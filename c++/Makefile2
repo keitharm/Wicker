@@ -1,0 +1,22 @@
+all: wicker
+
+wicker: wicker.o AP.o CapFile.o Client.o Config.o
+	g++ wicker.o AP.o CapFile.o Client.o Config.o -o wicker
+
+wicker.o: wicker.cpp
+	g++ -c wicker.cpp
+
+AP.o: AP.cpp
+	g++ -c AP.cpp
+
+CapFile.o: CapFile.cpp
+	g++ -c CapFile.cpp
+
+Client.o: Client.cpp
+	g++ -c Client.cpp
+
+Config.o: Config.cpp
+	g++ -c Config.cpp
+
+clean:
+	rm -rf *.o wicker

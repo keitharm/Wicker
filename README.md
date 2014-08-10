@@ -1,3 +1,3 @@
-Wicker - the stupid wifi cracker
+Wicker - The stupid wifi cracker.
 
 
