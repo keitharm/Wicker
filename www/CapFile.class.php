@@ -37,6 +37,9 @@ Class CapFile {
 
         // Insert record into DB
         $instance->addToDB();
+
+        // Generate attack records
+        $instance->generateAttackRecords();
         
         return $instance;
     }
@@ -121,7 +124,21 @@ Class CapFile {
 		}
 	}
 
+    private function generateAttackRecords() {
+        $cap = CapFile::fromDB("[C]" . $this->getChecksum());
+        for ($a = 1; $a <= 6; $a++) {
+            $statement = $this->db->con()->prepare("INSERT INTO `attacks` (`cap_id`, `attack`) VALUES (?, ?)");
+            $statement->execute(array($cap->getID(), $a));
+        }
+    }
+
 	public function getTimestamp() { return $this->timestamp; }
+    public function getLocation() { return $this->location; }
 	public function getID() { return $this->id; }
 	public function getChecksum() { return $this->checksum; }
+    public function getESSID() { return $this->essid; }
+    public function getBSSID() { return $this->bssid; }
+    public function getPackets() { return $this->packets; }
+    public function getSize() { return $this->size; }
+    public function getStatus() { return $this->status; }
 }

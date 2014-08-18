@@ -13,8 +13,8 @@ if ($_FILES != null) {
     }
 
     if ($size > 1024*1024*10) {
-        $bad = true;
-        $msg = "Only files up to 20 mb are accepted.";
+        #$bad = true;
+        #$msg = "Only files up to 20 mb are accepted.";
     }
 
     if (!$bad) {
