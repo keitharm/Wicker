@@ -90,30 +90,30 @@ $stats = json_decode($stats);
                         </div>
                     </div>
 
-                    <h2 class="sub-header">Current Operations</h2>
+                    <h2 class="sub-header">Uploaded .caps</h2>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>User</th>
+                                    <th>View</th>
                                     <th>ESSID</th>
                                     <th>BSSID</th>
-                                    <th>Pre-Computed?</th>
-                                    <th>% Complete</th>
-                                    <th>Run Time</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
 <?php
-for ($a = 0; $a < count($json->results); $a++) {
+$statement = $wicker->db->con()->prepare("SELECT * FROM cap ORDER BY ? DESC");
+$statement->execute(array("timestamp"));
+for ($a = 0; $a < $statement->rowCount(); $a++) {
+    $info = $statement->fetchObject();
+    $cap = CapFile::FromDB($info->id);
 ?>
                                 <tr>
-                                    <td><?=$json->results[$a]->{'Wicker Operations'}->User?></td>
-                                    <td><?=$json->results[$a]->{'Wicker Operations'}->ESSID?></td>
-                                    <td><?=$json->results[$a]->{'Wicker Operations'}->BSSID?></td>
-                                    <td><?=$json->results[$a]->{'Wicker Operations'}->PreComputed?></td>
-                                    <td><?=$json->results[$a]->{'Wicker Operations'}->Percent?></td>
-                                    <td><?=$json->results[$a]->{'Wicker Operations'}->Runtime?></td>
+                                    <td><a href="view.php?id=<?=$cap->getID()?>">View</a></td>
+                                    <td><?=$cap->getESSID()?></td>
+                                    <td><?=$cap->getBSSID()?></td>
+                                    <td><?=$cap->getStatus()?></td>
                                 </tr>
 <?php
 }
