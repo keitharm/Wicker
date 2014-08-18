@@ -54,7 +54,7 @@ class Wicker
 		<meta name="author" content="">
 		<!--<link rel="icon" href="../../favicon.ico">-->
 
-		<title><?=WICKER::NAME?> <?=WICKER::VERSION?> <?=$title?></title>
+		<title><?=WICKER::NAME?> <?=WICKER::VERSION?> :: <?=$title?></title>
 
 		<!-- Bootstrap core CSS -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">
