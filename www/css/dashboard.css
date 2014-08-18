@@ -103,4 +103,11 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+td {
+  text-align: center;
+}
+
+th {
+  text-align: center;
+}
 
