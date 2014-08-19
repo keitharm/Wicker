@@ -81,7 +81,7 @@ $stats = json_decode($stats);
                             <span class="text-muted">Success Rate</span>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
-                            <h2>1,178,735,606</h2>
+                            <h2>1,188,494,739</h2>
                             <span class="text-muted">Passwords</span>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
@@ -95,25 +95,29 @@ $stats = json_decode($stats);
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>View</th>
                                     <th>ESSID</th>
                                     <th>BSSID</th>
                                     <th>Status</th>
+                                    <th>Uploaded</th>
                                 </tr>
                             </thead>
                             <tbody>
 <?php
-$statement = $wicker->db->con()->prepare("SELECT * FROM cap ORDER BY ? DESC");
-$statement->execute(array("timestamp"));
+$statement = $wicker->db->con()->prepare("SELECT * FROM cap ORDER BY id DESC");
+$statement->execute();
 for ($a = 0; $a < $statement->rowCount(); $a++) {
     $info = $statement->fetchObject();
     $cap = CapFile::FromDB($info->id);
 ?>
                                 <tr>
+                                    <td><?=$a+1?></td>
                                     <td><a href="view.php?id=<?=$cap->getID()?>">View</a></td>
                                     <td><?=$cap->getESSID()?></td>
                                     <td><?=$cap->getBSSID()?></td>
                                     <td><?=$cap->getStatus()?></td>
+                                    <td><?=$wicker->timeconv($cap->getTimestamp())?>
                                 </tr>
 <?php
 }
