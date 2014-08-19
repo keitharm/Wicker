@@ -1,3 +1,1 @@
-Wicker - The stupid wifi cracker.
-
-
+PHP version of Wicker.

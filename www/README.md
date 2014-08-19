@@ -1,1 +1,0 @@
-PHP version of Wicker.
