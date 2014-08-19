@@ -74,6 +74,8 @@ Class Attack {
 		if ($this->getStatus() != 2 && $this->getStatus() != 3) {
 			$this->updateStatus();
 			$this->updateRuntime();
+			$this->calculateCurrentKey();
+			$this->calculateRate();
 		}
 	}
 
@@ -121,8 +123,22 @@ Class Attack {
 		shell_exec("kill " . $this->getPID());
 	}
 
+	public function calculateCurrentKey() {
+		global $wicker;
+		$log = file_get_contents("logs/" . $this->getTmpfile());
+		$keys = $wicker->extractData($log, "] ", " keys");
+		$current_keys = $keys[count($keys)-1];
+		$this->setCurrent($current_keys);
+	}
+
 	public function calculateRate() {
-		$log = file_get_contents("logs" . $this->getTmpfile());
+		global $wicker;
+		$log = file_get_contents("logs/" . $this->getTmpfile());
+		$rate = $wicker->extractData($log, "d (", " k/s)");
+		$rate = $rate[count($rate)-1];
+
+		$rate = explode(".", $rate)[0];
+		$this->setRate($rate);
 	}
 
 	public function getID() { return $this->id; }

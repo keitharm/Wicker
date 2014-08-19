@@ -145,7 +145,7 @@ for ($a = 1; $a <= 6; $a++) {
                                     <td><?=$attack->getStatusName()?></td>
                                     <td><?=$attack->getPassword()?></td>
                                     <td><?=number_format($attack->getDictionarySize())?></td>
-                                    <td><?=round($attack->getCurrent()/$attack->getDictionarySize(), 2)*100?>%</td>
+                                    <td><?=round($attack->getCurrent()/$attack->getDictionarySize()*100, 2)?>%</td>
                                     <td><?=$attack->getRuntime()?></td>
 <?php
                                     if ($attack->getRate() == 0) {
@@ -154,7 +154,7 @@ for ($a = 1; $a <= 6; $a++) {
 <?php
                                     } else {
 ?>
-                                    <td><?=($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()?></td>
+                                    <td><?=gmdate("H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))?></td>
 <?php
                                     }
 ?>  
