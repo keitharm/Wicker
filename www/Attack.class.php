@@ -6,6 +6,7 @@ status
 2 = failed
 3 = success
 4 = terminated
+5 = paused
 */
 require_once("Wicker.php");
 
@@ -23,9 +24,9 @@ Class Attack {
 	private $rate;
 	private $auth;
 	private $pid;
-	private $name = array("10k", "small", "medium", "rockyou", "big", "superbig");
-	private $size = array(10000, 292847, 9904974, 14344391, 185866729, 982963903);
-	private $statusName = array("-", "<font color='purple'>Cracking</font>", "<font color='red'>Failed</font>", "<font color='green'>Success</font>", "<font color='orange'>Terminated</font>");
+	private $name = array("10k top passwords (fixed)", "small", "medium", "rockyou", "big", "superbig");
+	private $size = array(4139, 240838, 9815083, 9607279, 185863497, 982963903);
+	private $statusName = array("-", "<font color='purple'>Cracking</font>", "<font color='red'>Failed</font>", "<font color='green'>Success</font>", "<font color='orange'>Terminated</font>", "<font color='blue'>Paused</font>");
 
 	public $db;
 
@@ -72,9 +73,9 @@ Class Attack {
 
 	public function updateData() {
 		if ($this->getStatus() != 2 && $this->getStatus() != 3) {
+			$this->calculateCurrentKey();
 			$this->updateStatus();
 			$this->updateRuntime();
-			$this->calculateCurrentKey();
 			$this->calculateRate();
 		}
 	}
@@ -120,13 +121,13 @@ Class Attack {
 	public function terminate() {
 		$this->updateData();
 		$this->setStatus(4);
-		shell_exec("kill " . $this->getPID());
+		posix_kill($this->getPID(), 9);
 	}
 
 	public function calculateCurrentKey() {
 		global $wicker;
 		$log = file_get_contents("logs/" . $this->getTmpfile());
-		$keys = $wicker->extractData($log, "] ", " keys");
+		$keys = $wicker->extractData(substr($log, -1500), "] ", " keys");
 		$current_keys = $keys[count($keys)-1];
 		$this->setCurrent($current_keys);
 	}
@@ -134,7 +135,7 @@ Class Attack {
 	public function calculateRate() {
 		global $wicker;
 		$log = file_get_contents("logs/" . $this->getTmpfile());
-		$rate = $wicker->extractData($log, "d (", " k/s)");
+		$rate = $wicker->extractData(substr($log, -1500), "d (", " k/s)");
 		$rate = $rate[count($rate)-1];
 
 		$rate = explode(".", $rate)[0];
