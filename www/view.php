@@ -99,8 +99,8 @@ if ($cap->getID() == 0) {
                                 <tr>
                                     <th>Action</th>
                                     <th>Attack Type</th>
-                                    <th>PID</th>
-                                    <th>Running</th>
+                                    <!--<th>PID</th>-->
+                                    <!--<th>Running</th>-->
                                     <th>Status</th>
                                     <th>Password</th>
                                     <th>Dictionary size</th>
@@ -111,6 +111,7 @@ if ($cap->getID() == 0) {
                             </thead>
                             <tbody>
 <?php
+
 for ($a = 1; $a <= 6; $a++) {
     unset($status);
     unset($runtime);
@@ -119,17 +120,27 @@ for ($a = 1; $a <= 6; $a++) {
 ?>
                                 <tr>
 <?php
-                                    if ($attack->getPID() == null) {
+                                    if ($attack->getPID() == null || $attack->getStatus() == 2 || $attack->getStatus() == 3 || $attack->getStatus() == 4) {
 ?>
-                                    <td><a href="execute.php?id=<?=$cap->getID()?>&attack=<?=$a?>">Execute</a> | <a href="terminate.php?id=<?=$cap->getID()?>&attack=<?=$a?>">Terminate</a></td>
+                                    <td><a href="execute.php?cmd=execute&id=<?=$cap->getID()?>&attack=<?=$a?>">Execute</a> | Pause | Terminate</td>
 <?php
                                     } else {
 ?>
                                     <td>Execute | 
 <?php
-                                    if ($attack->getStatus() == 1) {
+                                    if ($attack->getStatus() == 5) {
 ?>
-                                    <a href="terminate.php?id=<?=$cap->getID()?>&attack=<?=$a?>">Terminate</a>
+                                    <a href="ctl.php?cmd=resume&id=<?=$cap->getID()?>&attack=<?=$a?>">Resume</a> | 
+<?php
+                                    } else {
+?>
+                                    <a href="ctl.php?cmd=pause&id=<?=$cap->getID()?>&attack=<?=$a?>">Pause</a> | 
+<?php
+                                    }
+                                    if ($attack->getStatus() == 1 || $attack->getStatus() == 5) {
+?>
+                                    <a href="ctl.php?cmd=terminate&id=<?=$cap->getID()?>&attack=<?=$a?>">Terminate</a>
+
 <?php
 } else {
 ?>                                  Terminate
@@ -140,8 +151,8 @@ for ($a = 1; $a <= 6; $a++) {
                                     }
 ?>
                                     <td><?=$attack->getAttackName()?></td>
-                                    <td><?=$attack->getPID()?></td>
-                                    <td><?=$attack->getStatusText()?></td>
+                                    <!--<td><?=$attack->getPID()?></td>-->
+                                    <!--<td><?=$attack->getStatusText()?></td>-->
                                     <td><?=$attack->getStatusName()?></td>
                                     <td><?=$attack->getPassword()?></td>
                                     <td><?=number_format($attack->getDictionarySize())?></td>
