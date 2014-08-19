@@ -99,6 +99,10 @@ if ($cap->getID() == 0) {
                                 <tr>
                                     <th>Action</th>
                                     <th>Attack Type</th>
+                                    <th>PID</th>
+                                    <th>Running</th>
+                                    <th>Status</th>
+                                    <th>Password</th>
                                     <th>Dictionary size</th>
                                     <th>% Complete</th>
                                     <th>Run Time</th>
@@ -108,23 +112,40 @@ if ($cap->getID() == 0) {
                             <tbody>
 <?php
 for ($a = 1; $a <= 6; $a++) {
+    unset($status);
+    unset($runtime);
     $attack = Attack::fromDB($cap->getID(), $a);
+    $attack->updateData();
 ?>
                                 <tr>
 <?php
                                     if ($attack->getPID() == null) {
 ?>
-                                    <td><a href="execute.php?id=<?=$cap->getID()?>&attack=<?=$a?>">Execute</a></td>
+                                    <td><a href="execute.php?id=<?=$cap->getID()?>&attack=<?=$a?>">Execute</a> | <a href="terminate.php?id=<?=$cap->getID()?>&attack=<?=$a?>">Terminate</a></td>
 <?php
                                     } else {
 ?>
-                                    <td>Execute</td>
+                                    <td>Execute | 
+<?php
+                                    if ($attack->getStatus() == 1) {
+?>
+                                    <a href="terminate.php?id=<?=$cap->getID()?>&attack=<?=$a?>">Terminate</a>
+<?php
+} else {
+?>                                  Terminate
+<?php
+}
+?>                                  </td>
 <?php
                                     }
 ?>
                                     <td><?=$attack->getAttackName()?></td>
+                                    <td><?=$attack->getPID()?></td>
+                                    <td><?=$attack->getStatusText()?></td>
+                                    <td><?=$attack->getStatusName()?></td>
+                                    <td><?=$attack->getPassword()?></td>
                                     <td><?=number_format($attack->getDictionarySize())?></td>
-                                    <td><?=round($attack->getCurrent()/$attack->getDictionarySize(), 2)?>%</td>
+                                    <td><?=round($attack->getCurrent()/$attack->getDictionarySize(), 2)*100?>%</td>
                                     <td><?=$attack->getRuntime()?></td>
 <?php
                                     if ($attack->getRate() == 0) {
