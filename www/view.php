@@ -122,7 +122,7 @@ for ($a = 1; $a <= 6; $a++) {
 <?php
                                     if ($attack->getPID() == null || $attack->getStatus() == 2 || $attack->getStatus() == 3 || $attack->getStatus() == 4) {
 ?>
-                                    <td><a href="execute.php?cmd=execute&id=<?=$cap->getID()?>&attack=<?=$a?>">Execute</a> | Pause | Terminate</td>
+                                    <td><a href="ctl.php?cmd=execute&id=<?=$cap->getID()?>&attack=<?=$a?>">Execute</a> | Pause | Terminate</td>
 <?php
                                     } else {
 ?>
