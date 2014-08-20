@@ -93,9 +93,12 @@ Class Attack {
 	}
 
 	private function wasCracked() {
-		if (@file_get_contents("passwords/" . $this->getPwFile()) != null) {
+		global $wicker;
+		$log = file_get_contents("logs/" . $this->getTmpfile());
+		$keys = $wicker->extractData(substr($log, -1500), "The password is '", "'.");
+		if ($keys != null) {
 			$this->setStatus(3);
-			$this->setPassword(file_get_contents("passwords/" . $this->getPwFile()));
+			$this->setPassword($keys);
 		} else {
 			if ($this->getStatus() == 1 && $this->getStatusText() == "<font color='red'>No</font>") {
 				$this->setStatus(2);
@@ -127,7 +130,7 @@ Class Attack {
 	public function calculateCurrentKey() {
 		global $wicker;
 		$log = file_get_contents("logs/" . $this->getTmpfile());
-		$keys = $wicker->extractData(substr($log, -1500), "] ", " keys");
+		$keys = $wicker->extractData(substr($log, -1500), "Tried ", " PMKs so");
 		$current_keys = $keys[count($keys)-1];
 		$this->setCurrent($current_keys);
 	}
@@ -135,10 +138,9 @@ Class Attack {
 	public function calculateRate() {
 		global $wicker;
 		$log = file_get_contents("logs/" . $this->getTmpfile());
-		$rate = $wicker->extractData(substr($log, -1500), "d (", " k/s)");
+		$rate = $wicker->extractData(substr($log, -1500), "far; ", " PMKs per");
 		$rate = $rate[count($rate)-1];
 
-		$rate = explode(".", $rate)[0];
 		$this->setRate($rate);
 	}
 
