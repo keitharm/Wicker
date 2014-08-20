@@ -7,7 +7,7 @@ function getStatsData(){
     var results;
     
     $.ajax({
-        url: '/fetch.php?type=cap&id='+id,
+        url: 'fetch.php?type=cap&id='+id,
         dataType: 'json',
         async: false,
         success: function(data){
