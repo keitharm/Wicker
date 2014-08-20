@@ -4,25 +4,27 @@ $.ajaxSetup ({
 
 function getStatsData(){
     var id = $('id').html();
-  $.ajax({
-    url: 'http://keitharmstrong.me/wicker/fetch.php?type=cap&id='+id,
-    dataType: 'json',
-    async: false,
-    success: function(data){
-        results = data;
-    }
-  });
-  return results;
+    var results;
+    
+    $.ajax({
+        url: 'http://keitharmstrong.me/wicker/fetch.php?type=cap&id='+id,
+        dataType: 'json',
+        async: false,
+        success: function(data){
+            results = data;
+        }
+    });
+    return results;
 }
 
 setInterval(function(){
-  var data = getStatsData();
+    var data = getStatsData();
 
-  for(var i=1; i<7; i++) {
-    $('#'+i+' > #current').html(data[i]['current']);
-    $('#'+i+' > #complete').html(data[i]['complete']);
-    $('#'+i+' > #rate').html(data[i]['rate']);
-    $('#'+i+' > #runtime').html(data[i]['runtime']);
-    $('#'+i+' > #eta').html(data[i]['eta']);
-  }
+    for(var i=1; i<7; i++) {
+        $('#'+i+' > #current').html(data[i]['current']);
+        $('#'+i+' > #complete').html(data[i]['complete']);
+        $('#'+i+' > #rate').html(data[i]['rate']);
+        $('#'+i+' > #runtime').html(data[i]['runtime']);
+        $('#'+i+' > #eta').html(data[i]['eta']);
+    }
 }, 500);
