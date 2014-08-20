@@ -34,7 +34,7 @@ Class Attack {
 		$this->connectToDatabase();
 	}
 
-    public static function fromDB($id, $attack) {
+    public static function fromDB($id, $attack = 1) {
     	global $wicker;
         $instance = new self();
 

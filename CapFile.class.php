@@ -132,6 +132,11 @@ Class CapFile {
         }
     }
 
+    private function setVal($field, $val) {
+        $statement = $this->db->con()->prepare("UPDATE `cap` SET `$field` = ? WHERE `id` = ?");
+        $statement->execute(array($val, $this->getID()));
+    }
+
 	public function getTimestamp() { return $this->timestamp; }
     public function getLocation() { return $this->location; }
 	public function getID() { return $this->id; }
@@ -141,4 +146,6 @@ Class CapFile {
     public function getPackets() { return $this->packets; }
     public function getSize() { return $this->size; }
     public function getStatus() { return $this->status; }
+
+    public function setStatus($val) { $this->setVal("status", $val); $this->status = $val; }
 }

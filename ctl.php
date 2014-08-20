@@ -28,6 +28,14 @@ if ($cmd == "execute") {
 	posix_kill($attack->getPID(), 18);
 	//passthru("sudo kill -CONT " . $attack->getPID());
 	$attack->setStatus(1);
+} else if ($cmd == "hide") {
+	$cap = CapFile::fromDB($id);
+	$cap->setStatus(1);
+	header('Location: index.php');
+	die;
+} else {
+	header('Location: index.php');
+	die;
 }
 header('Location: view.php?id=' . $_GET['id']);
 die;
