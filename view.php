@@ -71,6 +71,7 @@ if ($cap->getID() == 0) {
                                     <th>Rate (w/s)</th>
                                     <th>Run Time</th>
                                     <th>ETA</th>
+                                    <th>test</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,6 +136,22 @@ for ($a = 1; $a <= 6; $a++) {
 <?php
                                     }
 ?>  
+                                    <style>
+                                        .loadingbar {
+                                            position:relative;
+                                            
+                                        }
+
+                                        .loadingpercent {
+                                            position:absolute;
+                                            left:0;
+                                            background:blue;
+                                            height:100%;
+                                            width:0;
+                                        }
+
+                                    </style>
+                                    <td><div class="loadingbar"><div class="loadingpercent"></div></div></td>
                                 </tr>
 <?php
 }

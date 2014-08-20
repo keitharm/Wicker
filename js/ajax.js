@@ -26,5 +26,6 @@ setInterval(function(){
         $('#'+i+' > #rate').html(data[i]['rate']);
         $('#'+i+' > #runtime').html(data[i]['runtime']);
         $('#'+i+' > #eta').html(data[i]['eta']);
+        $('#'+i+' > .loadingpercent').width(data[i]['complete']);
     }
-}, 500);
+}, 800);
