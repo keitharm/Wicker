@@ -13,47 +13,8 @@ if ($cap->getID() == 0) {
     <head>
         <?=$wicker->heading("Viewing " . $cap->getESSID())?>
     </head>
-
     <body>
-
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.php">Wicker - The stupid wifi cracker</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <!--
-                            <form class="navbar-form navbar-right" action="login" method="POST">
-                                <div class="form-group">
-                                    <input type="text" name="username" placeholder="Username" class="form-control" required <?=$auto?>>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" placeholder="Password" class="form-control" required>
-                                </div>
-                                &nbsp;
-                                <input type="submit" class="btn btn-success" value="Login">&nbsp;<input type="button" onClick="window.location='signup'" class="btn btn-primary" value="Sign up">
-                            </form>
-                            -->
-                        </li>
-                        <li><a href="https://github.com/solewolf/wicker" target="_blank">Github</a></li>
-                        <!--
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="#">Help</a></li>
-                        -->
-                    </ul>
-                </div>
-            </div>
-        </div>
-
+        <?=$wicker->navbar()?>
         <div class="container-fluid">
             <div class="row">
                 <?=$wicker->menu("null")?>
@@ -104,7 +65,9 @@ if ($cap->getID() == 0) {
                                     <th>Status</th>
                                     <th>Password</th>
                                     <th>Dictionary size</th>
+                                    <th>Current</th>
                                     <th>% Complete</th>
+                                    <th>Rate</th>
                                     <th>Run Time</th>
                                     <th>ETA</th>
                                 </tr>
@@ -156,7 +119,9 @@ for ($a = 1; $a <= 6; $a++) {
                                     <td><?=$attack->getStatusName()?></td>
                                     <td><?=$attack->getPassword()?></td>
                                     <td><?=number_format($attack->getDictionarySize())?></td>
+                                    <td><?=number_format($attack->getCurrent())?></td>
                                     <td><?=round($attack->getCurrent()/$attack->getDictionarySize()*100, 2)?>%</td>
+                                    <td><?=number_format($attack->getRate())?></td>
                                     <td><?=$attack->getRuntime()?></td>
 <?php
                                     if ($attack->getRate() == 0) {
@@ -165,7 +130,7 @@ for ($a = 1; $a <= 6; $a++) {
 <?php
                                     } else {
 ?>
-                                    <td><?=gmdate("H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))?></td>
+                                    <td><?=(int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1) . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))?></td>
 <?php
                                     }
 ?>  

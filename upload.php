@@ -38,47 +38,8 @@ if ($_FILES != null) {
     <head>
         <?=$wicker->heading("Dashboard")?>
     </head>
-
     <body>
-
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.php">Wicker - The stupid wifi cracker</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <!--
-                            <form class="navbar-form navbar-right" action="login" method="POST">
-                                <div class="form-group">
-                                    <input type="text" name="username" placeholder="Username" class="form-control" required <?=$auto?>>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" placeholder="Password" class="form-control" required>
-                                </div>
-                                &nbsp;
-                                <input type="submit" class="btn btn-success" value="Login">&nbsp;<input type="button" onClick="window.location='signup'" class="btn btn-primary" value="Sign up">
-                            </form>
-                            -->
-                        </li>
-                        <li><a href="https://github.com/solewolf/wicker" target="_blank">Github</a></li>
-                        <!--
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="#">Help</a></li>
-                        -->
-                    </ul>
-                </div>
-            </div>
-        </div>
-
+        <?=$wicker->navbar()?>
         <div class="container-fluid">
             <div class="row">
                 <?=$wicker->menu("upload")?>
