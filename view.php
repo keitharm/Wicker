@@ -139,7 +139,7 @@ for ($a = 1; $a <= 6; $a++) {
                                     <style>
                                         .loadingbar {
                                             position:relative;
-                                            
+
                                         }
 
                                         .loadingpercent {
@@ -151,7 +151,14 @@ for ($a = 1; $a <= 6; $a++) {
                                         }
 
                                     </style>
-                                    <td><div class="loadingbar"><div class="loadingpercent"></div></div></td>
+                                    <td>
+                                        <div class="progress" style="min-width:100px;">
+                                            <div class="progress-bar progress-bar-striped active" 
+                                            role="progressbar" aria-valuenow="0">
+                                                0%
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
 <?php
 }
