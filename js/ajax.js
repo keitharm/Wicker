@@ -25,4 +25,4 @@ setInterval(function(){
     $('#'+i+' > #runtime').html(data[i]['runtime']);
     $('#'+i+' > #eta').html(data[i]['eta']);
   }
-}, 1000);
+}, 500);

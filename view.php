@@ -127,7 +127,7 @@ for ($a = 1; $a <= 6; $a++) {
 <?php
                                     if ($attack->getRate() == 0) {
 ?>
-                                    <td>--:--</td>
+                                    <td id="eta">--:--</td>
 <?php
                                     } else {
 ?>
