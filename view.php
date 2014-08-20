@@ -12,6 +12,7 @@ if ($cap->getID() == 0) {
 <html lang="en">
     <head>
         <?=$wicker->heading("Viewing " . $cap->getESSID())?>
+        <link href="css/bars.css" rel="stylesheet">
         <id hidden><?=$_GET['id']?></id>
     </head>
     <body>
@@ -60,109 +61,62 @@ if ($cap->getID() == 0) {
                             <thead>
                                 <tr>
                                     <th>Action</th>
-                                    <th>Attack Type</th>
-                                    <!--<th>PID</th>-->
-                                    <!--<th>Running</th>-->
+                                    <th>Dictionary</th>
                                     <th>Status</th>
-                                    <th>Password</th>
                                     <th>Dictionary size</th>
-                                    <th>Current</th>
-                                    <th>% Complete</th>
                                     <th>Rate (w/s)</th>
                                     <th>Run Time</th>
-                                    <th>ETA</th>
-                                    <th>test</th>
+                                    <th>ETC</th>
                                 </tr>
                             </thead>
                             <tbody>
-<?php
 
+<?php
 for ($a = 1; $a <= 6; $a++) {
     unset($status);
     unset($runtime);
     $attack = Attack::fromDB($cap->getID(), $a);
     $attack->updateData();
-?>
-                                <tr id="<?= $a ?>">
-<?php
-                                    if ($attack->getPID() == null || $attack->getStatus() == 2 || $attack->getStatus() == 3 || $attack->getStatus() == 4) {
-?>
-                                    <td><a href="ctl.php?cmd=execute&id=<?=$cap->getID()?>&attack=<?=$a?>">Execute</a> | Pause | Terminate</td>
-<?php
-                                    } else {
-?>
-                                    <td>Execute | 
-<?php
-                                    if ($attack->getStatus() == 5) {
-?>
-                                    <a href="ctl.php?cmd=resume&id=<?=$cap->getID()?>&attack=<?=$a?>">Resume</a> | 
-<?php
-                                    } else {
-?>
-                                    <a href="ctl.php?cmd=pause&id=<?=$cap->getID()?>&attack=<?=$a?>">Pause</a> | 
-<?php
-                                    }
-                                    if ($attack->getStatus() == 1 || $attack->getStatus() == 5) {
-?>
-                                    <a href="ctl.php?cmd=terminate&id=<?=$cap->getID()?>&attack=<?=$a?>">Terminate</a>
+                echo "<tr id=\"$a\">";
 
-<?php
-} else {
-?>                                  Terminate
-<?php
-}
-?>                                  </td>
-<?php
-                                    }
+                    if ($attack->getPID() == null || $attack->getStatus() == 2 || $attack->getStatus() == 3 || $attack->getStatus() == 4) {
+                        echo "<td><a href=\"ctl.php?cmd=execute&id=" . $cap->getID() . "&attack=$a\">Execute</a> | Pause | Terminate</td>";
+                    } else {
+                        echo "<td>Execute | ";
+                        if ($attack->getStatus() == 5) {
+                            echo "<a href=\"ctl.php?cmd=resume&id=" . $cap->getID() . "&attack=$a\">Resume</a> | ";
+                        } else {
+                            echo "<a href=\"ctl.php?cmd=pause&id=" . $cap->getID() . "&attack=$a\">Pause</a> | ";
+                        }
+                        if ($attack->getStatus() == 1 || $attack->getStatus() == 5) {
+                            echo "<a href=\"ctl.php?cmd=terminate&id=" . $cap->getID() . "&attack=$a\">Terminate</a>";
+                        } else {
+                            echo "Terminate";
+                        }                                  
+                        echo "</td>";
+                    }
 ?>
-                                    <td id="attackStrength"><?=$attack->getAttackName()?></td>
-                                    <!--<td><?=$attack->getPID()?></td>-->
-                                    <!--<td><?=$attack->getStatusText()?></td>-->
-                                    <td id="status"><?=$attack->getStatusName()?></td>
-                                    <td id="password"><?=$attack->getPassword()?></td>
+                                    <td id="dictionaryName"><?=$attack->getAttackName()?></td>
+                                    <td id="status">
+                                        <div class="progress" style="min-width:100px;">
+                                            <div class="progress-bar active" 
+                                            role="progressbar" aria-valuenow="40" style="width:40.9%">
+                                                40%
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td id="dictSize"><?=number_format($attack->getDictionarySize())?></td>
-                                    <td id="current"><?=number_format($attack->getCurrent())?></td>
-                                    <td id="complete"><?=round($attack->getCurrent()/$attack->getDictionarySize()*100, 2)?>%</td>
                                     <td id="rate"><?=number_format($attack->getRate())?></td>
                                     <td id="runtime"><?=$attack->getRuntime()?></td>
 <?php
                                     if ($attack->getRate() == 0) {
-?>
-                                    <td id="eta">--:--</td>
-<?php
+                                        echo "<td id=\"etc\">--:--</td>";
                                     } else {
-?>
-                                    <td id="eta"><?=(int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1) . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))?></td>
-<?php
+                                        echo "<td id=\"etc\">" . (int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1) . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate())) . "</td>";
                                     }
-?>  
-                                    <style>
-                                        .loadingbar {
-                                            position:relative;
-
-                                        }
-
-                                        .loadingpercent {
-                                            position:absolute;
-                                            left:0;
-                                            background:blue;
-                                            height:100%;
-                                            width:0;
-                                        }
-
-                                    </style>
-                                    <td>
-                                        <div class="progress" style="min-width:100px;">
-                                            <div class="progress-bar progress-bar-striped active" 
-                                            role="progressbar" aria-valuenow="0">
-                                                0%
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-<?php
-}
-?> 
+                                    echo "</tr>";
+                                }
+?>
                             </tbody>
                         </table>
                     </div>

@@ -10,7 +10,7 @@ if ($type == "cap") {
 		$attack = Attack::fromDB($id, $a);
 		$attack->updateData();
 		$data[$a]["current"]  = $attack->getCurrent();
-		$data[$a]["complete"] = round($attack->getCurrent()/$attack->getDictionarySize()*100, 2) . "%";
+		$data[$a]["complete"] = round($attack->getCurrent()/$attack->getDictionarySize()*100, 2);
 		$data[$a]["rate"]     = number_format($attack->getRate());
 		$data[$a]["runtime"]  = $attack->getRuntime();
 		if ($attack->getRate() != 0) {

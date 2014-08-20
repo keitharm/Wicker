@@ -1,0 +1,7 @@
+.noStatus, .progress-bar-danger, .progress-bar-warning, .progress-bar-success {
+    width:100%;
+}
+
+.noStatus {
+    background:transparent;
+}
