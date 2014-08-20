@@ -4,7 +4,7 @@ $.ajaxSetup ({
 
 function getStatsData(){
   $.ajax({
-    url: '../fetch.php?type=',
+    url: 'http://keitharmstrong.me/wicker/fetch.php?type=cap',
     dataType: 'json',
     async: false,
     success: function(data){
