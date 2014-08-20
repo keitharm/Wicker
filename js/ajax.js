@@ -4,14 +4,11 @@ $.ajaxSetup ({
 
 function getStatsData(){
   $.ajax({
-    url: 'http://keitharmstrong.me/wicker/fetch.php?type=cap',
+    url: 'http://keitharmstrong.me/wicker/fetch.php?type=cap&id=2',
     dataType: 'json',
     async: false,
     success: function(data){
-      // results = data['Total Users'];
-      if(!data['error']){
         results = data;
-      }
     }
   });
   return results;
