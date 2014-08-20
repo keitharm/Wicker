@@ -36,7 +36,7 @@ setInterval(function(){
             case 3:     // Success
                 $('#'+i+' > #status > .progress-bar').addClass('progress-bar-success')
                     .removeClass('noStatus progress-bar-striped progress-bar-warning progress-bar-danger')
-                    .attr('aria-valuenow', 50]).html('Success');
+                    .attr('aria-valuenow', 50).html('Success');
                 break;
             case 4:     // Terminated
                 $('#'+i+' > #status > .progress-bar').addClass('progress-bar-danger')
