@@ -3,8 +3,9 @@ $.ajaxSetup ({
 });
 
 function getStatsData(){
+    var id = $('id').html();
   $.ajax({
-    url: 'http://keitharmstrong.me/wicker/fetch.php?type=cap&id=2',
+    url: 'http://keitharmstrong.me/wicker/fetch.php?type=cap&id='+id,
     dataType: 'json',
     async: false,
     success: function(data){
