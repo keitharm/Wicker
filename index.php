@@ -57,27 +57,25 @@ $stats = json_decode($stats);
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>View</th>
+                                    <th>Actions</th>
                                     <th>ESSID</th>
                                     <th>BSSID</th>
-                                    <th>Status</th>
                                     <th>Uploaded</th>
                                 </tr>
                             </thead>
                             <tbody>
 <?php
-$statement = $wicker->db->con()->prepare("SELECT * FROM cap ORDER BY id DESC");
-$statement->execute();
+$statement = $wicker->db->con()->prepare("SELECT * FROM cap WHERE `status` = ? ORDER BY id DESC");
+$statement->execute(array(0));
 for ($a = 0; $a < $statement->rowCount(); $a++) {
     $info = $statement->fetchObject();
     $cap = CapFile::FromDB($info->id);
 ?>
                                 <tr>
                                     <td><?=$a+1?></td>
-                                    <td><a href="view.php?id=<?=$cap->getID()?>">View</a></td>
+                                    <td><a href="view.php?id=<?=$cap->getID()?>">View</a> | <a href="ctl.php?cmd=hide&id=<?=$cap->getID()?>">Hide</a></td>
                                     <td><?=$cap->getESSID()?></td>
                                     <td><?=$cap->getBSSID()?></td>
-                                    <td><?=$cap->getStatus()?></td>
                                     <td><?=$wicker->timeconv($cap->getTimestamp())?>
                                 </tr>
 <?php
