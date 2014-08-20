@@ -12,6 +12,7 @@ if ($cap->getID() == 0) {
 <html lang="en">
     <head>
         <?=$wicker->heading("Viewing " . $cap->getESSID())?>
+        <id hidden><?=$_GET['id']?></id>
     </head>
     <body>
         <?=$wicker->navbar()?>
