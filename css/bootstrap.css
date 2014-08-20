@@ -3768,8 +3768,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar {
   position: relative;
-  min-height: 50px;
-  margin-bottom: 20px;
+  min-height: 80px;
+  margin-bottom: 50px;
   border: 1px solid transparent;
 }
 @media (min-width: 768px) {
@@ -3883,6 +3883,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   padding: 20px 15px;
   font-size: 18px;
   line-height: 20px;
+  margin-top: 10px;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
@@ -6199,25 +6200,5 @@ button.close {
   .hidden-print {
     display: none !important;
   }
-}
-
-.navbar-center
-{
-    position: absolute;
-    width: 100%;
-    left: 0;
-    text-align: center;
-    margin: auto;
-    color: #888;
-}
-
-.navbar-center .line1
-{
-  margin: 2px;
-}
-
-.navbar-center .line2
-{
-  margin: -5px;
 }
 /*# sourceMappingURL=bootstrap.css.map */

@@ -36,6 +36,7 @@ body {
 @media (min-width: 768px) {
   .sidebar {
     position: fixed;
+    margin-top: 30px;
     top: 51px;
     bottom: 0;
     left: 0;
@@ -72,6 +73,7 @@ body {
  */
 
 .main {
+  margin-top: 30px;
   padding: 20px;
 }
 @media (min-width: 768px) {
@@ -109,5 +111,31 @@ td {
 
 th {
   text-align: center;
+}
+
+.navbar-center
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: auto;
+    color: #888;
+}
+
+.navbar-center .line1
+{
+  margin: 7px;
+  font-size: 18px;
+}
+
+.navbar-center .line2
+{
+  margin: -5px;
+}
+
+.navbar-center .line3
+{
+  margin: -5px;
 }
 
