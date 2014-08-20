@@ -20,7 +20,7 @@ function getStatsData(){
 setInterval(function(){
   var data = getStatsData();
 
-  for(int i=1; i<7; i++) {
+  for(var i=1; i<7; i++) {
     $('#'+i+' > #current').html(data[i]['current']);
     $('#'+i+' > #complete').html(data[i]['complete']);
     $('#'+i+' > #rate').html(data[i]['rate']);
