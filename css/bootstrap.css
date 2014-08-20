@@ -3880,7 +3880,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-brand {
   float: left;
   height: 50px;
-  padding: 15px 15px;
+  padding: 20px 15px;
   font-size: 18px;
   line-height: 20px;
 }
@@ -6199,5 +6199,25 @@ button.close {
   .hidden-print {
     display: none !important;
   }
+}
+
+.navbar-center
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: auto;
+    color: #888;
+}
+
+.navbar-center .line1
+{
+  margin: 2px;
+}
+
+.navbar-center .line2
+{
+  margin: -5px;
 }
 /*# sourceMappingURL=bootstrap.css.map */
