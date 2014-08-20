@@ -67,7 +67,7 @@ if ($cap->getID() == 0) {
                                     <th>Dictionary size</th>
                                     <th>Current</th>
                                     <th>% Complete</th>
-                                    <th>Rate</th>
+                                    <th>Rate (w/s)</th>
                                     <th>Run Time</th>
                                     <th>ETA</th>
                                 </tr>
@@ -81,7 +81,7 @@ for ($a = 1; $a <= 6; $a++) {
     $attack = Attack::fromDB($cap->getID(), $a);
     $attack->updateData();
 ?>
-                                <tr>
+                                <tr id="<?= $a ?>">
 <?php
                                     if ($attack->getPID() == null || $attack->getStatus() == 2 || $attack->getStatus() == 3 || $attack->getStatus() == 4) {
 ?>
@@ -113,16 +113,16 @@ for ($a = 1; $a <= 6; $a++) {
 <?php
                                     }
 ?>
-                                    <td><?=$attack->getAttackName()?></td>
+                                    <td id="attackStrength"><?=$attack->getAttackName()?></td>
                                     <!--<td><?=$attack->getPID()?></td>-->
                                     <!--<td><?=$attack->getStatusText()?></td>-->
-                                    <td><?=$attack->getStatusName()?></td>
-                                    <td><?=$attack->getPassword()?></td>
-                                    <td><?=number_format($attack->getDictionarySize())?></td>
-                                    <td><?=number_format($attack->getCurrent())?></td>
-                                    <td><?=round($attack->getCurrent()/$attack->getDictionarySize()*100, 2)?>%</td>
-                                    <td><?=number_format($attack->getRate())?></td>
-                                    <td><?=$attack->getRuntime()?></td>
+                                    <td id="status"><?=$attack->getStatusName()?></td>
+                                    <td id="password"><?=$attack->getPassword()?></td>
+                                    <td id="dictSize"><?=number_format($attack->getDictionarySize())?></td>
+                                    <td id="current"><?=number_format($attack->getCurrent())?></td>
+                                    <td id="complete"><?=round($attack->getCurrent()/$attack->getDictionarySize()*100, 2)?>%</td>
+                                    <td id="rate"><?=number_format($attack->getRate())?></td>
+                                    <td id="runtime"><?=$attack->getRuntime()?></td>
 <?php
                                     if ($attack->getRate() == 0) {
 ?>
@@ -130,7 +130,7 @@ for ($a = 1; $a <= 6; $a++) {
 <?php
                                     } else {
 ?>
-                                    <td><?=(int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1) . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))?></td>
+                                    <td id="eta"><?=(int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1) . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))?></td>
 <?php
                                     }
 ?>  
@@ -145,5 +145,6 @@ for ($a = 1; $a <= 6; $a++) {
             </div>
         </div>
         <?=$wicker->footer()?>
+        <script src="js/ajax.js"></script>
     </body>
 </html>
