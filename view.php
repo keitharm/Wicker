@@ -100,9 +100,7 @@ for ($a = 1; $a <= 6; $a++) {
                                     <td id="status">
                                         <div class="progress" style="min-width:100px;">
                                             <div class="progress-bar active" 
-                                            role="progressbar" aria-valuenow="40" style="width:40.9%">
-                                                40%
-                                            </div>
+                                            role="progressbar" aria-valuenow="40" style="width:40.9%"></div>
                                         </div>
                                     </td>
                                     <td id="dictSize"><?=number_format($attack->getDictionarySize())?></td>

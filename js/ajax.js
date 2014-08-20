@@ -22,10 +22,7 @@ setInterval(function(){
 
     for(var i=1; i<=6; i++) {
 
-        switch(data[i]['status']) }
-            case 0:     // No status
-                $('#'+i+' > #status > .progress-bar').addClass('noStatus').html('----');
-                break;
+        switch(data[i]['status']) {
             case 1:     // Cracking
                 $('#'+i+' > #status > .progress-bar').addClass('progress-bar-striped')
                     .removeClass('noStatus progress-bar-success progress-bar-warning progress-bar-danger')
@@ -50,6 +47,9 @@ setInterval(function(){
                 $('#'+i+' > #status > .progress-bar').addClass('progress-bar-warning')
                     .removeClass('noStatus progress-bar-striped')
                     .attr('aria-valuenow', 50).html('Paused');
+                break;
+            default:     // No status
+                $('#'+i+' > #status > .progress-bar').addClass('noStatus').html('----');
                 break;
         }
 
