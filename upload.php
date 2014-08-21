@@ -3,18 +3,14 @@ require_once("Wicker.php");
 
 if ($_FILES != null) {
     $tmpname = $_FILES["file"]["tmp_name"];
-    $name = $_FILES["file"]["name"];
-    $size = $_FILES["file"]["size"];
-    $ext = pathinfo($name, PATHINFO_EXTENSION);
-    $bad = false;
+    $name    = $_FILES["file"]["name"];
+    $size    = $_FILES["file"]["size"];
+    $ext     = pathinfo($name, PATHINFO_EXTENSION);
+    $bad     = false;
+
     if (!in_array($ext, array("cap"))) {
         $bad = true;
         $msg = "Only . files are accepted.";
-    }
-
-    if ($size > 1024*1024*10) {
-        #$bad = true;
-        #$msg = "Only files up to 20 mb are accepted.";
     }
 
     if (!$bad) {
@@ -28,7 +24,6 @@ if ($_FILES != null) {
         $check = move_uploaded_file($tmpname, "uploads/" . $location . ".cap");
         $wicker->importcap($location . ".cap");
         die;
-
     }
 }
 

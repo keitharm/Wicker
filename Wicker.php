@@ -1,5 +1,4 @@
 <?php
-require_once("User.class.php");
 require_once("Database.class.php");
 require_once("CapFile.class.php");
 
@@ -16,23 +15,6 @@ class Wicker
     public function __construct() {
         $this->startSession();
         $this->connectToDatabase();
-
-        /*if ($this->loggedIn()) {
-            $this->initializeUser($_SESSION['username']);
-        } else {
-            $this->initializeUser(null);
-        }
-
-        $this->checkSumUserAgent();
-
-        if ($this->loggedIn()) {
-            $this->checkSessionCredentials();
-            $this->checkTutorial();
-        }
-
-        $this->validPostRef();
-        */
-
     }
 
     public function startSession() {
@@ -92,40 +74,39 @@ class Wicker
     }
 
     public function random($mode, $length) {
-        #mt_srand(hexdec(substr(md5(openssl_random_pseudo_bytes(4)),0 ,8)));
         # RANDOM_DEFAULT
         if ($mode == 1) {
             $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         }
-    # RANDOM_NUMERIC
+        # RANDOM_NUMERIC
         if ($mode == 2) {
             $chars = "1234567890";
         }
-    # RANDOM_ALPHA
+        # RANDOM_ALPHA
         if ($mode == 3) {
             $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         }
-    # RANDOM_UPPER
+        # RANDOM_UPPER
         if ($mode == 4) {
             $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         }
-    #RANDOM_LOWER
+        #RANDOM_LOWER
         if ($mode == 5) {
             $chars = "abcdefghijklmnopqrstuvwxyz";
         }
-    # RANDOM_UPPERNUM
+        # RANDOM_UPPERNUM
         if ($mode == 6) {
             $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         }
-    # RANDOM_LOWERNUM
+        # RANDOM_LOWERNUM
         if ($mode == 7) {
             $chars = "abcdefghijklmnopqrstuvwxyz1234567890";
         }
-    # RANDOM_EVERYTHING
+        # RANDOM_EVERYTHING
         if ($mode == 8) {
             $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890~!@#$%^&*()_+-=[]\\{}|;':\"<>?,./";
         }
-    # RANDOM_HEX
+        # RANDOM_HEX
         if ($mode == 9) {
             $chars = "abcdef1234567890";
         }
@@ -151,22 +132,27 @@ class Wicker
         $len = strlen($data);
         $matches = $this->findall($search, $data);
         $found = array();
+
         foreach ($matches as $val) {
             $bad = false;
             $offset = 0;
             $val += strlen($search);
+
             while (substr($data, $val+$offset, strlen($ending)) != $ending) {
                 $offset++;
+
                 // If we are outside of the range of the string, there is no ending match.
                 if ($offset > $len) {
                     $bad = true;
                     break;
                 }
             }
+
             if (!$bad) {
                 $found[] = substr($data, $val, $offset);
             }
         }
+
         if ($found == false) {
             return false;
         }
@@ -185,8 +171,8 @@ class Wicker
         $len       = strlen($haystack);
         $searchlen = strlen($needle);
         $results   = array();
+        $data      = $haystack;
 
-        $data = $haystack;
         while (1) {
             $occurance = strpos($data, $needle);
             if ($occurance === false) {
@@ -223,7 +209,6 @@ class Wicker
             <head>
                 <?=$this->heading("Error")?>
             </head>
-
             <body>
                 <?=$this->navbar()?>
                 <div class="container-fluid">
@@ -231,13 +216,11 @@ class Wicker
                         <?=$this->menu(null)?>
                         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                             <h1 class="page-header">Error</h1>
-
                             <div class="row" align="center" style="margin-top: 100px">
                                 <h2><?=$msg?></h2>
                                 <p><?=$misc?></p>
                                 <input type="button" class="btn btn-success" onClick="window.location='index.php'" value="Ok">
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -412,13 +395,5 @@ class Wicker
 
 // Create instance of Wicker
 $wicker = new Wicker;
-
-
-if (isset($_GET['sessioninfo'])) {
-    echo "<pre>";
-    print_r($_SESSION);
-    echo session_id();
-    echo "</pre>";
-}
 
 ?>
