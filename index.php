@@ -75,7 +75,7 @@ for ($a = 0; $a < $statement->rowCount(); $a++) {
                                     <td><?=$a+1?></td>
                                     <td><a href="view.php?id=<?=$cap->getID()?>">View</a> | <a href="ctl.php?cmd=hide&id=<?=$cap->getID()?>">Hide</a></td>
                                     <td><?=$cap->getESSID()?></td>
-                                    <td><?=$cap->getBSSID()?></td>
+                                    <td><?=strtoupper($cap->getBSSID())?></td>
                                     <td><?=$wicker->timeconv($cap->getTimestamp())?>
                                 </tr>
 <?php
