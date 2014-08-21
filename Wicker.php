@@ -337,10 +337,30 @@ class Wicker
                         System Status
                     </div>
                     <div class="line2">
-                        CPU0<?=$this->space(3)?>CPU1<?=$this->space(3)?>CPU2<?=$this->space(3)?>CPU3<?=$this->space(10)?>UPTIME<?=$this->space(10)?>1M<?=$this->space(5)?>5M<?=$this->space(5)?>15M<?=$this->space(5)?>Uploads<?=$this->space(6)?>Logs
-                    </div>
-                    <div class="line3">
-                        <?=$this->status()?>
+                        <table class="tablestatus">
+                            <thead>
+<?php
+                                $name = array("CPU0", "CPU1", "CPU2", "CPU3", "Uptime", "1m", "5m", "15m", "Uploads", "Logs");
+                                for ($a = 0; $a < count($name); $a++) {
+?>
+                                    <th><?=$name[$a]?></th>
+                                    <th><?=$this->space(5)?></th>
+<?php
+                                }
+?>
+                            </thead>
+                            <tbody>
+<?php
+                                $status = $this->status();
+                                for ($a = 0; $a < count($name); $a++) {
+?>
+                                    <td><?=$status[$a]?></td>
+                                    <td><?=$this->space(5)?></td>
+<?php
+                                }
+?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -355,7 +375,7 @@ class Wicker
         $uptime = array($this->extractData($data[13], " ", " up"), $loadavgs[0], $loadavgs[1], $loadavgs[2]);
         $uploads = trim($this->extractData(":" . $data[14], ":", "uploads"));
         $logs = trim($this->extractData(":" . $data[15], ":", "logs"));
-        return "<span style='color: " . $this->color($cpus[0], 100, 60) . "'>" . $cpus[0] . "</span>" . $this->space(8) . "<span style='color: " . $this->color($cpus[1], 100, 60) . "'>" . $cpus[1] . "</span>" . $this->space(8) . "<span style='color: " . $this->color($cpus[2], 100, 60) . "'>" . $cpus[2] . "</span>" . $this->space(8) . "<span style='color: " . $this->color($cpus[3], 100, 60) . "'>" . $cpus[3] . "</span>" . $this->space(12) . $uptime[0] . $this->space(9) . "<span style='color: " . $this->color($uptime[1], 4.00, 1.00) . "'>" . $uptime[1] . "</span>" . $this->space(3) . "<span style='color: " . $this->color($uptime[2], 4.00, 1.00) . "'>" . $uptime[2] . "</span>" . $this->space(4) . "<span style='color: " . $this->color($uptime[3], 4.00, 1.00) . "'>" . $uptime[3] . "</span>" . $this->space(8) . $uploads . $this->space(7) . $logs;
+        return array("<span style='color: " . $this->color($cpus[0], 100, 60) . "'>" . $cpus[0] . "</span>", "<span style='color: " . $this->color($cpus[1], 100, 60) . "'>" . $cpus[1] . "</span>", "<span style='color: " . $this->color($cpus[2], 100, 60) . "'>" . $cpus[2] . "</span>", "<span style='color: " . $this->color($cpus[3], 100, 60) . "'>" . $cpus[3] . "</span>", $uptime[0], "<span style='color: " . $this->color($uptime[1], 4.00, 1.00) . "'>" . $uptime[1] . "</span>", "<span style='color: " . $this->color($uptime[2], 4.00, 1.00) . "'>" . $uptime[2] . "</span>", "<span style='color: " . $this->color($uptime[3], 4.00, 1.00) . "'>" . $uptime[3] . "</span>", $uploads, $logs);
     }
 
     public function capfiles() {

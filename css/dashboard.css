@@ -126,6 +126,7 @@ th {
 .navbar-center .line1
 {
   margin: 7px;
+  margin-left: -50px;
   font-size: 18px;
 }
 
@@ -134,8 +135,12 @@ th {
   margin: -3px;
 }
 
-.navbar-center .line3
-{
-  margin: 4px;
+.tablestatus {
+  margin-left:auto;
+  margin-right:auto;
 }
 
+.tablestatus td {
+  text-align: center;
+
+}
