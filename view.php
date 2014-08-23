@@ -98,9 +98,11 @@ for ($a = 1; $a <= 6; $a++) {
 ?>
                                     <td id="dictionaryName"><?=$attack->getAttackName()?></td>
                                     <td id="status">
-                                        <div class="progress" style="min-width:100px;">
-                                            <div class="progress-bar active" 
-                                            role="progressbar" aria-valuenow="40" style="width:40.9%"></div>
+                                        <div class="progress">
+                                            <div class="progress-bar noStatus active" 
+                                            role="progressbar" aria-valuenow="0">
+                                                ----
+                                            </div>
                                         </div>
                                     </td>
                                     <td id="dictSize"><?=number_format($attack->getDictionarySize())?></td>

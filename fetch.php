@@ -10,14 +10,14 @@ if ($type == "cap") {
         unset($attack);
         $attack = Attack::fromDB($id, $a);
         $attack->updateData();
-        $data[$a]["current"]  = $attack->getCurrent();
+        $data[$a]['status']   = $attack->getStatus();
         $data[$a]["complete"] = round($attack->getCurrent()/$attack->getDictionarySize()*100, 2);
         $data[$a]["rate"]     = number_format($attack->getRate());
         $data[$a]["runtime"]  = $attack->getRuntime();
         if ($attack->getRate() != 0) {
-            $data[$a]["eta"]      = (int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1) . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()));
+            $data[$a]["etc"]      = (int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1) . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()));
         } else {
-            $data[$a]["eta"] = "--:--";
+            $data[$a]["etc"] = "--:--";
         }
     }
 }

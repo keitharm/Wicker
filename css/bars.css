@@ -2,6 +2,14 @@
     width:100%;
 }
 
+.progress {
+    min-width:170px;
+}
+
+.progress-bar-striped {
+    min-width:45px;
+}
+
 .noStatus {
     background:transparent;
 }
