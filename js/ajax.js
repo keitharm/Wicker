@@ -18,6 +18,7 @@ function getStatsData() {
                     $actionButtons[0].disabled = false;
                     $actionButtons[1].disabled = true;
                     $actionButtons[2].disabled = true;
+                    $actionButtons[1].innerHTML = 'Pause';
                 } else {
                     // Executing
                     $actionButtons[0].disabled = true;
@@ -83,6 +84,7 @@ function execute(attack) {
         dataType: 'json',
         async: false
     }); 
+    getStatsData();
 }
 
 function terminate(attack) {
@@ -91,13 +93,15 @@ function terminate(attack) {
         dataType: 'json',
         async: false
     }); 
+    getStatsData();
 }
 
 function pauseToggle(attack) {
     var state = ($('tr#'+attack+' #actions > .btn-group button')[1].innerHTML == 'Pause') ? 'pause':'resume';
     $.ajax({
-        url: 'ctl.php?cmd='+state+'&id='+id+'&attack'+attack,
+        url: 'ctl.php?cmd='+state+'&id='+id+'&attack='+attack,
         dataType: 'json',
         async: false
     }); 
+    getStatsData();
 }

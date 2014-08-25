@@ -8,6 +8,11 @@ $id          = $_GET['id'];
 $attack_type = $_GET['attack'];
 $attack      = Attack::fromDB($_GET['id'], $_GET['attack']);
 
+if(is_null($cmd) || is_null($id) || is_null($attack_type)) {
+    header('Location: view.php?id=' . $_GET['id']);
+    die;
+}
+
 if ($cmd == "execute") {
     $dictionaries = array("10k most common.txt", "small", "medium", "rockyou.txt", "Custom-WPA", "Super-WPA");
     $cap = CapFile::fromDB($id);
@@ -39,7 +44,4 @@ if ($cmd == "execute") {
     header('Location: index.php');
     die;
 }
-
-//header('Location: view.php?id=' . $_GET['id']);
-//die;
 ?>
