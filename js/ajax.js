@@ -2,23 +2,40 @@ $.ajaxSetup ({
     cache: false
 });
 
-function getStatsData() {
-    var id = $('id').html();
+var id = $('id').html();
 
+function getStatsData() {
     $.ajax({
         url: 'fetch.php?type=cap&id='+id,
         dataType: 'json',
-        async: false,
+        async: true,
         success: function(data) {
             for(var i=1; i<=6; i++) {
+                // Action Button updates
+                var $actionButtons = $('#'+i+' > #actions .btn-group > button');
+                if(data[i]['status'] == 0 || data[i]['status'] == 2 || data[i]['status'] == 3 || data[i]['status'] == 4) {
+                    // Not executing
+                    $actionButtons[0].disabled = false;
+                    $actionButtons[1].disabled = true;
+                    $actionButtons[2].disabled = true;
+                } else {
+                    // Executing
+                    $actionButtons[0].disabled = true;
+                    $actionButtons[1].disabled = false;
+                    $actionButtons[2].disabled = false;
+
+                    if(data[i]['status'] == 5)
+                        $actionButtons[1].innerHTML = 'Resume';
+                    else
+                        $actionButtons[1].innerHTML = 'Pause';
+                }
+
+                // Progress bar updates
                 switch(data[i]['status']) {
                     case 1:     // Cracking
-                        if(!$('#'+i+' > #status .progress-bar').hasClass('progress-bar-striped')) {
-                            $('#'+i+' > #status .progress-bar').addClass('progress-bar-striped')
-                                .removeClass('noStatus progress-bar-success progress-bar-warning progress-bar-danger');
-                        }
-
-                        $('#'+i+' > #status .progress-bar').attr('aria-valuenow', data[i]['complete']).html(data[i]['complete']+'%');
+                        $('#'+i+' > #status .progress-bar').addClass('progress-bar-striped')
+                            .removeClass('noStatus progress-bar-success progress-bar-warning progress-bar-danger')
+                            .attr('aria-valuenow', data[i]['complete']).html(data[i]['complete']+'%');
 
                         if(data[i]['complete'] > 20)
                             $('#'+i+' > #status .progress-bar').width(data[i]['complete']+'%');
@@ -48,9 +65,9 @@ function getStatsData() {
                         break;
                 }
 
-                $('#'+i+' > #rate').html(data[i]['rate']);
-                //$('#'+i+' > #runtime').html(data[i]['runtime']);
-                $('#'+i+' > #etc').html(data[i]['etc']);
+                $('#'+i+' > #rate').html(data[i]['rate']);              // Update rate
+                //$('#'+i+' > #runtime').html(data[i]['runtime']);      // Update runtime
+                $('#'+i+' > #etc').html(data[i]['etc']);                // Update ETC
             }
         }
     });
@@ -58,3 +75,29 @@ function getStatsData() {
 
 getStatsData();
 setInterval(getStatsData, 1000);
+
+
+function execute(attack) {
+    $.ajax({
+        url: 'ctl.php?cmd=execute&id='+id+'&attack='+attack,
+        dataType: 'json',
+        async: false
+    }); 
+}
+
+function terminate(attack) {
+    $.ajax({
+        url: 'ctl.php?cmd=terminate&id='+id+'&attack='+attack,
+        dataType: 'json',
+        async: false
+    }); 
+}
+
+function pauseToggle(attack) {
+    var state = ($('tr#'+attack+' #actions > .btn-group button')[1].innerHTML == 'Pause') ? 'pause':'resume';
+    $.ajax({
+        url: 'ctl.php?cmd='+state+'&id='+id+'&attack'+attack,
+        dataType: 'json',
+        async: false
+    }); 
+}

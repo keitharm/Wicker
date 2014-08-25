@@ -77,25 +77,32 @@ for ($a = 1; $a <= 6; $a++) {
     unset($runtime);
     $attack = Attack::fromDB($cap->getID(), $a);
     $attack->updateData();
-                echo "<tr id=\"$a\">";
+    echo "<tr id=\"$a\">";
 
-                    if ($attack->getPID() == null || $attack->getStatus() == 2 || $attack->getStatus() == 3 || $attack->getStatus() == 4) {
-                        echo "<td><a href=\"ctl.php?cmd=execute&id=" . $cap->getID() . "&attack=$a\">Execute</a> | Pause | Terminate</td>";
-                    } else {
-                        echo "<td>Execute | ";
-                        if ($attack->getStatus() == 5) {
-                            echo "<a href=\"ctl.php?cmd=resume&id=" . $cap->getID() . "&attack=$a\">Resume</a> | ";
-                        } else {
-                            echo "<a href=\"ctl.php?cmd=pause&id=" . $cap->getID() . "&attack=$a\">Pause</a> | ";
-                        }
-                        if ($attack->getStatus() == 1 || $attack->getStatus() == 5) {
-                            echo "<a href=\"ctl.php?cmd=terminate&id=" . $cap->getID() . "&attack=$a\">Terminate</a>";
-                        } else {
-                            echo "Terminate";
-                        }                                  
-                        echo "</td>";
-                    }
+        // if ($attack->getPID() == null || $attack->getStatus() == 2 || $attack->getStatus() == 3 || $attack->getStatus() == 4) {
+        //     echo "<td><a href=\"ctl.php?cmd=execute&id=" . $cap->getID() . "&attack=$a\">Execute</a> | Pause | Terminate</td>";
+        // } else {
+        //     echo "<td>Execute | ";
+        //     if ($attack->getStatus() == 5) {
+        //         echo "<a href=\"ctl.php?cmd=resume&id=" . $cap->getID() . "&attack=$a\">Resume</a> | ";
+        //     } else {
+        //         echo "<a href=\"ctl.php?cmd=pause&id=" . $cap->getID() . "&attack=$a\">Pause</a> | ";
+        //     }
+        //     if ($attack->getStatus() == 1 || $attack->getStatus() == 5) {
+        //         echo "<a href=\"ctl.php?cmd=terminate&id=" . $cap->getID() . "&attack=$a\">Terminate</a>";
+        //     } else {
+        //         echo "Terminate";
+        //     }                                  
+        //     echo "</td>";
+        // }
 ?>
+                                    <td id="actions">
+                                        <div class="btn-group">
+                                            <button type="button" onclick="execute(<?=$a?>)" class="btn btn-default">Execute</button>
+                                            <button type="button" onclick="pauseToggle(<?=$a?>)" class="btn btn-default">Pause</button>
+                                            <button type="button" onclick="terminate(<?=$a?>)" class="btn btn-default">Terminate</button>
+                                        </div>
+                                    </td>
                                     <td id="dictionaryName"><?=$attack->getAttackName()?></td>
                                     <td id="status">
                                         <div class="progress">

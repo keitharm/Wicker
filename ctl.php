@@ -36,11 +36,10 @@ if ($cmd == "execute") {
     header('Location: index.php');
     die;
 } else {
-
     header('Location: index.php');
     die;
 }
 
-header('Location: view.php?id=' . $_GET['id']);
-die;
+//header('Location: view.php?id=' . $_GET['id']);
+//die;
 ?>
