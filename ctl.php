@@ -14,7 +14,7 @@ if(is_null($cmd) || is_null($id) || is_null($attack_type)) {
 }
 
 if ($cmd == "execute") {
-    $dictionaries = array("10k most common.txt", "small", "medium", "rockyou.txt", "Custom-WPA", "Super-WPA");
+    $dictionaries = array("10k most common.txt", "rockyou.txt");
     $cap = CapFile::fromDB($id);
     $attack->setTmpfile($wicker->random(2, 10));
     $attack->setPwFile($wicker->random(2, 10));

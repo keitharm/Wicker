@@ -24,8 +24,8 @@ Class Attack {
     private $rate;
     private $auth;
     private $pid;
-    private $name = array("10k top passwords (fixed)", "small", "medium", "rockyou", "big", "superbig");
-    private $size = array(4139, 240838, 9815083, 9607279, 185863497, 982963903);
+    private $name = array("10k top passwords (fixed)", "rockyou");
+    private $size = array(4139, 9607147);
     private $statusName = array("-", "<font color='purple'>Cracking</font>", "<font color='red'>Failed</font>", "<font color='green'>Success</font>", "<font color='orange'>Terminated</font>", "<font color='blue'>Paused</font>");
 
     public $db;
