@@ -3,6 +3,9 @@ $.ajaxSetup ({
 });
 
 var id = $('id').html();
+$('#actions .btn-group > button').map(function() {
+    $(this).width($(this).outerWidth());
+});
 
 function getStatsData() {
     $.ajax({
@@ -10,7 +13,7 @@ function getStatsData() {
         dataType: 'json',
         async: true,
         success: function(data) {
-            for(var i=1; i<=2; i++) {
+            for(var i=1; i<=6; i++) {
                 // Action Button updates
                 var $actionButtons = $('#'+i+' > #actions .btn-group > button');
                 if(data[i]['status'] == 0 || data[i]['status'] == 2 || data[i]['status'] == 3 || data[i]['status'] == 4) {
