@@ -13,16 +13,10 @@ class Wicker
     public $user;
 
     public function __construct() {
-        $this->startSession();
         $this->connectToDatabase();
     }
 
-    public function startSession() {
-        session_name("Wicker");
-        session_start();
-    }
-
-    public function connectToDatabase() {
+    private function connectToDatabase() {
         $database = new Database;
         $this->db = $database;
     }
@@ -252,7 +246,7 @@ class Wicker
         $uptime = array($this->extractData($data[13], "up ", ",") . " - " . $this->extractData($data[13], ",", ",")[0], $loadavgs[0], $loadavgs[1], $loadavgs[2]);
         $uploads = trim($this->extractData(":" . $data[14], ":", "uploads"));
         $logs = trim($this->extractData(":" . $data[15], ":", "logs"));
-        return array("<span style='color: " . $this->color($cpus[0], 100, 60) . "'>" . $cpus[0] . "°C</span>", "<span style='color: " . $this->color($cpus[1], 100, 60) . "'>" . $cpus[1] . "°C</span>", "<span style='color: " . $this->color($cpus[2], 100, 60) . "'>" . $cpus[2] . "°C</span>", "<span style='color: " . $this->color($cpus[3], 100, 60) . "'>" . $cpus[3] . "°C</span>", $uptime[0], "<span style='color: " . $this->color($uptime[1], 4.00, 1.00) . "'>" . $uptime[1] . "</span>", "<span style='color: " . $this->color($uptime[2], 4.00, 1.00) . "'>" . $uptime[2] . "</span>", "<span style='color: " . $this->color($uptime[3], 4.00, 1.00) . "'>" . $uptime[3] . "</span>", $uploads, $logs);
+        return array("<span style='color: " . $this->color($cpus[0], 100, 70) . "'>" . $cpus[0] . "°C</span>", "<span style='color: " . $this->color($cpus[1], 100, 70) . "'>" . $cpus[1] . "°C</span>", "<span style='color: " . $this->color($cpus[2], 100, 70) . "'>" . $cpus[2] . "°C</span>", "<span style='color: " . $this->color($cpus[3], 100, 70) . "'>" . $cpus[3] . "°C</span>", $uptime[0], "<span style='color: " . $this->color($uptime[1], 6.00, 1.00) . "'>" . $uptime[1] . "</span>", "<span style='color: " . $this->color($uptime[2], 6.00, 1.00) . "'>" . $uptime[2] . "</span>", "<span style='color: " . $this->color($uptime[3], 6.00, 1.00) . "'>" . $uptime[3] . "</span>", $uploads, $logs);
     }
 
     public function capfiles() {
@@ -283,6 +277,11 @@ class Wicker
         $rgb = "rgb(255, 0, 0)";
         }
         return "rgb(" . $red . ", " . $green . ", 0)";
+    }
+
+    public function newGUID() {
+        $guid = $this->random(10, 8) . "-" . $this->random(10, 4) . "-" . $this->random(10, 4) . "-" . $this->random(10, 4) . "-" . $this->random(10, 12);
+        return $guid;
     }
 }
 

@@ -1,7 +1,8 @@
 <?php
 require_once("Wicker.php");
 
-Class CapFile {
+Class CapFile
+{
     private $id;
     private $location;
     private $repaired;
@@ -19,10 +20,6 @@ Class CapFile {
     private $timestamp;
 
     public $db;
-
-    public function __construct() {
-        $this->connectToDatabase();
-    }
 
     public static function import($location) {
         $instance = new self();
@@ -52,9 +49,9 @@ Class CapFile {
 
         if (substr($id, 0, 3) == "[C]") {
             $id = substr($id, 3);
-            $statement = $wicker->db->con()->prepare("SELECT * FROM cap WHERE checksum = ?");
+            $statement = $wicker->db->con()->prepare("SELECT * FROM `caps` WHERE `checksum` = ?");
         } else {
-            $statement = $wicker->db->con()->prepare("SELECT * FROM cap WHERE id = ?");
+            $statement = $wicker->db->con()->prepare("SELECT * FROM `caps` WHERE `id` = ?");
         }
 
         $statement->execute(array($id));
@@ -133,7 +130,7 @@ Class CapFile {
     }
 
     private function setVal($field, $val) {
-        $statement = $this->db->con()->prepare("UPDATE `cap` SET `$field` = ? WHERE `id` = ?");
+        $statement = $this->db->con()->prepare("UPDATE `caps` SET `$field` = ? WHERE `id` = ?");
         $statement->execute(array($val, $this->getID()));
     }
 

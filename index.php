@@ -1,23 +1,6 @@
 <?php
 require_once("Wicker.php");
 
-$mode = 0;
-
-if ($mode == 1) {
-    // Create a stream
-    $options  = array('http' => array('user_agent' => 'RandomAPI'));
-    $context  = stream_context_create($options);
-
-    // Open the file using the HTTP headers set above
-    $json  = file_get_contents("https://randomapi.com/api/?key=NKOB-8C2V-SX9C-RA05&id=6byfjx&results=25", false, $context);
-    $stats = file_get_contents("https://randomapi.com/api/?key=NKOB-8C2V-SX9C-RA05&id=5gb2vm", false, $context);
-} else {
-    $json  = file_get_contents("json/aps/" . mt_rand(0, 10) . ".json");
-    $stats = file_get_contents("json/stats/" . mt_rand(0, 10) . ".json");
-}
-
-$json  = json_decode($json);
-$stats = json_decode($stats);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +48,7 @@ $stats = json_decode($stats);
                             </thead>
                             <tbody>
 <?php
-$statement = $wicker->db->con()->prepare("SELECT * FROM cap WHERE `status` = ? ORDER BY id DESC");
+$statement = $wicker->db->con()->prepare("SELECT * FROM `caps` WHERE `status` = ? ORDER BY `id` DESC");
 $statement->execute(array(0));
 for ($a = 0; $a < $statement->rowCount(); $a++) {
     $info = $statement->fetchObject();
