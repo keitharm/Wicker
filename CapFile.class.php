@@ -1,7 +1,8 @@
 <?php
 require_once("Wicker.php");
 
-Class CapFile {
+Class CapFile
+{
     private $id;
     private $location;
     private $repaired;
@@ -19,10 +20,6 @@ Class CapFile {
     private $timestamp;
 
     public $db;
-
-    public function __construct() {
-        $this->connectToDatabase();
-    }
 
     public static function import($location) {
         $instance = new self();

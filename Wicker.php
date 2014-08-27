@@ -13,16 +13,10 @@ class Wicker
     public $user;
 
     public function __construct() {
-        $this->startSession();
         $this->connectToDatabase();
     }
 
-    public function startSession() {
-        session_name("Wicker");
-        session_start();
-    }
-
-    public function connectToDatabase() {
+    private function connectToDatabase() {
         $database = new Database;
         $this->db = $database;
     }
@@ -389,6 +383,11 @@ class Wicker
         $rgb = "rgb(255, 0, 0)";
         }
         return "rgb(" . $red . ", " . $green . ", 0)";
+    }
+
+    public function newGUID() {
+        $guid = $this->random(10, 8) . "-" . $this->random(10, 4) . "-" . $this->random(10, 4) . "-" . $this->random(10, 4) . "-" . $this->random(10, 12);
+        return $guid;
     }
 }
 

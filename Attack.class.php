@@ -10,14 +10,14 @@ status
 */
 require_once("Wicker.php");
 
-Class Attack {
+Class Attack
+{
     private $id;
     private $cap_id;
     private $attack;
     private $status;
     private $status_text;
     private $password;
-    private $pwfile;
     private $tmpfile;
     private $runtime;
     private $current;
@@ -30,14 +30,9 @@ Class Attack {
 
     public $db;
 
-    public function __construct() {
-        $this->connectToDatabase();
-    }
-
     public static function fromDB($id, $attack = 1) {
         global $wicker;
         $instance = new self();
-
         $instance->connectToDatabase();
 
         $statement = $wicker->db->con()->prepare("SELECT * FROM attacks WHERE cap_id = ? AND attack = ?");
@@ -50,7 +45,6 @@ Class Attack {
         $instance->status      = $info->status;
         $instance->status_text = $info->status_text;
         $instance->password    = $info->password;
-        $instance->pwfile      = $info->pwfile;
         $instance->tmpfile     = $info->tmpfile;
         $instance->runtime     = $info->runtime;
         $instance->current     = $info->current;
@@ -150,7 +144,6 @@ Class Attack {
     public function getStatus() { return $this->status; }
     public function getStatusText() { return $this->status_text; }
     public function getPassword() { return $this->password; }
-    public function getPwFile() { return $this->pwfile; }
     public function getTmpfile() { return $this->tmpfile; }
     public function getRuntime() { return $this->runtime; }
     public function getAttackName() { return $this->name[$this->attack-1]; }
@@ -168,7 +161,6 @@ Class Attack {
     public function setStatus($val) { $this->setVal("status", $val); $this->status = $val; }
     public function setStatusText($val) { $this->setVal("status_text", $val); $this->status_text = $val; }
     public function setPassword($val) { $this->setVal("password", $val); $this->password = $val; }
-    public function setPwFile($val) { $this->setVal("pwfile", $val); $this->pwfile = $val; }
     public function setPID($val) { $this->setVal("pid", $val); $this->pid = $val; }
 
     public function getStatusName() { return $this->statusName[$this->getStatus()]; }
