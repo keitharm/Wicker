@@ -3,9 +3,9 @@ $.ajaxSetup ({
 });
 
 var id = $('id').html();
-$('#actions .btn-group > button').map(function() {
-    $(this).width($(this).outerWidth());
-});
+// $('#actions .btn-group > button').map(function() {
+//     $(this).width($(this).outerWidth());
+// });
 
 function getStatsData() {
     $.ajax({

@@ -11,15 +11,15 @@ if ($cap->getID() == 0) {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <?=$wicker->heading("Viewing " . $cap->getESSID())?>
+        <?include('htmlBlocks/head.php');heading("Viewing " . $cap->getESSID())?>
         <link href="css/bars.css" rel="stylesheet">
         <id hidden><?=$_GET['id']?></id>
     </head>
     <body>
-        <?=$wicker->navbar()?>
+        <?include('htmlBlocks/header.php')?>
         <div class="container-fluid">
             <div class="row">
-                <?=$wicker->menu("null")?>
+                <?include('htmlBlocks/nav.php');menu("null")?>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <h1 class="page-header"><?=$cap->getESSID()?></h1>
 
@@ -130,7 +130,7 @@ for ($a = 1; $a <= 2; $a++) {
                 </div>
             </div>
         </div>
-        <?=$wicker->footer()?>
+        <?include('htmlBlocks/scriptIncludes.php')?>
         <script src="js/ajax.js"></script>
     </body>
 </html>
