@@ -21,18 +21,14 @@ if ($cap->getID() == 0) {
             <div class="row">
                 <?include('htmlBlocks/nav.php');menu("null")?>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <h1 class="page-header"><?=$cap->getESSID()?></h1>
+                    <h1 class="page-header">ESSID: <small><?=$cap->getESSID()?></small></h1>
 
                     <div class="row placeholders">
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                            <h2><?=$cap->getESSID()?></h2>
-                            <span class="text-muted">ESSID</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
+                        <div class="col-xs-6 col-sm-4 placeholder">
                             <h2><?=strtoupper($cap->getBSSID())?></h2>
                             <span class="text-muted">BSSID/AP MAC</span>
                         </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
+                        <div class="col-xs-6 col-sm-4 placeholder">
                             <h2><?=strtoupper($cap->getPackets())?></h2>
                             <span class="text-muted">Packets</span>
                         </div>
@@ -45,7 +41,7 @@ if ($cap->getID() == 0) {
                             <h2><span title="<?=$cap->getChecksum()?>"><?=substr($cap->getChecksum(), 0, 16)?>...</span></h2>
                             <span class="text-muted">Checksum</span>
                         </div>
-                        <div class="col-xs-6 col-sm-5 placeholder">
+                        <div class="col-xs-6 col-sm-4 placeholder">
                             <h2><?=$cap->getLocation()?></h2>
                             <span class="text-muted">Location</span>
                         </div>
