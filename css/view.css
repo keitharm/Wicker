@@ -13,3 +13,7 @@
 .noStatus {
     background:transparent;
 }
+
+.btn {
+    min-width:77px;
+}

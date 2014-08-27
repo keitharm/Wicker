@@ -12,7 +12,7 @@ if ($cap->getID() == 0) {
 <html lang="en">
     <head>
         <?include('htmlBlocks/head.php');heading("Viewing " . $cap->getESSID())?>
-        <link href="css/bars.css" rel="stylesheet">
+        <link href="css/view.css" rel="stylesheet">
         <id hidden><?=$_GET['id']?></id>
     </head>
     <body>
@@ -96,7 +96,7 @@ for ($a = 1; $a <= 2; $a++) {
                                         <div class="btn-group">
                                             <button type="button" onclick="execute(<?=$a?>)" class="btn btn-default">Execute</button>
                                             <button type="button" onclick="pauseToggle(<?=$a?>)" class="btn btn-default">Pause</button>
-                                            <button type="button" onclick="terminate(<?=$a?>)" class="btn btn-default">Terminate</button>
+                                            <button type="button" onclick="terminate(<?=$a?>)" class="btn btn-default">Stop</button>
                                         </div>
                                     </td>
                                     <td id="dictionaryName"><?=$attack->getAttackName()?></td>
