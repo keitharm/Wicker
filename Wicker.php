@@ -180,7 +180,7 @@ class Wicker
     }
 
     public function doesExist($table, $fieldname, $value, $returnObject = false) {
-        $statement = $this->db->con()->prepare("SELECT * FROM $table WHERE $fieldname = ?");
+        $statement = $this->db->con()->prepare("SELECT * FROM `$table` WHERE `$fieldname` = ?");
         $statement->execute(array($value));
         $info = $statement->FetchObject();
         
@@ -359,6 +359,16 @@ class Wicker
         if ($handle = opendir("uploads")) {
             while (($file = readdir($handle)) !== false){
                 if (!in_array($file, array('.', '..')) && !is_dir($dir.$file)) 
+                    $i++;
+            }
+        }
+        return $i;
+    }
+
+    public function scanfiles() {
+        if ($handle = opendir("scans")) {
+            while (($file = readdir($handle)) !== false){
+                if (!in_array($file, array('.', '..')) && !is_dir($dir.$file))
                     $i++;
             }
         }
