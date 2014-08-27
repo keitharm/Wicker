@@ -65,7 +65,7 @@ class Wicker
                 <!--<li<?=$active["about"]?>><a href="stats.php">About</a></li>-->
             </ul>
             <ul class="nav nav-sidebar">
-                <!--<li<?=$active["local"]?>><a href="upload.php">Local Scan/Crack</a></li>-->
+                <li<?=$active["scanner"]?>><a href="scanner.php">Scanner</a></li>
                 <li<?=$active["upload"]?>><a href="upload.php">Uploader</a></li>
                 <!--<li<?=$active["crack"]?>><a href="crack.php">Cracker</a></li>-->
             </ul>
