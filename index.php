@@ -48,7 +48,7 @@ require_once("Wicker.php");
                             </thead>
                             <tbody>
 <?php
-$statement = $wicker->db->con()->prepare("SELECT * FROM cap WHERE `status` = ? ORDER BY id DESC");
+$statement = $wicker->db->con()->prepare("SELECT * FROM `caps` WHERE `status` = ? ORDER BY `id` DESC");
 $statement->execute(array(0));
 for ($a = 0; $a < $statement->rowCount(); $a++) {
     $info = $statement->fetchObject();
