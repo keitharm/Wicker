@@ -106,8 +106,8 @@ Class CapFile
     private function addToDB() {
         global $wicker;
         // Check if this is a duplicate
-        if (!$wicker->doesExist("cap", "checksum", $this->checksum)) {
-            $statement = $this->db->con()->prepare("INSERT INTO `cap` (`essid`, `bssid`, `checksum`, `location`, `raw`, `packets`, `size`, `timestamp`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        if (!$wicker->doesExist("caps", "checksum", $this->checksum)) {
+            $statement = $this->db->con()->prepare("INSERT INTO `caps` (`essid`, `bssid`, `checksum`, `location`, `raw`, `packets`, `size`, `timestamp`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             $statement->execute(array($this->essid, $this->bssid, $this->checksum, $this->location, $this->raw, $this->packets, $this->size, time()));
         } else {
             $cap = CapFile::fromDB("[C]" . $this->checksum);
@@ -123,7 +123,7 @@ Class CapFile
 
     private function generateAttackRecords() {
         $cap = CapFile::fromDB("[C]" . $this->getChecksum());
-        for ($a = 1; $a <= 6; $a++) {
+        for ($a = 1; $a <= 2; $a++) {
             $statement = $this->db->con()->prepare("INSERT INTO `attacks` (`cap_id`, `attack`) VALUES (?, ?)");
             $statement->execute(array($cap->getID(), $a));
         }
