@@ -1,7 +1,3 @@
-<?php
-    require_once('Wicker.php');
-?>
-
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -25,18 +21,18 @@
                         for ($a = 0; $a < count($name); $a++) {
 ?>
                             <th><?=$name[$a]?></th>
-                            <th><?=$wicker->space(5)?></th>
+                            <th><?=$this->space(5)?></th>
 <?php
                         }
 ?>
                     </thead>
                     <tbody>
 <?php
-                        $status = $wicker->status();
+                        $status = $this->status();
                         for ($a = 0; $a < count($name); $a++) {
 ?>
                             <td><?=$status[$a]?></td>
-                            <td><?=$wicker->space(5)?></td>
+                            <td><?=$this->space(5)?></td>
 <?php
                         }
 ?>

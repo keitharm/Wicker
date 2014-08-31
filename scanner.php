@@ -5,12 +5,12 @@ require_once("Scan.class.php");
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <?=$wicker->heading("Scanner")?>
+        <?=$wicker->head("Scanner")?>
         <link href="css/bars.css" rel="stylesheet">
         <id hidden><?=$_GET['id']?></id>
     </head>
     <body>
-        <?=$wicker->navbar()?>
+        <?=$wicker->heading()?>
         <div class="container-fluid">
             <div class="row">
                 <?=$wicker->menu("scanner")?>

@@ -11,12 +11,12 @@ if ($scan->getID() == 0) {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <?=$wicker->heading("Viewing Scan #" . $scan->getID())?>
+        <?=$wicker->head("Viewing Scan #" . $scan->getID())?>
         <link href="css/bars.css" rel="stylesheet">
         <id hidden><?=$_GET['id']?></id>
     </head>
     <body>
-        <?=$wicker->navbar()?>
+        <?=$wicker->heading()?>
         <div class="container-fluid">
             <div class="row">
                 <?=$wicker->menu("null")?>

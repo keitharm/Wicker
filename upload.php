@@ -31,13 +31,13 @@ if ($_FILES != null) {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <?include('htmlBlocks/head.php');heading("Dashboard")?>
+       <?=$wicker->head("Upload")?>
     </head>
     <body>
-        <?include('htmlBlocks/header.php')?>
+        <?=$wicker->heading()?>
         <div class="container-fluid">
             <div class="row">
-                <?include('htmlBlocks/nav.php');menu("upload")?>
+                <?=$wicker->menu("upload")?>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <h1 class="page-header">Upload</h1>
                     <h3>Upload a .cap file for cracking</h3>
@@ -48,6 +48,6 @@ if ($_FILES != null) {
                 </div>
             </div>
         </div>
-        <?include('htmlBlocks/scriptIncludes.php')?>
+        <?=$wicker->footer()?>
     </body>
 </html>

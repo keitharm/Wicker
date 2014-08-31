@@ -21,6 +21,15 @@ class Wicker
         $this->db = $database;
     }
 
+    public function head($title = "NULL") {
+        require_once("includes/head.php");
+    }
+
+    public function menu($selected) {
+        $active[$selected] = " class=\"active\"";
+        require_once("includes/menu.php");
+    }
+
     public function random($mode, $length) {
         # RANDOM_DEFAULT
         if ($mode == 1) {
@@ -155,10 +164,10 @@ class Wicker
         <!DOCTYPE html>
         <html lang="en">
             <head>
-                <?=$this->heading("Error")?>
+                <?=$this->head("Error")?>
             </head>
             <body>
-                <?include('htmlBlocks/nav.php');?>
+                <?=$this->heading()?>
                 <div class="container-fluid">
                     <div class="row">
                         <?=$this->menu(null)?>
@@ -172,11 +181,15 @@ class Wicker
                         </div>
                     </div>
                 </div>
-                <?include('htmlBlocks/scriptIncludes.php')?>
+                <?=$this->footer()?>
             </body>
         </html>
 <?php
     die;
+    }
+
+    public function footer() {
+        require_once("includes/footer.php");
     }
 
     public function timeconv($timestamp, $span = true) {
@@ -237,6 +250,10 @@ class Wicker
             return "<span title='" . date("F j, Y, g:i a", $timestamp) . "'>" . $data . "</span>";
         }
         return $data;
+    }
+//heading
+    public function heading() {
+        require_once("includes/heading.php");
     }
 
     public function status() {
@@ -300,4 +317,3 @@ class Wicker
 $wicker = new Wicker;
 
 ?>
-

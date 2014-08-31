@@ -5,13 +5,13 @@ require_once("Wicker.php");
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <?include('htmlBlocks/head.php');heading('Dashboard')?>
+        <?=$wicker->head("Dashboard")?>
     </head>
     <body>
-        <?include('htmlBlocks/header.php');?>
+        <?=$wicker->heading()?>
         <div class="container-fluid">
             <div class="row">
-                <?include('htmlBlocks/nav.php');menu("index")?>
+                <?=$wicker->menu("index")?>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <h1 class="page-header">Dashboard</h1>
 
@@ -70,6 +70,6 @@ for ($a = 0; $a < $statement->rowCount(); $a++) {
                 </div>
             </div>
         </div>
-        <?include('htmlBlocks/scriptIncludes.php')?>
+        <?=$wicker->footer()?>
     </body>
 </html>
