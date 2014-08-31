@@ -11,28 +11,24 @@ if ($cap->getID() == 0) {
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <?=$wicker->heading("Viewing " . $cap->getESSID())?>
-        <link href="css/bars.css" rel="stylesheet">
+        <?include('htmlBlocks/head.php');heading("Viewing " . $cap->getESSID())?>
+        <link href="css/view.css" rel="stylesheet">
         <id hidden><?=$_GET['id']?></id>
     </head>
     <body>
-        <?=$wicker->navbar()?>
+        <?include('htmlBlocks/header.php')?>
         <div class="container-fluid">
             <div class="row">
-                <?=$wicker->menu("null")?>
+                <?include('htmlBlocks/nav.php');menu("null")?>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <h1 class="page-header"><?=$cap->getESSID()?></h1>
+                    <h1 class="page-header">ESSID: <small><?=$cap->getESSID()?></small></h1>
 
                     <div class="row placeholders">
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                            <h2><?=$cap->getESSID()?></h2>
-                            <span class="text-muted">ESSID</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
+                        <div class="col-xs-6 col-sm-4 placeholder">
                             <h2><?=strtoupper($cap->getBSSID())?></h2>
                             <span class="text-muted">BSSID/AP MAC</span>
                         </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
+                        <div class="col-xs-6 col-sm-4 placeholder">
                             <h2><?=strtoupper($cap->getPackets())?></h2>
                             <span class="text-muted">Packets</span>
                         </div>
@@ -45,7 +41,7 @@ if ($cap->getID() == 0) {
                             <h2><span title="<?=$cap->getChecksum()?>"><?=substr($cap->getChecksum(), 0, 16)?>...</span></h2>
                             <span class="text-muted">Checksum</span>
                         </div>
-                        <div class="col-xs-6 col-sm-5 placeholder">
+                        <div class="col-xs-6 col-sm-4 placeholder">
                             <h2><?=$cap->getLocation()?></h2>
                             <span class="text-muted">Location</span>
                         </div>
@@ -100,7 +96,7 @@ for ($a = 1; $a <= 8; $a++) {
                                         <div class="btn-group">
                                             <button type="button" onclick="execute(<?=$a?>)" class="btn btn-default">Execute</button>
                                             <button type="button" onclick="pauseToggle(<?=$a?>)" class="btn btn-default">Pause</button>
-                                            <button type="button" onclick="terminate(<?=$a?>)" class="btn btn-default">Terminate</button>
+                                            <button type="button" onclick="terminate(<?=$a?>)" class="btn btn-default">Stop</button>
                                         </div>
                                     </td>
                                     <td id="dictionaryName"><?=$attack->getAttackName()?></td>
@@ -130,7 +126,7 @@ for ($a = 1; $a <= 8; $a++) {
                 </div>
             </div>
         </div>
-        <?=$wicker->footer()?>
+        <?include('htmlBlocks/scriptIncludes.php')?>
         <script src="js/ajax.js"></script>
     </body>
 </html>

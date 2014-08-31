@@ -21,52 +21,6 @@ class Wicker
         $this->db = $database;
     }
 
-    public function heading($title = "NULL") {
-?>
-    <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <!--<link rel="icon" href="../../favicon.ico">-->
-
-        <title><?=WICKER::NAME?> <?=WICKER::VERSION?> :: <?=$title?></title>
-
-        <!-- Bootstrap core CSS -->
-        <link href="css/bootstrap.css" rel="stylesheet">
-
-        <!-- Custom styles for this template -->
-        <link href="css/dashboard.css" rel="stylesheet">
-
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="js/ie10-viewport-bug-workaround.js"></script>
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-<?php
-    }
-
-    public function menu($selected) {
-        $active[$selected] = " class=\"active\"";
-?>
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li<?=$active["index"]?>><a href="index.php">Dashboard</a></li>
-                <!--<li<?=$active["stats"]?>><a href="stats.php">Statistics</a></li>-->
-                <!--<li<?=$active["about"]?>><a href="stats.php">About</a></li>-->
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li<?=$active["scanner"]?>><a href="scanner.php">Scanner</a></li>
-                <li<?=$active["upload"]?>><a href="upload.php">Uploader</a></li>
-                <!--<li<?=$active["crack"]?>><a href="crack.php">Cracker</a></li>-->
-            </ul>
-        </div>
-<?php
-    }
-
     public function random($mode, $length) {
         # RANDOM_DEFAULT
         if ($mode == 1) {
@@ -204,7 +158,7 @@ class Wicker
                 <?=$this->heading("Error")?>
             </head>
             <body>
-                <?=$this->navbar()?>
+                <?include('htmlBlocks/nav.php');?>
                 <div class="container-fluid">
                     <div class="row">
                         <?=$this->menu(null)?>
@@ -218,22 +172,11 @@ class Wicker
                         </div>
                     </div>
                 </div>
-                <?=$this->footer()?>
+                <?include('htmlBlocks/scriptIncludes.php')?>
             </body>
         </html>
 <?php
     die;
-    }
-
-    public function footer() {
-?>
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/holder.js"></script>
-<?php
     }
 
     public function timeconv($timestamp, $span = true) {
@@ -294,55 +237,6 @@ class Wicker
             return "<span title='" . date("F j, Y, g:i a", $timestamp) . "'>" . $data . "</span>";
         }
         return $data;
-    }
-
-    public function navbar() {
-?>
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.php"><img src='img/logo.png' width="90" style="margin-top: -20px; margin-right: -5px"> - The stupid wifi cracker</a>
-                </div>
-                <div class="navbar-center">
-                    <div class="line1">
-                        System Status
-                    </div>
-                    <div class="line2">
-                        <table class="tablestatus">
-                            <thead>
-<?php
-                                $name = array("CPU0", "CPU1", "CPU2", "CPU3", "Uptime", "1m", "5m", "15m", "Uploads", "Logs");
-                                for ($a = 0; $a < count($name); $a++) {
-?>
-                                    <th><?=$name[$a]?></th>
-                                    <th><?=$this->space(5)?></th>
-<?php
-                                }
-?>
-                            </thead>
-                            <tbody>
-<?php
-                                $status = $this->status();
-                                for ($a = 0; $a < count($name); $a++) {
-?>
-                                    <td><?=$status[$a]?></td>
-                                    <td><?=$this->space(5)?></td>
-<?php
-                                }
-?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-<?php
     }
 
     public function status() {
@@ -406,3 +300,4 @@ class Wicker
 $wicker = new Wicker;
 
 ?>
+
