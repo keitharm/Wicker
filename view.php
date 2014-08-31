@@ -72,7 +72,7 @@ if ($cap->getID() == 0) {
                             <tbody>
 
 <?php
-for ($a = 1; $a <= 2; $a++) {
+for ($a = 1; $a <= 8; $a++) {
     unset($status);
     unset($runtime);
     $attack = Attack::fromDB($cap->getID(), $a);

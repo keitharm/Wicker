@@ -25,7 +25,7 @@ require_once("Wicker.php");
                             <span class="text-muted">Success Rate</span>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
-                            <h2>9,611,286</h2>
+                            <h2>1,623,275,482</h2>
                             <span class="text-muted">Passwords</span>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">

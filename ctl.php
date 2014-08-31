@@ -14,7 +14,7 @@ if(is_null($cmd) || is_null($id) || is_null($attack_type)) {
 }
 
 if ($cmd == "execute") {
-    $dictionaries = array("10k most common.txt", "rockyou.txt");
+    $dictionaries = array("10k most common.txt", "rockyou.txt", "small", "Custom-WPA", "Super-WPA", "big", "bigger", "combined");
     $cap = CapFile::fromDB($id);
     $attack->setTmpfile($wicker->newGUID());
 

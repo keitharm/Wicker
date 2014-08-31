@@ -24,8 +24,8 @@ Class Attack
     private $rate;
     private $auth;
     private $pid;
-    private $name = array("10k top passwords (fixed)", "rockyou");
-    private $size = array(4139, 9607147);
+    private $name = array("10k top passwords (fixed)", "rockyou", "small", "Custom-WPA", "Super-WPA", "big", "bigger", "combined");
+    private $size = array(4139, 9605415, 46836902, 109605684, 582620889, 648418381, 915103913, 1623275482);
     private $statusName = array("-", "<font color='purple'>Cracking</font>", "<font color='red'>Failed</font>", "<font color='green'>Success</font>", "<font color='orange'>Terminated</font>", "<font color='blue'>Paused</font>");
 
     public $db;

@@ -6,7 +6,7 @@ $data = array();
 if ($type == "cap") {
     $id = $_GET['id'];
 
-    for ($a = 1; $a <= 2; $a++) {
+    for ($a = 1; $a <= 8; $a++) {
         unset($attack);
         $attack = Attack::fromDB($id, $a);
         $attack->updateData();
