@@ -49,7 +49,7 @@ class Config
             die;
         }
         $this->config_raw = @file_get_contents("wicker.conf");
-        $this->config = @unserialize(gzuncompress($this->config_raw)) or die ("Wicker configuration file appears to be corrupt!\n");
+        $this->config = @unserialize(gzuncompress($this->config_raw)) or die ("Wicker configuration file appears to be corrupt! Please run setup.php (via CLI) to configure Wicker.\n");
     }
 
     private function parseConfig() {
