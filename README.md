@@ -21,4 +21,5 @@ Disclaimer
 Wicker is meant only for networks that you have *permission* for penetration testing on.
 
 Users are fully responsible for any consequences resulting from the misuse of Wicker.
+
 Wicker is provided for educational or information purposes only.
