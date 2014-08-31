@@ -33,7 +33,13 @@ if ($argv[1] == "--view-config") {
 
 // Check for configuration file.
 if (file_exists("wicker.conf")) {
-    echo O . "Warning" . ": There already appears to be a Wicker configuration file.\nIf you continue with the setup, the configuration file will be overwritten.\nYou may view your current configuration by typing " . G . "php setup.php --view-config" . W . ".\n\n" . W;
+    echo O . "Warning" . W . ": There already appears to be a Wicker configuration file.\nIf you continue with the setup, the configuration file will be overwritten.\nYou may view your current configuration by typing " . G . "php setup.php --view-config" . W . ".\n\n" . W;
+}
+
+// Check if Wicker configuration file is corrupt.
+$tmp = @unserialize(gzuncompress(file_get_contents("wicker.conf")));
+if ($tmp == null) {
+    echo R . "Error" . W . ": Wicker configuration file appears to be corrupt!\n\n";
 }
 
 // Perform dependencies check
