@@ -10,8 +10,9 @@ class Database
     }
 
     public function connect() {
+        global $config;
         try {
-            $this->db = new PDO("mysql:host=localhost;port=3306;dbname=" . Config::DB_NAME, Config::DB_USER, Config::DB_PASS);
+            $this->db = new PDO("mysql:host=" . $config->getDBURL() . ";port=3306;dbname=" . $config->getDBName(), $config->getDBUser(), $config->getDBPass());
             $this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         } catch (PDOException $e) {
             echo "Uh oh, something bad has happened.";
