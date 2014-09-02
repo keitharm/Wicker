@@ -21,7 +21,7 @@ if ($cap->getID() == 0) {
             <div class="row">
                 <?=$wicker->menu("null")?>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <h1 class="page-header"><small><?=$cap->getESSID()?></small></h1>
+                    <h1 class="page-header">ESSID: <small><?=$cap->getESSID()?></small></h1>
 
                     <div class="row placeholders">
                         <div class="col-xs-6 col-sm-4 placeholder">
@@ -74,23 +74,6 @@ for ($a = 1; $a <= 8; $a++) {
     $attack = Attack::fromDB($cap->getID(), $a);
     $attack->updateData();
     echo "<tr id=\"$a\">";
-
-        // if ($attack->getPID() == null || $attack->getStatus() == 2 || $attack->getStatus() == 3 || $attack->getStatus() == 4) {
-        //     echo "<td><a href=\"ctl.php?cmd=execute&id=" . $cap->getID() . "&attack=$a\">Execute</a> | Pause | Terminate</td>";
-        // } else {
-        //     echo "<td>Execute | ";
-        //     if ($attack->getStatus() == 5) {
-        //         echo "<a href=\"ctl.php?cmd=resume&id=" . $cap->getID() . "&attack=$a\">Resume</a> | ";
-        //     } else {
-        //         echo "<a href=\"ctl.php?cmd=pause&id=" . $cap->getID() . "&attack=$a\">Pause</a> | ";
-        //     }
-        //     if ($attack->getStatus() == 1 || $attack->getStatus() == 5) {
-        //         echo "<a href=\"ctl.php?cmd=terminate&id=" . $cap->getID() . "&attack=$a\">Terminate</a>";
-        //     } else {
-        //         echo "Terminate";
-        //     }                                  
-        //     echo "</td>";
-        // }
 ?>
                                     <td id="actions">
                                         <div class="btn-group">
