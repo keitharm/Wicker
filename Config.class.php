@@ -41,15 +41,22 @@ class Config
         echo "Pyrit:\t\t" . G . $this->getPyrit() . W . "\n";
         echo "WPAclean:\t" . G . $this->getWPAClean() . W . "\n";
         echo "PCAPfix:\t" . G . $this->getPCAPFix() . W . "\n";
+        echo "MySQL:\t\t" . G . $this->getMySQL() . W . "\n";
+        echo "lm-sensors:\t" . G . $this->getSensors() . W . "\n";
     }
 
     private function loadConfig() {
-        if (!file_exists("wicker.conf")) {
+        if (!file_exists("wicker.conf.php")) {
             echo "Wicker configuration file not found. Please run setup.php (via CLI) to configure Wicker.\n";
             die;
         }
-        $this->config_raw = @file_get_contents("wicker.conf");
-        $this->config = @unserialize(gzuncompress($this->config_raw)) or die ("Wicker configuration file appears to be corrupt! Please run setup.php (via CLI) to configure Wicker.\n");
+        $this->config_raw = @file_get_contents("wicker.conf.php");
+        $lines = explode("\n", $this->config_raw);
+        if (count($lines) != 5 || !file_exists("wicker.conf.php")) {
+            die("Wicker configuration file appears to be corrupt! Please run setup.php (via CLI) to configure Wicker.\n");
+        } else {
+            $this->config = unserialize(substr($lines[2], 1));
+        }
     }
 
     private function parseConfig() {
@@ -71,6 +78,8 @@ class Config
         $this->tools["pyrit"]        = $this->config["tools"]["pyrit"];
         $this->tools["wpaclean"]     = $this->config["tools"]["wpaclean"];
         $this->tools["pcapfix"]      = $this->config["tools"]["pcapfix"];
+        $this->tools["mysql"]        = $this->config["tools"]["mysql"];
+        $this->tools["lm-sensors"]   = $this->config["tools"]["lm-sensors"];
     }
 
     public function getDBURL() { return $this->database["url"]; }
@@ -87,6 +96,8 @@ class Config
     public function getPyrit() { return $this->tools["pyrit"]; }
     public function getWPAClean() { return $this->tools["wpaclean"]; }
     public function getPCAPFix() { return $this->tools["pcapfix"]; }
+    public function getMySQL() { return $this->tools["mysql"]; }
+    public function getSensors() { return $this->tools["lm-sensors"]; }
 }
 
 $config = new Config;
