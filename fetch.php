@@ -15,7 +15,11 @@ if ($type == "cap") {
         $data[$a]["rate"]     = number_format($attack->getRate());
         $data[$a]["runtime"]  = $attack->getRuntime();
         if ($attack->getRate() != 0) {
-            $data[$a]["etc"]      = (int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1) . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()));
+            $days = (int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1);
+            if ($days < 10) {
+                $days = "0" . $days;
+            }
+            $data[$a]["etc"]      = $days . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()));
         } else {
             $data[$a]["etc"] = "--:--";
         }
