@@ -16,6 +16,7 @@ function getStatsData() {
             for(var i=1; i<=8; i++) {
                 // Action Button updates
                 var $actionButtons = $('#'+i+' > #actions .btn-group > button');
+
                 if(data[i]['status'] == 0 || data[i]['status'] == 2 || data[i]['status'] == 3 || data[i]['status'] == 4) {
                     // Not executing
                     $actionButtons[0].disabled = false;
@@ -36,7 +37,7 @@ function getStatsData() {
 
                 // Progress bar updates
                 switch(data[i]['status']) {
-                    case 1:     // Cracking
+                    case '1':     // Cracking
                         $('#'+i+' > #status .progress-bar').addClass('progress-bar-striped')
                             .removeClass('noStatus progress-bar-success progress-bar-warning progress-bar-danger')
                             .attr('aria-valuenow', data[i]['complete']).html(data[i]['complete']+'%');
@@ -44,22 +45,22 @@ function getStatsData() {
                         if(data[i]['complete'] > 20)
                             $('#'+i+' > #status .progress-bar').width(data[i]['complete']+'%');
                         break;
-                    case 2:     // Failed
+                    case '2':     // Failed
                         $('#'+i+' > #status .progress-bar').addClass('progress-bar-danger')
                             .removeClass('noStatus progress-bar-striped progress-bar-warning')
                             .attr('aria-valuenow', 50).removeAttr('style').html('Failed');
                         break;
-                    case 3:     // Success
+                    case '3':     // Success
                         $('#'+i+' > #status .progress-bar').addClass('progress-bar-success')
                             .removeClass('noStatus progress-bar-striped progress-bar-warning progress-bar-danger')
                             .attr('aria-valuenow', 50).removeAttr('style').html('Success');
                         break;
-                    case 4:     // Terminated
+                    case '4':     // Terminated
                         $('#'+i+' > #status .progress-bar').addClass('progress-bar-danger')
                             .removeClass('noStatus progress-bar-striped progress-bar-warning')
                             .attr('aria-valuenow', 50).removeAttr('style').html('Terminated');
                         break;
-                    case 5:     // Paused
+                    case '5':     // Paused
                         $('#'+i+' > #status .progress-bar').addClass('progress-bar-warning')
                             .removeClass('noStatus progress-bar-striped')
                             .attr('aria-valuenow', 50).removeAttr('style').html('Paused: '+data[i]['complete']+'%');
@@ -72,7 +73,7 @@ function getStatsData() {
                 if(data[i]['status'] == 1)
                     $('#'+i+' > #rate').html(data[i]['rate']);              // Update rate
                 else
-                    $('#'+i+' > #rate').html('0');              // Update rate
+                    $('#'+i+' > #rate').html('0');                        // Update rate
 
                 //$('#'+i+' > #runtime').html(data[i]['runtime']);      // Update runtime
                 $('#'+i+' > #etc').html(data[i]['etc']);                // Update ETC
