@@ -52,8 +52,8 @@ class Client
     }
 
     private function connectToDatabase() {
-        $database = new Database;
-        $this->db = $database;
+        global $wicker;
+        $this->db = $wicker->db;
     }
 
     private function setVal($field, $val) {

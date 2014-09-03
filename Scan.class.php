@@ -53,8 +53,8 @@ class Scan
     }
 
     private function connectToDatabase() {
-        $database = new Database;
-        $this->db = $database;
+        global $wicker;
+        $this->db = $wicker->db;
     }
 
     private function setVal($field, $val) {
@@ -71,7 +71,7 @@ class Scan
     }
 
     public function startScan() {
-        system("sudo airodump-ng -w \"scans/" . $this->getGUID() . "\" --output-format csv --ignore-negative-one mon0 > /dev/null &");
+        system("sudo airodump-ng -w \"scans/" . $this->getGUID() . "\" --output-format csv --ignore-negative-one mon0 > 2/dev/null &");
         exec("ps aux | grep '" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
         $this->setPID($out[0]);
     }

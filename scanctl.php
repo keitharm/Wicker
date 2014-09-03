@@ -35,8 +35,13 @@ if ($do == "newscan") {
         // Add AP if not found
         if ($check->getID() == null) {
             AP::newAP($scan->getID(), $ap["bssid"], strtotime($ap["first_seen"]), strtotime($ap["last_seen"]), $ap["channel"], $ap["privacy"], $ap["cipher"], $ap["authentication"], $ap["power"], $ap["beacons"], $ap["ivs"], $ap["essid"], round($_POST['lat'], 7), round($_POST['long'], 7));
-        // Update AP if in DB
+        // Update AP in DB
         } else {
+            // Update Coordinates if power is greater than -75
+            if ($ap["power"] >= -75) {
+                $check->setLatitude(round($_POST['lat'], 7));
+                $check->setLongitude(round($_POST['long'], 7));
+            }
             $check->setLastSeen(strtotime($ap["last_seen"]));
             $check->setBeacons($ap["beacons"]);
             $check->setIVs($ap["ivs"]);
@@ -51,7 +56,7 @@ if ($do == "newscan") {
         // Add Client if not found
         if ($check->getID() == null) {
             Client::newClient($scan->getID(), $ap->getID(), $client["mac"], strtotime($client["first_seen"]), strtotime($client["last_seen"]), $client["power"], $client["packets"], $client["bssid"], $client["probed"]);
-        // Update Client if in DB
+        // Update Client in DB
         } else {
             $check->setLastSeen(strtotime($client["last_seen"]));
             $check->setPackets($client["packets"]);

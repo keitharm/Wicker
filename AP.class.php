@@ -62,8 +62,8 @@ class AP
     }
 
     private function connectToDatabase() {
-        $database = new Database;
-        $this->db = $database;
+        global $wicker;
+        $this->db = $wicker->db;
     }
 
     private function setVal($field, $val) {
@@ -90,6 +90,8 @@ class AP
     public function setLastSeen($val) { $this->setVal("last_seen", $val); $this->last_seen = $val; }
     public function setBeacons($val) { $this->setVal("beacons", $val); $this->beacons = $val; }
     public function setIVs($val) { $this->setVal("ivs", $val); $this->ivs = $val; }
+    public function setLatitude($val) { $this->setVal("latitude", $val); $this->latitude = $val; }
+    public function setLongitude($val) { $this->setVal("longitude", $val); $this->longitude = $val; }
 }
 
 ?>
