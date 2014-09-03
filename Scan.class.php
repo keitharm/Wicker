@@ -22,8 +22,6 @@ class Scan
         $statement = $instance->db->con()->prepare("INSERT INTO `scans` (`time`, `guid`) VALUES (?, ?)");
         $statement->execute(array(time(), $guid));
 
-        // Rest a second
-        sleep(1);
         return Scan::fromDB("[G]" . $guid);
     }
 

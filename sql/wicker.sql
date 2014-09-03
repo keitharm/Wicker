@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 27, 2014 at 03:03 PM
--- Server version: 5.5.38
--- PHP Version: 5.5.15
+-- Generation Time: Sep 03, 2014 at 12:17 AM
+-- Server version: 5.5.38-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `attacks` (
   `runtime` varchar(10) NOT NULL,
   `rate` int(5) NOT NULL,
   `auth` int(10) NOT NULL,
-  `pid` int(8) NOT NULL
+  `pid` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -116,7 +116,8 @@ CREATE TABLE IF NOT EXISTS `scans` (
   `guid` varchar(36) NOT NULL,
   `time` int(10) NOT NULL,
   `aps` int(11) NOT NULL,
-  `clients` int(11) NOT NULL
+  `clients` int(11) NOT NULL,
+  `pid` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
@@ -185,4 +186,3 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-

@@ -362,7 +362,7 @@ function importWickerTables($good, $bad) {
             }
             echo W . "Importing new Wicker tables";
             pause();
-            exec("mysql -u " . $data["database"]["username"] . " -p" . $data["database"]["password"] . " -D " . $data["database"]["name"] . " < sql/blank.sql", $output, $code);
+            exec("mysql -u " . $data["database"]["username"] . " -p" . $data["database"]["password"] . " -D " . $data["database"]["name"] . " < sql/wicker.sql", $output, $code);
             if ($code != 0) {
                 echo R . "An error has occured while attempting to import new Wicker tables.\nPlease verify that the credentials supplied have valid database permissions." . W . "\n";
                 die;
@@ -375,7 +375,7 @@ function importWickerTables($good, $bad) {
     } else if ($good == 0 && $bad == 0) {
         echo W . "Importing Wicker tables";
         pause();
-        exec("mysql -u " . $data["database"]["username"] . " -p" . $data["database"]["password"] . " -D " . $data["database"]["name"] . " < sql/blank.sql", $output, $code);
+        exec("mysql -u " . $data["database"]["username"] . " -p" . $data["database"]["password"] . " -D " . $data["database"]["name"] . " < sql/wicker.sql", $output, $code);
         if ($code != 0) {
             echo R . "An error has occured while attempting to import new Wicker tables.\nPlease verify that the credentials supplied have valid database permissions." . W . "\n";
             die;
