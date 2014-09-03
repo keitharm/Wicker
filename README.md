@@ -15,9 +15,9 @@ settings on your system.
 
 1. Disable SELinux (or allow PHP to execute commands such as system, exec, 
     passthru, etc.)
-2. Add Webserver user to visudo with execute permissions for airodump-ng
+2. Add Webserver user to visudo with execute permissions for airodump-ng and kill
 ```
-    www-data        ALL=NOPASSWD:   /usr/local/sbin/airodump-ng
+    www-data        ALL=NOPASSWD:   /usr/local/sbin/airodump-ng, /bin/kill
 ```
 3. Comment out "Defaults requiretty" or add this line in visudo
 ```
