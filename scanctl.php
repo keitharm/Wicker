@@ -19,5 +19,8 @@ if ($do == "newscan") {
     system("sudo kill " . $scan->getPID());
     header('Location: scanview.php?id=' . $scan->getID());
     die;
+} else {
+    header('Location: index.php');
+    die;
 }
 ?>
