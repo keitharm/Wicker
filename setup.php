@@ -13,7 +13,7 @@ echo "\ \      / (_) ___| | _____ _ __\n";
 echo " \ \ /\ / /| |/ __| |/ / _ \ '__|\n";
 echo "  \ V  V / | | (__|   <  __/ |\n";
 echo "   \_/\_/  |_|\___|_|\_\___|_|\n";
-echo "Version 1.1.1\n\n";
+echo "Version 1.1.2\n\n";
 
 if ($argv[1] == "--view-config") {
     if (file_exists("wicker.conf.php")) {
@@ -151,6 +151,41 @@ do {
         $tools = true;
     }
 } while ($tools == false);
+
+// Set up directories for Wicker
+echo W . "\n=====" . C . " Initial Directory Setup " . W . "=====\n";
+
+echo "Creating directories\n";
+echo "logs";
+pause(false);
+@mkdir("logs");
+echo G . "done\n" . W;
+
+echo "scans";
+pause(false);
+@mkdir("scans");
+echo G . "done\n" . W;
+
+echo "uploads";
+pause(false);
+@mkdir("uploads");
+echo G . "done\n\n" . W;
+
+echo "Setting up permissions for web user\n";
+echo "Setting " . $data["webserver"]["user"] . " as group for directories";
+pause(false);
+exec("sudo chgrp " . $data["webserver"]["user"] . " logs scans uploads");
+echo G . "done\n" . W;
+
+echo "Setting permissions to 775 for directories";
+pause(false);
+exec("sudo chmod 775 logs scans uploads");
+echo G . "done\n" . W;
+
+echo "Setting group bit for directories";
+pause(false);
+exec("sudo chmod g+s logs scans uploads");
+echo G . "done\n" . W;
 
 // Generate conf file
 echo W . "\nGenerating Wicker Configuration file";
@@ -321,14 +356,16 @@ function command_exist($cmd) {
     return (empty($returnVal) ? false : true);
 }
 
-function pause() {
+function pause($return = true) {
     echo ".";
     usleep(250000);
     echo ".";
     usleep(250000);
     echo ".";
     usleep(250000);
-    echo "\n";
+    if ($return) {
+        echo "\n";
+    }
 }
 
 function importWickerTables($good, $bad) {
