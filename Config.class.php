@@ -39,7 +39,6 @@ class Config
         echo "=====" . C . " Tools " . W . "=====\n";
         echo "Aircrack-ng:\t" . G . $this->getAircrackng() . W . "\n";
         echo "Pyrit:\t\t" . G . $this->getPyrit() . W . "\n";
-        echo "WPAclean:\t" . G . $this->getWPAClean() . W . "\n";
         echo "PCAPfix:\t" . G . $this->getPCAPFix() . W . "\n";
         echo "MySQL:\t\t" . G . $this->getMySQL() . W . "\n";
         echo "lm-sensors:\t" . G . $this->getSensors() . W . "\n";
@@ -76,7 +75,6 @@ class Config
         // Tools
         $this->tools["aircrack-ng"]  = $this->config["tools"]["aircrack-ng"];
         $this->tools["pyrit"]        = $this->config["tools"]["pyrit"];
-        $this->tools["wpaclean"]     = $this->config["tools"]["wpaclean"];
         $this->tools["pcapfix"]      = $this->config["tools"]["pcapfix"];
         $this->tools["mysql"]        = $this->config["tools"]["mysql"];
         $this->tools["lm-sensors"]   = $this->config["tools"]["lm-sensors"];

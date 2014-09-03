@@ -135,9 +135,6 @@ do {
     echo W . "pyrit location? [" . exec("which pyrit") . "]:\t";
     $data["tools"]["pyrit"] = input(exec("which pyrit"));
 
-    echo W . "wpaclean location? [" . exec("which wpaclean") . "]:\t";
-    $data["tools"]["wpaclean"] = input(exec("which wpaclean"));
-
     echo W . "pcapfix location? [" . exec("which pcapfix") . "]:\t";
     $data["tools"]["pcapfix"] = input(exec("which pcapfix"));
 
@@ -246,6 +243,7 @@ function setupDatabase() {
         }
 
         // Import tables
+        importWickerTables(0, 0);
     }
 }
 
