@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 03, 2014 at 12:17 AM
+-- Generation Time: Sep 03, 2014 at 04:48 PM
 -- Server version: 5.5.38-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.3
 
@@ -39,7 +39,9 @@ CREATE TABLE IF NOT EXISTS `aps` (
   `power` int(3) NOT NULL,
   `beacons` int(6) NOT NULL,
   `ivs` int(10) NOT NULL,
-  `essid` varchar(64) NOT NULL
+  `essid` varchar(64) NOT NULL,
+  `latitude` varchar(20) NOT NULL,
+  `longitude` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -93,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `caps` (
 
 CREATE TABLE IF NOT EXISTS `clients` (
 `id` int(11) NOT NULL,
+  `scan_id` int(6) NOT NULL,
   `ap_id` int(6) NOT NULL,
   `mac` varchar(17) NOT NULL,
   `first_seen` int(10) NOT NULL,
@@ -100,9 +103,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `power` int(3) NOT NULL,
   `packets` int(6) NOT NULL,
   `bssid` int(17) NOT NULL,
-  `probed` text NOT NULL,
-  `latitude` varchar(20) NOT NULL,
-  `longitude` varchar(20) NOT NULL
+  `probed` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
