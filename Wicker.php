@@ -257,12 +257,22 @@ class Wicker
     }
 
     public function status() {
-        exec("sensors; uptime; du -hs uploads; du -hs logs;", $data);
-        $cpus = array(substr($this->extractData($data[8], "+", " C")[0], 0, -2), substr($this->extractData($data[9], "+", " C")[0], 0, -2), substr($this->extractData($data[10], "+", " C")[0], 0, -2), substr($this->extractData($data[11], "+", " C")[0], 0, -2));
-        $loadavgs = explode(", ", substr($data[13], strpos($data[13], "average: ")+9));
-        $uptime = array($this->extractData($data[13], "up ", ",") . " - " . $this->extractData($data[13], ",", ",")[0], $loadavgs[0], $loadavgs[1], $loadavgs[2]);
-        $uploads = trim($this->extractData(":" . $data[14], ":", "uploads"));
-        $logs = trim($this->extractData(":" . $data[15], ":", "logs"));
+        exec("sensors", $sensors);
+        exec("uptime; du -hs uploads; du -hs logs;", $data);
+
+        $sensors = implode($sensors);
+        $temps = $this->extractData($sensors, "Core", " (");
+        foreach ($temps as $temp) {
+            $cpus[] = $this->extractData($temp, "+", " C");
+        }
+        while (count($cpus) != 4) {
+            $cpus[] = "-";
+        }
+
+        $loadavgs = explode(", ", substr($data[0], strpos($data[0], "average: ")+9));
+        $uptime = array($this->extractData($data[0], "up ", ",") . " - " . $this->extractData($data[0], ",", ",")[0], $loadavgs[0], $loadavgs[1], $loadavgs[2]);
+        $uploads = trim($this->extractData(":" . $data[1], ":", "uploads"));
+        $logs = trim($this->extractData(":" . $data[2], ":", "logs"));
         return array("<span style='color: " . $this->color($cpus[0], 100, 70) . "'>" . $cpus[0] . "°C</span>", "<span style='color: " . $this->color($cpus[1], 100, 70) . "'>" . $cpus[1] . "°C</span>", "<span style='color: " . $this->color($cpus[2], 100, 70) . "'>" . $cpus[2] . "°C</span>", "<span style='color: " . $this->color($cpus[3], 100, 70) . "'>" . $cpus[3] . "°C</span>", $uptime[0], "<span style='color: " . $this->color($uptime[1], 6.00, 1.00) . "'>" . $uptime[1] . "</span>", "<span style='color: " . $this->color($uptime[2], 6.00, 1.00) . "'>" . $uptime[2] . "</span>", "<span style='color: " . $this->color($uptime[3], 6.00, 1.00) . "'>" . $uptime[3] . "</span>", $uploads, $logs);
     }
 

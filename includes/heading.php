@@ -17,7 +17,7 @@
                 <table class="tablestatus">
                     <thead>
 <?php
-                        $name = array("CPU0", "CPU1", "CPU2", "CPU3", "Uptime", "1m", "5m", "15m", "Uploads", "Logs");
+                        $name = array("CPU 1", "CPU 2", "CPU 3", "CPU 4", "Uptime", "1m", "5m", "15m", "Uploads", "Logs");
                         for ($a = 0; $a < count($name); $a++) {
 ?>
                             <th><?=$name[$a]?></th>
