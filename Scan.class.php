@@ -73,8 +73,8 @@ class Scan
     }
 
     public function startScan() {
-        system("sudo airodump-ng -w \"scans/" . $this->getGUID() . "\" --output-format csv --ignore-negative-one mon0 2> /dev/null &");
-        exec("ps aux | grep '" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
+        system("sudo airodump-ng -w \"scans/" . $this->getGUID() . "\" --output-format csv --ignore-negative-one mon0 > /dev/null &");
+        exec("ps aux | grep 'sudo airodump-ng -w scans/" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
         $this->setPID($out[0]);
     }
 
@@ -165,8 +165,8 @@ class Scan
     public function setGUID($val) { $this->setVal("guid", $val); $this->guid = $val; }
     public function setTime($val) { $this->setVal("time", $val); $this->time = $val; }
     public function setStatus($val) { $this->setVal("status", $val); $this->status = $val; }
-    public function setAPs($val) { $this->setVal("aps", $val); $this->aps = $val; }
-    public function setClients($val) { $this->setVal("clients", $val); $this->clients = $val; }
+    public function setAPCount($val) { $this->setVal("aps", $val); $this->aps = $val; }
+    public function setClientCount($val) { $this->setVal("clients", $val); $this->clients = $val; }
     public function setPID($val) { $this->setVal("pid", $val); $this->pid = $val; }
 }
 

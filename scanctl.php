@@ -24,7 +24,7 @@ if ($do == "newscan") {
         system("sudo kill " . $scan->getPID());
         header('Location: scanview.php?id=' . $scan->getID());
     } else {
-        if ($scan->getPID() != 0) {
+        if ($scan->getPID() == 0) {
             $wicker->error("PID of scan was 0.");
         } else if ($scan->getStatus() == 2) {
             $wicker->error("This scan has already been terminated");
@@ -39,6 +39,10 @@ if ($do == "newscan") {
 
     $aps     = $data["aps"];
     $clients = $data["clients"];
+
+    // Update scan counts for APs and Clients
+    $scan->setAPCount(count($aps));
+    $scan->setClientCount(count($clients));
 
     // Add APs to DB if they aren't already there
     foreach ($aps as $ap) {

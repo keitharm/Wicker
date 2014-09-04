@@ -29,7 +29,7 @@ if ($scan->getID() == 0) {
 
                     <div class="table-responsive">
                         <table class="table table-striped">
-                            <h3>APs</h3>
+                            <h3>APs - <?=$scan->getAPCount()?></h3>
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -76,7 +76,7 @@ if (count($aps) != 0) {
                             </tbody>
                         </table>
                         <table class="table table-striped">
-                            <h3>Clients</h3>
+                            <h3>Clients - <?=$scan->getClientCount()?></h3>
                             <thead>
                                 <tr>
                                     <th>#</th>
