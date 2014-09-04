@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.7.1
+-- version 4.2.8
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 03, 2014 at 04:48 PM
+-- Generation Time: Sep 03, 2014 at 07:56 PM
 -- Server version: 5.5.38-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.3
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `aps` (
   `essid` varchar(64) NOT NULL,
   `latitude` varchar(20) NOT NULL,
   `longitude` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `attacks` (
   `rate` int(5) NOT NULL,
   `auth` int(10) NOT NULL,
   `pid` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `caps` (
   `packets` int(6) NOT NULL,
   `size` int(7) NOT NULL,
   `timestamp` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `packets` int(6) NOT NULL,
   `bssid` int(17) NOT NULL,
   `probed` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -116,10 +116,11 @@ CREATE TABLE IF NOT EXISTS `scans` (
 `id` int(11) NOT NULL,
   `guid` varchar(36) NOT NULL,
   `time` int(10) NOT NULL,
+  `status` int(1) NOT NULL,
   `aps` int(11) NOT NULL,
   `clients` int(11) NOT NULL,
   `pid` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables

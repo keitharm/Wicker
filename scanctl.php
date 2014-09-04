@@ -11,8 +11,8 @@ if ($do == "newscan") {
         $wicker->error("No wireless devices in monitor mode detected.");
         die;
     }
-    $scan->startScan();
     $scan->setStatus(1);
+    $scan->startScan();
     // Give airodump-ng a chance to create files
     sleep(1);
     header('Location: scanview.php?id=' . $scan->getID());
