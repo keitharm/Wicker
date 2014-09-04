@@ -53,8 +53,8 @@ if ($do == "newscan") {
             AP::newAP($scan->getID(), $ap["bssid"], strtotime($ap["first_seen"]), strtotime($ap["last_seen"]), $ap["channel"], $ap["privacy"], $ap["cipher"], $ap["authentication"], $ap["power"], $ap["beacons"], $ap["ivs"], $ap["essid"], round($_POST['lat'], 7), round($_POST['long'], 7));
         // Update AP in DB
         } else {
-            // Update Coordinates if power is greater than -75
-            if ($ap["power"] >= -75) {
+            // Update Coordinates if seen within last 10 seconds
+            if ($wicker->timeconv(strtotime($ap["last_seen"])) == "Just now") {
                 $check->setLatitude(round($_POST['lat'], 7));
                 $check->setLongitude(round($_POST['long'], 7));
             }
