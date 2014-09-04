@@ -12,14 +12,26 @@ if ($do == "newscan") {
         die;
     }
     $scan->startScan();
+    $scan->setStatus(1);
     // Give airodump-ng a chance to create files
     sleep(1);
     header('Location: scanview.php?id=' . $scan->getID());
     die;
 } else if ($do == "terminate") {
     $scan = Scan::fromDB($id);
-    system("sudo kill " . $scan->getPID());
-    header('Location: scanview.php?id=' . $scan->getID());
+    if ($scan->getPID() != 0 && $scan->getStatus() == 1) {
+        $scan->setStatus(2);
+        system("sudo kill " . $scan->getPID());
+        header('Location: scanview.php?id=' . $scan->getID());
+    } else {
+        if ($scan->getPID() != 0) {
+            $wicker->error("PID of scan was 0.");
+        } else if ($scan->getStatus() == 2) {
+            $wicker->error("This scan has already been terminated");
+        } else {
+            $wicker->error("An unknown error has occured");
+        }
+    }
     die;
 } else if ($do == "coords") {
     $scan    = Scan::fromDB($id);

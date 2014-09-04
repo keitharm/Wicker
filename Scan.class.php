@@ -8,6 +8,7 @@ class Scan
     private $id;
     private $guid;
     private $time;
+    private $status;
     private $aps;
     private $clients;
     private $pid;
@@ -45,6 +46,7 @@ class Scan
         $instance->id      = $info->id;
         $instance->guid    = $info->guid;
         $instance->time    = $info->time;
+        $instance->status  = $info->status;
         $instance->aps     = $info->aps;
         $instance->clients = $info->clients;
         $instance->pid     = $info->pid;
@@ -71,7 +73,7 @@ class Scan
     }
 
     public function startScan() {
-        system("sudo airodump-ng -w \"scans/" . $this->getGUID() . "\" --output-format csv --ignore-negative-one mon0 > 2/dev/null &");
+        system("sudo airodump-ng -w \"scans/" . $this->getGUID() . "\" --output-format csv --ignore-negative-one mon0 2> /dev/null &");
         exec("ps aux | grep '" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
         $this->setPID($out[0]);
     }
@@ -155,12 +157,14 @@ class Scan
     public function getID() { return $this->id; }
     public function getGUID() { return $this->guid; }
     public function getTime() { return $this->time; }
+    public function getStatus() { return $this->status; }
     public function getAPCount() { return $this->aps; }
     public function getClientCount() { return $this->clients; }
     public function getPID() { return $this->pid; }
 
     public function setGUID($val) { $this->setVal("guid", $val); $this->guid = $val; }
     public function setTime($val) { $this->setVal("time", $val); $this->time = $val; }
+    public function setStatus($val) { $this->setVal("status", $val); $this->status = $val; }
     public function setAPs($val) { $this->setVal("aps", $val); $this->aps = $val; }
     public function setClients($val) { $this->setVal("clients", $val); $this->clients = $val; }
     public function setPID($val) { $this->setVal("pid", $val); $this->pid = $val; }
