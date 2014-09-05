@@ -73,7 +73,7 @@ for ($a = 1; $a <= 8; $a++) {
     unset($runtime);
     $attack = Attack::fromDB($cap->getID(), $a);
     $attack->updateData();
-    echo "<tr id=\"$a\" class=\"attacks\">";
+    echo "<tr id=\"$a\">";
 ?>
                                     <td id="actions">
                                         <div class="btn-group">
