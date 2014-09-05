@@ -73,7 +73,7 @@ for ($a = 1; $a <= 8; $a++) {
     unset($runtime);
     $attack = Attack::fromDB($cap->getID(), $a);
     $attack->updateData();
-    echo "<tr id=\"$a\">";
+    echo "<tr id=\"$a\" class=\"attacks\">";
 ?>
                                     <td id="actions">
                                         <div class="btn-group">
@@ -110,6 +110,6 @@ for ($a = 1; $a <= 8; $a++) {
             </div>
         </div>
         <?=$wicker->footer()?>
-        <script src="js/ajax.js"></script>
+        <script src="js/viewStatus.js"></script>
     </body>
 </html>

@@ -31,7 +31,7 @@
                         $status = $this->status();
                         for ($a = 0; $a < count($name); $a++) {
 ?>
-                            <td><?=$status[$a]?></td>
+                            <td id="<?=$name[$a]?>"><?=$status[$a]?></td>
                             <td><?=$this->space(5)?></td>
 <?php
                         }
