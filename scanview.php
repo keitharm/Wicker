@@ -28,140 +28,96 @@ if ($scan->getID() == 0) {
 
 
                     <div class="table-responsive">
+                        <table class="table table-striped">
+                            <h3>APs - <?=$scan->getAPCount()?></h3>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>BSSID</th>
+                                    <th>ESSID</th>
+                                    <th>First seen</th>
+                                    <th>Last seen</th>
+                                    <th>Channel</th>
+                                    <th>Privacy</th>
+                                    <th>Cipher</th>
+                                    <th>Auth.</th>
+                                    <th>Power</th>
+                                    <th>Beacons</th>
+                                    <th>IVs</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 <?php
-#$scan = file_get_contents("aircrack/scan1029481-01.csv");
-$csv = array_map('str_getcsv', file('scans/' . $scan->getGUID() . '-01.csv'));
-unset($csv[0]);
-$csv = array_values($csv);
-foreach ($csv as &$line) {
-    foreach ($line as &$val) {
-        $val = trim($val);
-    }
-}
-unset($csv[count($csv)-1]);
-unset($csv[0]);
-
-$aps = array();
-$clients = array();
+$aps = $scan->getAPs();
 $a = 0;
-$mode = "ap";
-foreach ($csv as $group) {
-    $a++;
-
-    // Reached client section
-    if (count($group) == 1) {
-        $mode = "client";
-        $a = 0;
-        continue;
-    }
-
-    // AP section
-    if ($mode == "ap") {
-        $aps[$a]["bssid"]          = $group[0];
-        $aps[$a]["first_seen"]     = $group[1];
-        $aps[$a]["last_seen"]      = $group[2];
-        $aps[$a]["channel"]        = $group[3];
-        $aps[$a]["privacy"]        = $group[5];
-        $aps[$a]["cipher"]         = $group[6];
-        $aps[$a]["authentication"] = $group[7];
-        $aps[$a]["power"]          = $group[8];
-        $aps[$a]["beacons"]        = $group[9];
-        $aps[$a]["ivs"]            = $group[10];
-        $aps[$a]["essid"]          = $group[13];
-    } else {
-        $clients[$a]["mac"]        = $group[0];
-        $clients[$a]["first_seen"] = $group[1];
-        $clients[$a]["last_seen"]  = $group[2];
-        $clients[$a]["power"]      = $group[3];
-        $clients[$a]["packets"]    = $group[4];
-        $clients[$a]["bssid"]      = $group[5];
-        $clients[$a]["probed"]     = $group[6];
-    }
-}
-$clients = array_values($clients);
-unset($clients[0]); 
+if (count($aps) != 0) {
+    foreach ($aps as $ap) {
+        $a++;
 ?>
-                    <table class="table table-striped">
-                        <h3>APs</h3>
-                        <thead>
                             <tr>
-                                <th>#</th>
-                                <th>BSSID</th>
-                                <th>ESSID</th>
-                                <th>First seen</th>
-                                <th>Last seen</th>
-                                <th>Channel</th>
-                                <th>Privacy</th>
-                                <th>Cipher</th>
-                                <th>Auth.</th>
-                                <th>Power</th>
-                                <th>Beacons</th>
-                                <th>IVs</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-<?php
-$a = 0;
-foreach ($aps as $ap) {
-    $a++;
-?>                          <tr>
                                 <td><?=$a?></td>
-                                <td><?=$ap["bssid"]?></td>
-                                <td><?=$ap["essid"]?></td>
-                                <td><?=$wicker->timeconv(strtotime($ap["first_seen"]))?></td>
-                                <td><?=$wicker->timeconv(strtotime($ap["last_seen"]))?></td>
-                                <td><?=$ap["channel"]?></td>
-                                <td><?=$ap["privacy"]?></td>
-                                <td><?=$ap["cipher"]?></td>
-                                <td><?=$ap["authentication"]?></td>
-                                <td><?=$ap["power"]?></td>
-                                <td><?=$ap["beacons"]?></td>
-                                <td><?=$ap["ivs"]?></td>
+                                <td><?=$ap->getBSSID()?></td>
+                                <td><?=$ap->getESSID()?></td>
+                                <td><?=$wicker->timeconv($ap->getFirstSeen())?></td>
+                                <td><?=$wicker->timeconv($ap->getLastSeen())?></td>
+                                <td><?=$ap->getChannel()?></td>
+                                <td><?=$ap->getPrivacy()?></td>
+                                <td><?=$ap->getCipher()?></td>
+                                <td><?=$ap->getAuthentication()?></td>
+                                <td><?=$ap->getPower()?></td>
+                                <td><?=$ap->getBeacons()?></td>
+                                <td><?=$ap->getIVs()?></td>
                             </tr>
 <?php
+    }
 }
 ?>
-                        </tbody>
-                    </table>
-                    <table class="table table-striped">
-                        <h3>Clients</h3>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>MAC</th>
-                                <th>First seen</th>
-                                <th>Last seen</th>
-                                <th>Power</th>
-                                <th>Packets</th>
-                                <th>BSSID</th>
-                                <th>Probes</th>
-                            </tr>
-                        </thead>
+
+                            </tbody>
+                        </table>
+                        <table class="table table-striped">
+                            <h3>Clients - <?=$scan->getClientCount()?></h3>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>MAC</th>
+                                    <th>First seen</th>
+                                    <th>Last seen</th>
+                                    <th>Power</th>
+                                    <th>Packets</th>
+                                    <th>BSSID</th>
+                                    <th>Probes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 <?php
+$clients = $scan->getClients();
 $a = 0;
-foreach ($clients as $client) {
-    $a++;
-?>                          <tr>
-                                <td><?=$a?></td>
-                                <td><?=$client["mac"]?></td>
-                                <td><?=$wicker->timeconv(strtotime($client["first_seen"]))?></td>
-                                <td><?=$wicker->timeconv(strtotime($client["last_seen"]))?></td>
-                                <td><?=$client["power"]?></td>
-                                <td><?=$client["packets"]?></td>
-                                <td><?=$client["bssid"]?></td>
-                                <td><?=$client["probed"]?></td>
-                            </tr>
+if (count($clients) != 0) {
+    foreach ($clients as $client) {
+        $a++;
+?>
+                                <tr>
+                                    <td><?=$a?></td>
+                                    <td><?=$client->getMac()?></td>
+                                    <td><?=$wicker->timeconv($client->getFirstSeen())?></td>
+                                    <td><?=$wicker->timeconv($client->getLastSeen())?></td>
+                                    <td><?=$client->getPower()?></td>
+                                    <td><?=$client->getPackets()?></td>
+                                    <td><?=$client->getBSSID()?></td>
+                                    <td><?=$client->getProbed()?></td>
+                                </tr>
 <?php
+    }
 }
 ?>
-                        <tbody>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
         <?=$wicker->footer()?>
-        <script src="js/ajax.js"></script>
+        <script src="js/coordinates.js"></script>
     </body>
 </html>

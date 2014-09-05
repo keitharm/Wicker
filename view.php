@@ -98,7 +98,11 @@ for ($a = 1; $a <= 8; $a++) {
                                     if ($attack->getRate() == 0) {
                                         echo "<td id=\"etc\">--:--</td>";
                                     } else {
-                                        echo "<td id=\"etc\">" . (int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1) . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate())) . "</td>";
+                                        $days = (int)(gmdate("d", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate()))-1);
+                                        if ($days < 10) {
+                                            $days = "0" . $days;
+                                        }
+                                        echo "<td id=\"etc\">" . $days . gmdate(":H:i:s", round(($attack->getDictionarySize()-$attack->getCurrent())/$attack->getRate())) . "</td>";
                                     }
                                     echo "</tr>";
                                 }

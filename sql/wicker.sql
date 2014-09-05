@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.7.1
+-- version 4.2.8
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 27, 2014 at 03:03 PM
--- Server version: 5.5.38
--- PHP Version: 5.5.15
+-- Generation Time: Sep 03, 2014 at 07:56 PM
+-- Server version: 5.5.38-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -39,8 +39,10 @@ CREATE TABLE IF NOT EXISTS `aps` (
   `power` int(3) NOT NULL,
   `beacons` int(6) NOT NULL,
   `ivs` int(10) NOT NULL,
-  `essid` varchar(64) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `essid` varchar(64) NOT NULL,
+  `latitude` varchar(20) NOT NULL,
+  `longitude` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -60,8 +62,8 @@ CREATE TABLE IF NOT EXISTS `attacks` (
   `runtime` varchar(10) NOT NULL,
   `rate` int(5) NOT NULL,
   `auth` int(10) NOT NULL,
-  `pid` int(8) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `pid` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -83,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `caps` (
   `packets` int(6) NOT NULL,
   `size` int(7) NOT NULL,
   `timestamp` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -93,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `caps` (
 
 CREATE TABLE IF NOT EXISTS `clients` (
 `id` int(11) NOT NULL,
+  `scan_id` int(6) NOT NULL,
   `ap_id` int(6) NOT NULL,
   `mac` varchar(17) NOT NULL,
   `first_seen` int(10) NOT NULL,
@@ -100,10 +103,8 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `power` int(3) NOT NULL,
   `packets` int(6) NOT NULL,
   `bssid` int(17) NOT NULL,
-  `probed` text NOT NULL,
-  `latitude` varchar(20) NOT NULL,
-  `longitude` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `probed` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -115,9 +116,11 @@ CREATE TABLE IF NOT EXISTS `scans` (
 `id` int(11) NOT NULL,
   `guid` varchar(36) NOT NULL,
   `time` int(10) NOT NULL,
+  `status` int(1) NOT NULL,
   `aps` int(11) NOT NULL,
-  `clients` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `clients` int(11) NOT NULL,
+  `pid` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -185,4 +188,3 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-

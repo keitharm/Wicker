@@ -13,7 +13,7 @@ echo "\ \      / (_) ___| | _____ _ __\n";
 echo " \ \ /\ / /| |/ __| |/ / _ \ '__|\n";
 echo "  \ V  V / | | (__|   <  __/ |\n";
 echo "   \_/\_/  |_|\___|_|\_\___|_|\n";
-echo "Version 1.1.1\n\n";
+echo "Version 1.1.2\n\n";
 
 if ($argv[1] == "--view-config") {
     if (file_exists("wicker.conf.php")) {
@@ -135,9 +135,6 @@ do {
     echo W . "pyrit location? [" . exec("which pyrit") . "]:\t";
     $data["tools"]["pyrit"] = input(exec("which pyrit"));
 
-    echo W . "wpaclean location? [" . exec("which wpaclean") . "]:\t";
-    $data["tools"]["wpaclean"] = input(exec("which wpaclean"));
-
     echo W . "pcapfix location? [" . exec("which pcapfix") . "]:\t";
     $data["tools"]["pcapfix"] = input(exec("which pcapfix"));
 
@@ -154,6 +151,41 @@ do {
         $tools = true;
     }
 } while ($tools == false);
+
+// Set up directories for Wicker
+echo W . "\n=====" . C . " Initial Directory Setup " . W . "=====\n";
+
+echo "Creating directories\n";
+echo "logs";
+pause(false);
+@mkdir("logs");
+echo G . "done\n" . W;
+
+echo "scans";
+pause(false);
+@mkdir("scans");
+echo G . "done\n" . W;
+
+echo "uploads";
+pause(false);
+@mkdir("uploads");
+echo G . "done\n\n" . W;
+
+echo "Setting up permissions for web user\n";
+echo "Setting " . $data["webserver"]["user"] . " as group for directories";
+pause(false);
+exec("sudo chgrp " . $data["webserver"]["user"] . " logs scans uploads");
+echo G . "done\n" . W;
+
+echo "Setting permissions to 775 for directories";
+pause(false);
+exec("sudo chmod 775 logs scans uploads");
+echo G . "done\n" . W;
+
+echo "Setting group bit for directories";
+pause(false);
+exec("sudo chmod g+s logs scans uploads");
+echo G . "done\n" . W;
 
 // Generate conf file
 echo W . "\nGenerating Wicker Configuration file";
@@ -246,6 +278,7 @@ function setupDatabase() {
         }
 
         // Import tables
+        importWickerTables(0, 0);
     }
 }
 
@@ -323,14 +356,16 @@ function command_exist($cmd) {
     return (empty($returnVal) ? false : true);
 }
 
-function pause() {
+function pause($return = true) {
     echo ".";
     usleep(250000);
     echo ".";
     usleep(250000);
     echo ".";
     usleep(250000);
-    echo "\n";
+    if ($return) {
+        echo "\n";
+    }
 }
 
 function importWickerTables($good, $bad) {
@@ -364,7 +399,7 @@ function importWickerTables($good, $bad) {
             }
             echo W . "Importing new Wicker tables";
             pause();
-            exec("mysql -u " . $data["database"]["username"] . " -p" . $data["database"]["password"] . " -D " . $data["database"]["name"] . " < sql/blank.sql", $output, $code);
+            exec("mysql -u " . $data["database"]["username"] . " -p" . $data["database"]["password"] . " -D " . $data["database"]["name"] . " < sql/wicker.sql", $output, $code);
             if ($code != 0) {
                 echo R . "An error has occured while attempting to import new Wicker tables.\nPlease verify that the credentials supplied have valid database permissions." . W . "\n";
                 die;
@@ -377,7 +412,7 @@ function importWickerTables($good, $bad) {
     } else if ($good == 0 && $bad == 0) {
         echo W . "Importing Wicker tables";
         pause();
-        exec("mysql -u " . $data["database"]["username"] . " -p" . $data["database"]["password"] . " -D " . $data["database"]["name"] . " < sql/blank.sql", $output, $code);
+        exec("mysql -u " . $data["database"]["username"] . " -p" . $data["database"]["password"] . " -D " . $data["database"]["name"] . " < sql/wicker.sql", $output, $code);
         if ($code != 0) {
             echo R . "An error has occured while attempting to import new Wicker tables.\nPlease verify that the credentials supplied have valid database permissions." . W . "\n";
             die;
