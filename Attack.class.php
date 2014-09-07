@@ -30,29 +30,26 @@ Class Attack
 
     public $db;
 
-    public static function fromDB($id, $attack = 1) {
+    public function __construct($id, $attack = 1) {
         global $wicker;
-        $instance = new self();
-        $instance->connectToDatabase();
+        $this->connectToDatabase();
 
         $statement = $wicker->db->con()->prepare("SELECT * FROM attacks WHERE cap_id = ? AND attack = ?");
         $statement->execute(array($id, $attack));
         $info = $statement->fetchObject();
 
-        $instance->id          = $info->id;
-        $instance->cap_id      = $info->cap_id;
-        $instance->attack      = $info->attack;
-        $instance->status      = $info->status;
-        $instance->status_text = $info->status_text;
-        $instance->password    = $info->password;
-        $instance->tmpfile     = $info->tmpfile;
-        $instance->runtime     = $info->runtime;
-        $instance->current     = $info->current;
-        $instance->rate        = $info->rate;
-        $instance->auth        = $info->auth;
-        $instance->pid         = $info->pid;
-
-        return $instance;
+        $this->id          = $info->id;
+        $this->cap_id      = $info->cap_id;
+        $this->attack      = $info->attack;
+        $this->status      = $info->status;
+        $this->status_text = $info->status_text;
+        $this->password    = $info->password;
+        $this->tmpfile     = $info->tmpfile;
+        $this->runtime     = $info->runtime;
+        $this->current     = $info->current;
+        $this->rate        = $info->rate;
+        $this->auth        = $info->auth;
+        $this->pid         = $info->pid;
     }
 
     private function connectToDatabase() {
@@ -97,7 +94,7 @@ Class Attack
             if ($this->getStatus() == 1 && $this->getStatusText() == "<font color='red'>No</font>") {
                 $this->setStatus(2);
                 $this->setCurrent($this->size[$this->getAttack()-1]);
-                $this->setPassword("-");
+                $this->setPassword("");
             }
         }
     }
@@ -135,7 +132,10 @@ Class Attack
         $rate = $wicker->extractData(substr($log, -1500), "far; ", " PMKs per");
         $rate = $rate[count($rate)-1];
 
-        $this->setRate($rate);
+        if($this->getStatus() == 1)
+            $this->setRate($rate);
+        else
+            $this->setRate(0);
     }
 
     public function getID() { return $this->id; }
@@ -143,7 +143,7 @@ Class Attack
     public function getAttack() { return $this->attack; }
     public function getStatus() { return $this->status; }
     public function getStatusText() { return $this->status_text; }
-    public function getPassword() { return $this->password; }
+    public function getPassword() { return (new CapFile($this->cap_id))->getPassword(); }
     public function getTmpfile() { return $this->tmpfile; }
     public function getRuntime() { return $this->runtime; }
     public function getAttackName() { return $this->name[$this->attack-1]; }
@@ -160,7 +160,7 @@ Class Attack
     public function setTmpfile($val) { $this->setVal("tmpfile", $val); $this->tmpfile = $val; }
     public function setStatus($val) { $this->setVal("status", $val); $this->status = $val; }
     public function setStatusText($val) { $this->setVal("status_text", $val); $this->status_text = $val; }
-    public function setPassword($val) { $this->setVal("password", $val); $this->password = $val; }
+    public function setPassword($val) { (new CapFile($this->cap_id))->setPassword($val); }
     public function setPID($val) { $this->setVal("pid", $val); $this->pid = $val; }
 
     public function getStatusName() { return $this->statusName[$this->getStatus()]; }

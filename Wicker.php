@@ -81,7 +81,7 @@ class Wicker
 
     public function importcap($location) {
         $cap = CapFile::import($location);
-        $new = CapFile::fromDB("[C]" . $cap->getChecksum());
+        $new = new CapFile("[C]" . $cap->getChecksum());
         header('Location: view.php?id=' . $new->getID());
     }
 

@@ -12,11 +12,11 @@ if(is_null($cmd) || is_null($id) || is_null($attack_type)) {
     die;
 }
 
-$attack = Attack::fromDB($_GET['id'], $_GET['attack']);
+$attack = new Attack($_GET['id'], $_GET['attack']);
 
 if ($cmd == "execute") {
     $dictionaries = array("10k most common.txt", "rockyou.txt", "small", "Custom-WPA", "Super-WPA", "big", "bigger", "combined");
-    $cap = CapFile::fromDB($id);
+    $cap = new CapFile($id);
     $attack->setTmpfile($wicker->newGUID());
 
     system("pyrit -i \"dictionaries/" . $dictionaries[$attack_type-1] . "\" -r \"uploads/" . $cap->getLocation() . "\" attack_passthrough > \"logs/" . $attack->getTmpFile() . "\" &");
@@ -35,7 +35,7 @@ if ($cmd == "execute") {
 
     $attack->setStatus(1);
 } else if ($cmd == "hide") {
-    $cap = CapFile::fromDB($id);
+    $cap = new CapFile($id);
     $cap->setStatus(1);
 
     header('Location: index.php');

@@ -2,7 +2,7 @@
 require_once("Wicker.php");
 require_once("Attack.class.php");
 
-$cap = CapFile::FromDB($_GET['id']);
+$cap = new CapFile($_GET['id']);
 if ($cap->getID() == 0) {
     header('Location: index.php');
     die;
@@ -42,8 +42,8 @@ if ($cap->getID() == 0) {
                             <span class="text-muted">Checksum</span>
                         </div>
                         <div class="col-xs-6 col-sm-4 placeholder">
-                            <h2><?=$cap->getLocation()?></h2>
-                            <span class="text-muted">Location</span>
+                            <h2><?=$cap->getPassword()?></h2>
+                            <span class="text-muted">Password</span>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
                             <h2><?=$wicker->timeconv($cap->getTimestamp())?></h2>
@@ -71,7 +71,7 @@ if ($cap->getID() == 0) {
 for ($a = 1; $a <= 8; $a++) {
     unset($status);
     unset($runtime);
-    $attack = Attack::fromDB($cap->getID(), $a);
+    $attack = new Attack($cap->getID(), $a);
     $attack->updateData();
     echo "<tr id=\"$a\">";
 ?>

@@ -63,12 +63,8 @@ function getStatsData() {
                         break;
                 }
                 
-                if(data[i]['status'] == 1)
-                    $('#'+i+' > #rate').html(data[i]['rate']);              // Update rate
-                else
-                    $('#'+i+' > #rate').html('0');                        // Update rate
-
-                //$('#'+i+' > #runtime').html(data[i]['runtime']);      // Update runtime
+                $('#'+i+' > #rate').html(data[i]['rate']);              // Update rate
+                $('#'+i+' > #runtime').html(data[i]['runtime']);        // Update runtime
                 $('#'+i+' > #etc').html(data[i]['etc']);                // Update ETC
             }
         }

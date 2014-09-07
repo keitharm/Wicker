@@ -39,10 +39,10 @@ require_once("Wicker.php");
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Actions</th>
                                     <th>ESSID</th>
                                     <th>BSSID</th>
+                                    <th>Password</th>
                                     <th>Uploaded</th>
                                 </tr>
                             </thead>
@@ -52,13 +52,13 @@ $statement = $wicker->db->con()->prepare("SELECT * FROM `caps` WHERE `status` = 
 $statement->execute(array(0));
 for ($a = 0; $a < $statement->rowCount(); $a++) {
     $info = $statement->fetchObject();
-    $cap = CapFile::FromDB($info->id);
+    $cap = new CapFile($info->id);
 ?>
                                 <tr>
-                                    <td><?=$a+1?></td>
                                     <td><a href="view.php?id=<?=$cap->getID()?>">View</a> | <a href="ctl.php?cmd=hide&id=<?=$cap->getID()?>">Hide</a></td>
                                     <td><?=$cap->getESSID()?></td>
                                     <td><?=strtoupper($cap->getBSSID())?></td>
+                                    <td><?=$cap->getPassword()?></td>
                                     <td><?=$wicker->timeconv($cap->getTimestamp())?>
                                 </tr>
 <?php
