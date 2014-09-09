@@ -30,26 +30,29 @@ Class Attack
 
     public $db;
 
-    public function __construct($id, $attack = 1) {
+    public static function fromDB($id, $attack = 1) {
         global $wicker;
-        $this->connectToDatabase();
+        $instance = new self();
+        $instance->connectToDatabase();
 
         $statement = $wicker->db->con()->prepare("SELECT * FROM attacks WHERE cap_id = ? AND attack = ?");
         $statement->execute(array($id, $attack));
         $info = $statement->fetchObject();
 
-        $this->id          = $info->id;
-        $this->cap_id      = $info->cap_id;
-        $this->attack      = $info->attack;
-        $this->status      = $info->status;
-        $this->status_text = $info->status_text;
-        $this->password    = $info->password;
-        $this->tmpfile     = $info->tmpfile;
-        $this->runtime     = $info->runtime;
-        $this->current     = $info->current;
-        $this->rate        = $info->rate;
-        $this->auth        = $info->auth;
-        $this->pid         = $info->pid;
+        $instance->id          = $info->id;
+        $instance->cap_id      = $info->cap_id;
+        $instance->attack      = $info->attack;
+        $instance->status      = $info->status;
+        $instance->status_text = $info->status_text;
+        $instance->password    = $info->password;
+        $instance->tmpfile     = $info->tmpfile;
+        $instance->runtime     = $info->runtime;
+        $instance->current     = $info->current;
+        $instance->rate        = $info->rate;
+        $instance->auth        = $info->auth;
+        $instance->pid         = $info->pid;
+
+        return $instance;
     }
 
     private function connectToDatabase() {
@@ -143,7 +146,7 @@ Class Attack
     public function getAttack() { return $this->attack; }
     public function getStatus() { return $this->status; }
     public function getStatusText() { return $this->status_text; }
-    public function getPassword() { return (new CapFile($this->cap_id))->getPassword(); }
+    public function getPassword() { return CapFile::fromDB($this->cap_id)->getPassword(); }
     public function getTmpfile() { return $this->tmpfile; }
     public function getRuntime() { return $this->runtime; }
     public function getAttackName() { return $this->name[$this->attack-1]; }
@@ -160,7 +163,7 @@ Class Attack
     public function setTmpfile($val) { $this->setVal("tmpfile", $val); $this->tmpfile = $val; }
     public function setStatus($val) { $this->setVal("status", $val); $this->status = $val; }
     public function setStatusText($val) { $this->setVal("status_text", $val); $this->status_text = $val; }
-    public function setPassword($val) { (new CapFile($this->cap_id))->setPassword($val); }
+    public function setPassword($val) { CapFile::fromDB($this->cap_id)->setPassword($val); }
     public function setPID($val) { $this->setVal("pid", $val); $this->pid = $val; }
 
     public function getStatusName() { return $this->statusName[$this->getStatus()]; }

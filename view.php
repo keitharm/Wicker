@@ -2,7 +2,7 @@
 require_once("Wicker.php");
 require_once("Attack.class.php");
 
-$cap = new CapFile($_GET['id']);
+$cap = CapFile::fromDB($_GET['id']);
 if ($cap->getID() == 0) {
     header('Location: index.php');
     die;
@@ -71,7 +71,7 @@ if ($cap->getID() == 0) {
 for ($a = 1; $a <= 8; $a++) {
     unset($status);
     unset($runtime);
-    $attack = new Attack($cap->getID(), $a);
+    $attack = Attack::fromDB($cap->getID(), $a);
     $attack->updateData();
     echo "<tr id=\"$a\">";
 ?>

@@ -52,7 +52,7 @@ $statement = $wicker->db->con()->prepare("SELECT * FROM `caps` WHERE `status` = 
 $statement->execute(array(0));
 for ($a = 0; $a < $statement->rowCount(); $a++) {
     $info = $statement->fetchObject();
-    $cap = new CapFile($info->id);
+    $cap = CapFile::fromDB($info->id);
 ?>
                                 <tr>
                                     <td><a href="view.php?id=<?=$cap->getID()?>">View</a> | <a href="ctl.php?cmd=hide&id=<?=$cap->getID()?>">Hide</a></td>

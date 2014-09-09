@@ -41,9 +41,11 @@ Class CapFile
         return $instance;
     }
 
-    public function __construct($id) {
+    public static function fromDB($id) {
         global $wicker;
-        $this->connectToDatabase();
+        $instance = new self();
+
+        $instance->connectToDatabase();
 
         if (substr($id, 0, 3) == "[C]") {
             $id = substr($id, 3);
@@ -55,21 +57,23 @@ Class CapFile
         $statement->execute(array($id));
         $info = $statement->fetchObject();
 
-        $this->id        = $info->id;
-        $this->location  = $info->location;
-        $this->repaired  = $info->repaired;
-        $this->raw       = $info->raw;
-        $this->checksum  = $info->checksum;
-        $this->complete  = $info->complete;
-        $this->runtime   = $info->runtime;
-        $this->status    = $info->status;
-        $this->password  = $info->password;
-        $this->timestamp = $info->timestamp;
-        $this->size      = $info->size;
+        $instance->id        = $info->id;
+        $instance->location  = $info->location;
+        $instance->repaired  = $info->repaired;
+        $instance->raw       = $info->raw;
+        $instance->checksum  = $info->checksum;
+        $instance->complete  = $info->complete;
+        $instance->runtime   = $info->runtime;
+        $instance->status    = $info->status;
+        $instance->password  = $info->password;
+        $instance->timestamp = $info->timestamp;
+        $instance->size      = $info->size;
 
-        $this->bssid     = $info->bssid;
-        $this->essid     = $info->essid;
-        $this->packets   = $info->packets;
+        $instance->bssid     = $info->bssid;
+        $instance->essid     = $info->essid;
+        $instance->packets   = $info->packets;
+
+        return $instance;
     }
 
     private function connectToDatabase() {

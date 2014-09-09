@@ -8,7 +8,7 @@ switch($type) {
     case "cap":
         for ($a = 1; $a <= 8; $a++) {
             unset($attack);
-            $attack = new Attack($_GET['id'], $a);
+            $attack = Attack::fromDB($_GET['id'], $a);
             $attack->updateData();
             $data[$a]['status']   = $attack->getStatus();
             $data[$a]['password'] = $attack->getPassword();
@@ -27,7 +27,7 @@ switch($type) {
         }
         break;
     case "system":
-        $name = array("CPU1 ", "CPU2", "CPU3", "CPU4", "Uptime", "1m", "5m", "15m", "Uploads", "Logs");
+        $name = array("CPU1", "CPU2", "CPU3", "CPU4", "Uptime", "1m", "5m", "15m", "Uploads", "Logs");
 
         for($i = 0; $i < count($name); $i++)
             $data[$name[$i]] = $wicker->status()[$i];
