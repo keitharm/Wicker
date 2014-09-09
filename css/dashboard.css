@@ -133,6 +133,7 @@ th {
 .navbar-center .line2
 {
   margin: -3px;
+  margin-left: -90px;
 }
 
 .tablestatus {

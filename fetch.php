@@ -27,7 +27,7 @@ switch($type) {
         }
         break;
     case "system":
-        $name = array("CPU1", "CPU2", "CPU3", "CPU4", "Uptime", "1m", "5m", "15m", "Uploads", "Logs");
+        $name = array("CPU1", "CPU2", "CPU3", "CPU4", "GPU", "Uptime", "1m", "5m", "15m", "Uploads", "Logs");
 
         for($i = 0; $i < count($name); $i++)
             $data[$name[$i]] = $wicker->status()[$i];
