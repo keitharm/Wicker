@@ -4,7 +4,7 @@ Wicker - The stupid wifi cracker
 Overview
 --------
 Wicker is a web interface that runs on top of the aircrack-ng suite and pyrit.
-It allows you to run "cracking sessions" for WEP/WPA on a remote server that's
+It allows you to run "cracking sessions" for WPA on a remote server that's
 beefy enough to not take 999999 years while you can capture handshakes and IVs
 on your wimpy (and way more portable) laptop.
 
