@@ -1,12 +1,13 @@
-Wicker - The stupid wifi cracker
+Wicker - The stupid wifi pen tester
 ================================
 
 Overview
 --------
 Wicker is a web interface that runs on top of the aircrack-ng suite and pyrit.
-It allows you to run "cracking sessions" for WPA on a remote server that's
-beefy enough to not take 999999 years while you can capture handshakes and IVs
-on your wimpy (and way more portable) laptop.
+It was created to simplify the process of wireless pen testing against WPA/WPA2 networks.
+
+Wicker provides a simplistic web GUI that allows users to easily capture handshakes and then
+test them against supplied dictionaries. (scanner/dictionaries currently under development)
 
 Configuration
 -------------
@@ -15,9 +16,9 @@ settings on your system.
 
 1. Disable SELinux (or allow PHP to execute commands such as system, exec, 
     passthru, etc.)
-2. Add Webserver user to visudo with execute permissions for airodump-ng and kill
+2. Add Webserver user to visudo with execute permissions for airodump-ng, kill, chmod & chown (to allow wicker to make directories writeable)
 ```
-    www-data        ALL=NOPASSWD:   /usr/local/sbin/airodump-ng, /bin/kill
+    www-data        ALL=NOPASSWD:   /usr/local/sbin/airodump-ng, /bin/kill, /bin/chown, /bin/chmod
 ```
 3. Comment out "Defaults requiretty" or add this line in visudo
 ```
