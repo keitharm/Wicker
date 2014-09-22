@@ -13,7 +13,7 @@ echo "\ \      / (_) ___| | _____ _ __\n";
 echo " \ \ /\ / /| |/ __| |/ / _ \ '__|\n";
 echo "  \ V  V / | | (__|   <  __/ |\n";
 echo "   \_/\_/  |_|\___|_|\_\___|_|\n";
-echo "Version 1.1.2\n\n";
+echo "Version 1.1.3\n\n";
 
 if ($argv[1] == "--view-config") {
     if (file_exists("wicker.conf.php")) {
@@ -129,8 +129,8 @@ do {
 echo W . "\n=====" . C . " Tools " . W . "=====\n";
 $tools = false;
 do {
-    echo W . "aircrack-ng location? [" . exec("which aircrack-ng") . "]:\t";
-    $data["tools"]["aircrack-ng"] = input(exec("which aircrack-ng"));
+    echo W . "airodump-ng location? [" . exec("which airodump-ng") . "]:\t";
+    $data["tools"]["airodump-ng"] = input(exec("which airodump-ng"));
 
     echo W . "pyrit location? [" . exec("which pyrit") . "]:\t";
     $data["tools"]["pyrit"] = input(exec("which pyrit"));
@@ -303,12 +303,12 @@ function checkForDependencies() {
     }
     usleep(250000);
 
-    // Check for Aircrack-ng
-    if (!command_exist("aircrack-ng")) {
-        echo R . "✗ Aircrack-ng\n" . W;
+    // Check for Airodump-ng
+    if (!command_exist("airodump-ng")) {
+        echo R . "✗ Airodump-ng\n" . W;
         $bad = true;
     } else {
-        echo G . "✓ Aircrack-ng\n" . W;
+        echo G . "✓ Airodump-ng\n" . W;
     }
     usleep(250000);
 

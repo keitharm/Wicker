@@ -326,6 +326,14 @@ class Wicker
         $guid = $this->random(10, 8) . "-" . $this->random(10, 4) . "-" . $this->random(10, 4) . "-" . $this->random(10, 4) . "-" . $this->random(10, 12);
         return $guid;
     }
+
+    public function mon0Enabled() {
+        exec("/sbin/iwconfig mon0", $out);
+        if (count($out) == 0) {
+            return 0;
+        }
+        return 1;
+    }
 }
 
 

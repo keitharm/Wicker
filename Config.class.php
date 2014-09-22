@@ -10,7 +10,7 @@ class Config
     private $webserver;
     // rfkill, interface
     private $wireless;
-    // aircrack-ng, pyrit
+    // airodump-ng, pyrit
     private $tools;
 
     public function __construct() {
@@ -37,7 +37,7 @@ class Config
         echo "Interface:\t" . G . $this->getInterface() . W . "\n\n";
 
         echo "=====" . C . " Tools " . W . "=====\n";
-        echo "Aircrack-ng:\t" . G . $this->getAircrackng() . W . "\n";
+        echo "Airodump-ng:\t" . G . $this->getAirodumpng() . W . "\n";
         echo "Pyrit:\t\t" . G . $this->getPyrit() . W . "\n";
         echo "PCAPfix:\t" . G . $this->getPCAPFix() . W . "\n";
         echo "MySQL:\t\t" . G . $this->getMySQL() . W . "\n";
@@ -73,7 +73,7 @@ class Config
         $this->wireless["interface"] = $this->config["wireless"]["interface"];
 
         // Tools
-        $this->tools["aircrack-ng"]  = $this->config["tools"]["aircrack-ng"];
+        $this->tools["airodump-ng"]  = $this->config["tools"]["airodump-ng"];
         $this->tools["pyrit"]        = $this->config["tools"]["pyrit"];
         $this->tools["pcapfix"]      = $this->config["tools"]["pcapfix"];
         $this->tools["mysql"]        = $this->config["tools"]["mysql"];
@@ -90,7 +90,7 @@ class Config
     public function getRFkill() { return $this->wireless["rfkill"]; }
     public function getInterface() { return $this->wireless["interface"]; }
 
-    public function getAircrackng() { return $this->tools["aircrack-ng"]; }
+    public function getAirodumpng() { return $this->tools["airodump-ng"]; }
     public function getPyrit() { return $this->tools["pyrit"]; }
     public function getWPAClean() { return $this->tools["wpaclean"]; }
     public function getPCAPFix() { return $this->tools["pcapfix"]; }

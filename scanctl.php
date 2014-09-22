@@ -6,8 +6,10 @@ $do = $_GET['do'];
 $id = $_GET['id'];
 
 if ($do == "newscan") {
+    $wep = $_POST['wep'];
+    $wpa = $_POST['wpa'];
     $scan = Scan::newScan();
-    if (!$scan->mon0Enabled()) {
+    if (!$wicker->mon0Enabled()) {
         $wicker->error("No wireless devices in monitor mode detected.");
         die;
     }

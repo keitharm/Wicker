@@ -64,17 +64,10 @@ class Scan
         $statement->execute(array($val, $this->getID()));
     }
 
-    public function mon0Enabled() {
-        exec("/sbin/iwconfig mon0", $out);
-        if (count($out) == 0) {
-            return 0;
-        }
-        return 1;
-    }
-
     public function startScan() {
-        system("sudo airodump-ng -w \"scans/" . $this->getGUID() . "\" --output-format csv --ignore-negative-one mon0 > /dev/null 2>&1 &");
-        exec("ps aux | grep 'sudo airodump-ng -w scans/" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
+        global $wicker;
+        system("sudo " . $wicker->config->getAirodumpng() . " -w \"scans/" . $this->getGUID() . "\" --output-format csv --ignore-negative-one mon0 > /dev/null 2>&1 &");
+        exec("ps aux | grep 'sudo " . $wicker->config->getAirodumpng() . " -w scans/" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
         $this->setPID($out[0]);
     }
 
