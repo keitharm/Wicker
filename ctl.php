@@ -19,7 +19,7 @@ if ($cmd == "execute") {
     $cap = CapFile::fromDB($id);
     $attack->setTmpfile($wicker->newGUID());
 
-    system("pyrit -i \"dictionaries/" . $dictionaries[$attack_type-1] . "\" -r \"uploads/" . $cap->getLocation() . "\" attack_passthrough > \"logs/" . $attack->getTmpFile() . "\" &");
+    system($wicker->config->getPyrit() . " -i \"dictionaries/" . $dictionaries[$attack_type-1] . "\" -r \"uploads/" . $cap->getLocation() . "\" attack_passthrough > \"logs/" . $attack->getTmpFile() . "\" &");
     exec("ps aux | grep '" . $cap->getLocation() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
 
     $attack->setPID($out[0]);

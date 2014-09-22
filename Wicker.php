@@ -1,6 +1,7 @@
 <?php
 require_once("Database.class.php");
 require_once("CapFile.class.php");
+require_once("Config.class.php");
 
 class Wicker
 {
@@ -11,9 +12,12 @@ class Wicker
 
     public $db;
     public $user;
+    public $config;
 
     public function __construct() {
+        global $config;
         $this->connectToDatabase();
+        $this->config = $config;
     }
 
     private function connectToDatabase() {
@@ -257,7 +261,7 @@ class Wicker
     }
 
     public function status() {
-        exec("sensors", $sensors);
+        exec($this->config->getSensors(), $sensors);
         exec("uptime; du -hs uploads; du -hs logs;", $data);
         exec("DISPLAY=:0 aticonfig --pplib-cmd 'get temperature 0'", $gpu);
         $gputemp = $this->extractData($gpu[0], " is ", ".");

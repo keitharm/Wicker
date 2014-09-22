@@ -82,8 +82,9 @@ Class CapFile
     }
 
     private function fixCap() {
+        global $wicker;
         $this->changeToUploads();
-        shell_exec("pcapfix " . $this->location);
+        shell_exec($wicker->config->getPCAPFix() . " " . $this->location);
         if (file_exists("fixed_" . $this->location)) {
             $this->location = "fixed_" . $this->location;
             $this->repaired = true;
@@ -95,7 +96,7 @@ Class CapFile
     private function analyzeCap() {
         global $wicker;
         $this->changeToUploads();
-        $this->raw          = shell_exec("pyrit -r " . $this->location . " analyze");
+        $this->raw          = shell_exec($wicker->config->getPyrit() . " -r " . $this->location . " analyze");
         $this->bssid        = $wicker->extractData($this->raw, "AccessPoint ", " ('");
         $this->essid        = $wicker->extractData($this->raw, "('", "'):");
         $this->packets      = $wicker->extractData($this->raw, "Parsed ", " packets");
