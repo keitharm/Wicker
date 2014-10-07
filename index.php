@@ -17,7 +17,7 @@ require_once("Wicker.php");
 
                     <div class="row placeholders">
                         <div class="col-xs-6 col-sm-3 placeholder">
-                            <h2><?=$wicker->capfiles()?></h2>
+                            <h2><?=(($wicker->capfiles() == null) ? 0 : $wicker->capfiles())?></h2>
                             <span class="text-muted">.Cap Files</span>
                         </div>
                         <div class="col-xs-6 col-sm-3 placeholder">
