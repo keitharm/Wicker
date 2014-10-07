@@ -22,9 +22,7 @@ if ($scan->getID() == 0) {
                 <?=$wicker->menu("null")?>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <h1 class="page-header"><?=$scan->getID()?></h1>
-                    <div class="row placeholders">
-                        <input type="button" class="btn-danger" value="Terminate Scan" onClick="window.location='scanctl.php?do=terminate&id=<?=$scan->getID()?>'">
-                    </div>
+                    <input type="button" class="btn-danger" value="Terminate Scan" onClick="window.location='scanctl.php?do=terminate&id=<?=$scan->getID()?>'">
 
 
                     <div class="table-responsive">
@@ -39,8 +37,6 @@ if ($scan->getID() == 0) {
                                     <th>Last seen</th>
                                     <th>Channel</th>
                                     <th>Privacy</th>
-                                    <th>Cipher</th>
-                                    <th>Auth.</th>
                                     <th>Power</th>
                                     <th>Beacons</th>
                                     <th>IVs</th>
@@ -52,18 +48,19 @@ $aps = $scan->getAPs();
 $a = 0;
 if (count($aps) != 0) {
     foreach ($aps as $ap) {
+        if ($ap->getChannel() < 1 || $ap->getESSID() == null || (time() - $ap->getLastSeen()) > 60) {
+            continue;
+        }
         $a++;
 ?>
                             <tr>
                                 <td><?=$a?></td>
                                 <td><?=$ap->getBSSID()?></td>
-                                <td><?=$ap->getESSID()?></td>
+                                <td><a href="apview.php?scanid=<?=$_GET['id']?>&bssid=<?=$ap->getBSSID()?>"><?=$ap->getESSID()?></a></td>
                                 <td><?=$wicker->timeconv($ap->getFirstSeen())?></td>
                                 <td><?=$wicker->timeconv($ap->getLastSeen())?></td>
                                 <td><?=$ap->getChannel()?></td>
                                 <td><?=$ap->getPrivacy()?></td>
-                                <td><?=$ap->getCipher()?></td>
-                                <td><?=$ap->getAuthentication()?></td>
                                 <td><?=$ap->getPower()?></td>
                                 <td><?=$ap->getBeacons()?></td>
                                 <td><?=$ap->getIVs()?></td>
@@ -99,7 +96,7 @@ if (count($clients) != 0) {
 ?>
                                 <tr>
                                     <td><?=$a?></td>
-                                    <td><?=$client->getMac()?></td>
+                                    <td><a href="clientview.php?scanid=<?=$_GET['id']?>&bssid=<?=$client->getMac()?>"><?=$client->getMac()?></a></td>
                                     <td><?=$wicker->timeconv($client->getFirstSeen())?></td>
                                     <td><?=$wicker->timeconv($client->getLastSeen())?></td>
                                     <td><?=$client->getPower()?></td>
@@ -113,6 +110,8 @@ if (count($clients) != 0) {
 ?>
                             </tbody>
                         </table>
+                        <h3>Map</h3>
+                        <iframe src="mapview.php?id=<?=$_GET['id']?>" width="100%" height="500px"></iframe>
                     </div>
                 </div>
             </div>

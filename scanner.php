@@ -38,15 +38,17 @@ require_once("Scan.class.php");
 
                     <h2 class="sub-header">Previous Scans</h2>
                     <div class="table-responsive">
-                        <input type="button" class="btn-success" value="New Scan" onClick="window.location='scanctl.php?do=newscan'">
+                        <form action="scanctl.php?do=newscan" method="POST">
+                            <input type="checkbox" name="wep" value="wep" checked="checked"> WEP <input type="checkbox" name="wpa" value="wpa" checked="checked"> WPA
+                            <input type="submit" class="btn-success" value="New Scan">
+                        </form>
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Actions</th>
-                                    <th>ESSID</th>
-                                    <th>BSSID</th>
-                                    <th>Uploaded</th>
+                                    <th>APs</th>
+                                    <th>Clients</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,6 +62,8 @@ for ($a = 0; $a < $statement->rowCount(); $a++) {
                                 <tr>
                                     <td><?=$a+1?></td>
                                     <td><a href="scanview.php?id=<?=$scan->getID()?>">View</a></td>
+                                    <td><?=$scan->getAPCount()?></td>
+                                    <td><?=$scan->getClientCount()?></td>
                                 </tr>
 <?php
 }
