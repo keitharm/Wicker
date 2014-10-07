@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.8
+-- version 4.2.9.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 03, 2014 at 07:56 PM
+-- Generation Time: Oct 07, 2014 at 03:25 PM
 -- Server version: 5.5.38-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.3
+-- PHP Version: 5.6.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `last_seen` int(10) NOT NULL,
   `power` int(3) NOT NULL,
   `packets` int(6) NOT NULL,
-  `bssid` int(17) NOT NULL,
+  `bssid` varchar(17) NOT NULL,
   `probed` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
