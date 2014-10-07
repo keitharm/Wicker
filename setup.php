@@ -13,7 +13,7 @@ echo "\ \      / (_) ___| | _____ _ __\n";
 echo " \ \ /\ / /| |/ __| |/ / _ \ '__|\n";
 echo "  \ V  V / | | (__|   <  __/ |\n";
 echo "   \_/\_/  |_|\___|_|\_\___|_|\n";
-echo "Version 1.1.3\n\n";
+echo "Version 1.2.0\n\n";
 
 if ($argv[1] == "--view-config") {
     if (file_exists("wicker.conf.php")) {
@@ -24,9 +24,25 @@ if ($argv[1] == "--view-config") {
         echo R . "Wicker configuration file not found.\n" . W;
         die;
     }
+} else if ($argv[1] == "--view-config-serialized") {
+    if (file_exists("wicker.conf.php")) {
+        require_once("Config.class.php");
+        echo $config->viewConfigSerialized() . "\n";
+        die;
+    } else {
+        echo R . "Wicker configuration file not found.\n" . W;
+        die;
+    }
+} else if ($argv[1] == "--empty-dirs") {
+    emptydirs();
+    echo G . "logs, uploads, and scans have been deleted successfully!\n" . W;
+    die;
+} else if ($argv[1] == "--reset-db") {
+    resetdb();
+    die;
 } else {
     if (isset($argv[1])) {
-        echo R . "Invalid argument\n" . W . "Available options are: " . G . "--view-config" . W . ".\n";
+        echo R . "Invalid argument\n" . W . "Available options are:\n" . G . "--view-config" . W . "\n" . G . "--empty-dirs" . W . "\n" . G . "--reset-db" . W . "\n" . G . "--view-config-serialized" . W . "\n";
         die;
     }
 }
@@ -195,8 +211,18 @@ if (!file_exists("wicker.conf.php")) {
     file_put_contents("/tmp/wicker.conf.php", "<?php\ndie;\n#" . serialize($data) . "\n?>\n");
     echo R . "Error" . W . ": Unable to save configuration file.\nPlease copy file /tmp/wicker.conf.php to this directory manually to complete setup.\n";
 } else {
-    echo G . "\nWicker Configuration file saved successfully!\n";
+    echo G . "\nWicker Configuration file saved successfully!\n" . W;
 }
+echo "Setting group to " . $data["webserver"]["user"] . " for Wicker Configuration File";
+pause(false);
+exec("sudo chgrp " . $data["webserver"]["user"] . " wicker.conf.php");
+echo G . "done\n" . W;
+
+echo "Setting permissions to 775 for Wicker Configuration File";
+pause(false);
+exec("sudo chmod 775 wicker.conf.php");
+echo G . "done\n\n" . W;
+echo G . "Wicker Setup Complete!\n" . W;
 
 function input($default = null) {
     echo O;
@@ -423,6 +449,78 @@ function importWickerTables($good, $bad) {
     } else {
         echo W . "Something weird happened\n";
         die;
+    }
+}
+
+function emptydirs() {
+    exec("rm -f logs/* 2>/dev/null");
+    exec("rm -f uploads/* 2>/dev/null");
+    exec("rm -f scans/* 2>/dev/null");
+}
+
+function resetdb() {
+    global $data;
+    require_once("Config.class.php");
+    $data["database"]["url"] = $config->getDBURL();
+    $data["database"]["username"] = $config->getDBUser();
+    $data["database"]["password"] = $config->getDBPass();
+    $data["database"]["name"] = $config->getDBName();
+    echo "Checking if database exists";
+    pause();
+
+    $dbh = new PDO('mysql:host=' . $data["database"]["url"] . ';dbname=INFORMATION_SCHEMA', $data["database"]["username"], $data["database"]["password"], array(PDO::ATTR_TIMEOUT => "3"));
+    // Check if database exists
+    $query = $dbh->query("SELECT * FROM `SCHEMATA` WHERE `SCHEMA_NAME` = '" . $data["database"]["name"] . "'");
+    if ($query->rowCount() == 0) {
+        echo R . "Database was not found (or your credentials don't have valid permissions)\n\n" . W;
+        $found = false;
+    } else {
+        echo G . "Database was found\n\n" . W;
+        $found = true;
+    }
+    if ($found) {
+        // Check for tables
+        echo "Checking tables";
+        pause();
+        $dbh = new PDO('mysql:host=' . $data["database"]["url"] . ';dbname=' . $data["database"]["name"], $data["database"]["username"], $data["database"]["password"], array(PDO::ATTR_TIMEOUT => "3"));
+        $query = $dbh->query("show tables");
+        while ($results = $query->fetch()) {
+            $tables[] = $results[0];
+        }
+        if ($tables == null) {
+            echo G . "Database is empty" . W . "\n";
+            importWickerTables(0, 0);
+        } else {
+            echo O . "Database is occupied" . W . "\n\n";
+            echo "Listing tables in database.\n" . G . "Green" . W . " = Wicker tables\n" . R . "Red  " . W . " = Other tables\n----------\n";
+            $good = 0; $bad = 0;
+            foreach ($tables as $table) {
+                if (in_array($table, array("aps", "attacks", "caps", "clients", "scans"))) {
+                    echo G . $table . W . "\n";
+                    $good++;
+                } else {
+                    echo R . $table . W . "\n";
+                    $bad++;
+                }
+            }
+            echo "----------\n";
+            importWickerTables($good, $bad);
+        }
+        print_r($results);
+    } else {
+        $dbh = new PDO('mysql:host=' . $data["database"]["url"], $data["database"]["username"], $data["database"]["password"], array(PDO::ATTR_TIMEOUT => "3"));
+        echo "Attemping to create database";
+        pause();
+        $dbh->query("CREATE DATABASE IF NOT EXISTS " . $data["database"]["name"]);
+        if ($dbh->errorCode() != "00000") {
+            echo R . "An error has occured while attempting to create the database.\nPlease verify that the credentials supplied have valid database creation permissions." . W . "\n";
+            die;
+        } else {
+            echo G . "Database " . O . $data["database"]["name"] . G . " was created successfully!" . W . "\n";
+        }
+
+        // Import tables
+        importWickerTables(0, 0);
     }
 }
 ?>
