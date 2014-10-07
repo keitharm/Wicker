@@ -292,14 +292,14 @@ class Wicker
         return $i;
     }
 
-    public function scanfiles() {
-        if ($handle = opendir("scans")) {
-            while (($file = readdir($handle)) !== false){
-                if (!in_array($file, array('.', '..')) && !is_dir($dir.$file))
-                    $i++;
-            }
+    public function countScans($hidden = false) {
+        if ($hidden) {
+            $statement = $this->db->con()->prepare("SELECT * FROM `scans` WHERE `status` = 3");
+        } else {
+            $statement = $this->db->con()->prepare("SELECT * FROM `scans` WHERE `status` <> 3");
         }
-        return $i;
+        $statement->execute();
+        return $statement->rowCount();
     }
 
     public function space($val) {
@@ -342,8 +342,21 @@ class Wicker
         }
         exec("sudo airmon-ng start " . $config->getInterface());
     }
+
     public function disableMon0() {
         exec("sudo airmon-ng stop mon0");
+    }
+
+    public function totalAPs() {
+        $statement = $this->db->con()->prepare("SELECT DISTINCT `bssid` FROM `aps`");
+        $statement->execute();
+        return $statement->rowCount();
+    }
+
+    public function totalClients() {
+        $statement = $this->db->con()->prepare("SELECT DISTINCT `mac` FROM `clients`");
+        $statement->execute();
+        return $statement->rowCount();
     }
 }
 
