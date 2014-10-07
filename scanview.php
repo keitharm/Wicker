@@ -30,7 +30,7 @@ if ($scan->getStatus() == 1) {
 }
 ?>
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table class="table">
                             <h3>APs - <?=$scan->getAPCount()?></h3>
                             <thead>
                                 <tr>
@@ -52,20 +52,23 @@ $aps = $scan->getAPs();
 $a = 0;
 if (count($aps) != 0) {
     foreach ($aps as $ap) {
-        if ($ap->getChannel() < 1 || $ap->getESSID() == null || (time() - $ap->getLastSeen()) > 60) {
+        if ($ap->getChannel() < 1 || $ap->getESSID() == null || ((time() - $ap->getLastSeen()) > 60 && $scan->getStatus() != 2)) {
             continue;
         }
         $a++;
+
+        // Color code the BSSIDs
+        $hex = substr(md5($ap->getBSSID()),0 ,6);
 ?>
                             <tr>
-                                <td><?=$a?></td>
+                                <td bgcolor="#<?=$hex?>"><?=$a?></td>
                                 <td><?=$ap->getBSSID()?></td>
                                 <td><a href="apview.php?scanid=<?=$_GET['id']?>&bssid=<?=$ap->getBSSID()?>"><?=$ap->getESSID()?></a></td>
                                 <td><?=$wicker->timeconv($ap->getFirstSeen())?></td>
                                 <td><?=$wicker->timeconv($ap->getLastSeen())?></td>
                                 <td><?=$ap->getChannel()?></td>
-                                <td><?=$ap->getPrivacy()?></td>
-                                <td><?=$ap->getPower()?></td>
+                                <td><?=(($ap->getPrivacy() == "WEP") ? "<font color='green'>WEP</font>" : "<font color='red'>" . $ap->getPrivacy() . "</font>")?></td>
+                                <td><span style='color: <?=$wicker->color($ap->getPower(), -80, -50)?>'><?=$ap->getPower()?></span></td>
                                 <td><?=$ap->getBeacons()?></td>
                                 <td><?=$ap->getIVs()?></td>
                             </tr>
@@ -76,7 +79,7 @@ if (count($aps) != 0) {
 
                             </tbody>
                         </table>
-                        <table class="table table-striped">
+                        <table class="table">
                             <h3>Clients - <?=$scan->getClientCount()?></h3>
                             <thead>
                                 <tr>
@@ -97,9 +100,10 @@ $a = 0;
 if (count($clients) != 0) {
     foreach ($clients as $client) {
         $a++;
+        $hex = substr(md5($client->getBSSID()),0 ,6);
 ?>
                                 <tr>
-                                    <td><?=$a?></td>
+                                    <td bgcolor="#<?=$hex?>"><?=$a?></td>
                                     <td><a href="clientview.php?scanid=<?=$_GET['id']?>&bssid=<?=$client->getMac()?>"><?=$client->getMac()?></a></td>
                                     <td><?=$wicker->timeconv($client->getFirstSeen())?></td>
                                     <td><?=$wicker->timeconv($client->getLastSeen())?></td>
