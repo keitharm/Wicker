@@ -328,14 +328,24 @@ class Wicker
     }
 
     public function mon0Enabled() {
-        exec("/sbin/iwconfig mon0", $out);
+        exec("iwconfig mon0", $out);
         if (count($out) == 0) {
             return 0;
         }
         return 1;
     }
-}
 
+    public function enableMon0() {
+        global $config;
+        if ($config->getRFKill() == "true") {
+            exec("sudo rfkill unblock all");
+        }
+        exec("sudo airmon-ng start " . $config->getInterface());
+    }
+    public function disableMon0() {
+        exec("sudo airmon-ng stop mon0");
+    }
+}
 
 // Create instance of Wicker
 $wicker = new Wicker;

@@ -12,10 +12,10 @@ class Database
     public function connect() {
         global $config;
         try {
-            $this->db = new PDO("mysql:host=" . $config->getDBURL() . ";port=3306;dbname=" . $config->getDBName(), $config->getDBUser(), $config->getDBPass());
+            $this->db = new PDO("mysql:host=" . $config->getDBURL() . ";port=3306;dbname=" . $config->getDBName(), $config->getDBUser(), $config->getDBPass(), array(PDO::ATTR_TIMEOUT => 3));
             $this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         } catch (PDOException $e) {
-            echo "Uh oh, something bad has happened.";
+            echo "Uh oh, something bad has happened. Please check your DB configuration.";
             die;
         }
     }
