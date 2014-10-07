@@ -3,6 +3,13 @@ require_once("Wicker.php");
 
 $conf = unserialize($config->viewConfigSerialized());
 
+if ($_GET['do'] == "kill") {
+    $pid = $_GET['pid'];
+    system("sudo kill " . $pid);
+    header('Location: settings.php?do=killsuccess');
+    die;
+}
+
 if ($_GET['do'] == "enablemonitor") {
     $wicker->enableMon0();
 } else if ($_GET['do'] == "disablemonitor") {
@@ -33,6 +40,8 @@ if ($_GET['do'] == "enablemonitor") {
 
 if ($_GET['do'] == "success") {
     $msg = "<font color='green'>Settings saved successfully!</font>";
+} else if ($_GET['do'] == "killsuccess") {
+    $msg = "<font color='green'>Process killed successfully!</font>";
 }
 /*
 // Generate conf file
