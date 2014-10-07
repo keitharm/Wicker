@@ -453,9 +453,9 @@ function importWickerTables($good, $bad) {
 }
 
 function emptydirs() {
-    exec("rm -f logs/* 2>/dev/null");
-    exec("rm -f uploads/* 2>/dev/null");
-    exec("rm -f scans/* 2>/dev/null");
+    exec("rm -rf logs/* 2>/dev/null");
+    exec("rm -rf uploads/* 2>/dev/null");
+    exec("rm -rf scans/* 2>/dev/null");
 }
 
 function resetdb() {
