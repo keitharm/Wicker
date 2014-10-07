@@ -220,7 +220,7 @@ echo G . "done\n" . W;
 
 echo "Setting permissions to 775 for Wicker Configuration File";
 pause(false);
-exec("sudo chmod 775 wicker.conf.php");
+exec("sudo chmod 664 wicker.conf.php");
 echo G . "done\n\n" . W;
 echo G . "Wicker Setup Complete!\n" . W;
 
