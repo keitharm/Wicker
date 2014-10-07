@@ -358,6 +358,13 @@ class Wicker
         $statement->execute();
         return $statement->rowCount();
     }
+
+    public function getMan($mac) {
+        $ex = explode(":", $mac);
+        $new = $ex[0] . "-" . $ex[1] . "-" . $ex[2];
+        exec("grep \"" . $new . "\" oui.txt | awk '{print $3}'", $line);
+        return $line[0];
+    }
 }
 
 // Create instance of Wicker
