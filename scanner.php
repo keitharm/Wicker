@@ -46,7 +46,7 @@ if (!$hidden) {
 <?php
 } else {
 ?>
-                    <h1 class="page-header">Scanner - <a href="scanner.php">Show Normal scans</a></h1>
+                    <h1 class="page-header">Scanner - <a href="scanner.php">Show normal scans</a></h1>
 <?php
 }
 ?>
