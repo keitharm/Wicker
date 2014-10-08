@@ -34,8 +34,32 @@ $ap   = AP::fromDB($_GET['scanid'], $_GET['bssid']);
                             <h2><?=$wicker->timeconv($ap->getLastSeen())?></h2>
                             <span class="text-muted">Last Seen</span>
                         </div>
+                        <div class="col-xs-6 col-sm-4 placeholder">
+                            <h2><?=(($ap->getPrivacy() == "WEP") ? "<font color='green'>WEP</font>" : "<font color='red'>" . $ap->getPrivacy() . "</font>")?></h2>
+                            <span class="text-muted">Privacy</span>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 placeholder">
+                            <h2><span style='color: <?=$wicker->color($ap->getPower(), -90, -30)?>'><?=$ap->getPower()?></span> DB</h2>
+                            <span class="text-muted">Power</span>
+                        </div>
+                        <div class="col-xs-6 col-sm-3 placeholder">
+                            <h2><?=number_format($ap->getIVs())?></h2>
+                            <span class="text-muted">IVs</span>
+                        </div>
 
                     </div>
+                    <h1 class="sub-header"><small>Actions</small></h1>
+<?php
+if ($scan->getStatus() != 2) {
+?>
+                    <input type="button" class="btn-success" value="Terminate parent scan and start individual scan" onClick="window.location='apview.php?do=terminatenstart&scanid=<?=$scan->getID()?>&bssid=<?=$_GET['bssid']?>'">
+<?php
+} else {
+?>
+                    <input type="button" class="btn-success" value="Start individual scan" onClick="window.location='apview.php?do=terminatenstart&scanid=<?=$scan->getID()?>&bssid=<?=$_GET['bssid']?>'">
+<?php
+}
+?>
                     <h1 class="sub-header"><small>Clients for current scan</small></h1>
                     <div class="table-responsive">
                         <table class="table">
@@ -124,8 +148,6 @@ while ($info = $statement->FetchObject()) {
                             </tbody>
                         </table>
                     </div>
-                    <h3>Map</h3>
-                    <iframe src="mapview.php?ap&scanid=<?=$_GET['scanid']?>&bssid=<?=$_GET['bssid']?>" width="100%" height="500px"></iframe>
                 </div>
             </div>
         </div>
