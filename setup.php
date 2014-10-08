@@ -218,7 +218,7 @@ pause(false);
 exec("sudo chgrp " . $data["webserver"]["user"] . " wicker.conf.php");
 echo G . "done\n" . W;
 
-echo "Setting permissions to 775 for Wicker Configuration File";
+echo "Setting permissions to 664 for Wicker Configuration File";
 pause(false);
 exec("sudo chmod 664 wicker.conf.php");
 echo G . "done\n\n" . W;

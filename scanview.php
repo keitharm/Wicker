@@ -48,7 +48,7 @@ if ($scan->getStatus() == 1) {
                             </thead>
                             <tbody>
 <?php
-$aps = $scan->getAPs();
+$aps = $scan->getAPs("power", "DESC");
 $a = 0;
 if (count($aps) != 0) {
     foreach ($aps as $ap) {
@@ -68,7 +68,7 @@ if (count($aps) != 0) {
                                 <td><?=$wicker->timeconv($ap->getLastSeen())?></td>
                                 <td><?=$ap->getChannel()?></td>
                                 <td><?=(($ap->getPrivacy() == "WEP") ? "<font color='green'>WEP</font>" : "<font color='red'>" . $ap->getPrivacy() . "</font>")?></td>
-                                <td><span style='color: <?=$wicker->color($ap->getPower(), -80, -50)?>'><?=$ap->getPower()?></span></td>
+                                <td><span style='color: <?=$wicker->color($ap->getPower(), -90, -30)?>'><?=$ap->getPower()?></span></td>
                                 <td><?=$ap->getBeacons()?></td>
                                 <td><?=$ap->getIVs()?></td>
                             </tr>
@@ -118,8 +118,6 @@ if (count($clients) != 0) {
 ?>
                             </tbody>
                         </table>
-                        <h3>Map</h3>
-                        <iframe src="mapview.php?id=<?=$_GET['id']?>" width="100%" height="500px"></iframe>
                     </div>
                 </div>
             </div>

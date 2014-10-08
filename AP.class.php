@@ -92,6 +92,7 @@ class AP
     public function setIVs($val) { $this->setVal("ivs", $val); $this->ivs = $val; }
     public function setLatitude($val) { $this->setVal("latitude", $val); $this->latitude = $val; }
     public function setLongitude($val) { $this->setVal("longitude", $val); $this->longitude = $val; }
+    public function setPower($val) { $this->setVal("power", $val); $this->power = $val; }
 }
 
 ?>

@@ -63,6 +63,7 @@ if ($do == "newscan") {
             $check->setLastSeen(strtotime($ap["last_seen"]));
             $check->setBeacons($ap["beacons"]);
             $check->setIVs($ap["ivs"]);
+            $check->setPower($ap["power"]);
         }
     }
 
