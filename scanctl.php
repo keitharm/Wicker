@@ -35,7 +35,7 @@ if ($do == "newscan") {
         }
     }
     die;
-} else if ($do == "coords") {
+} else if ($do == "update") {
     $scan    = Scan::fromDB($id);
     $data    = $scan->parseCSV();
 
