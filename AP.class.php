@@ -5,6 +5,7 @@ class AP
 {
     private $id;
     private $scan_id;
+    private $ind_scan_id;
     private $bssid;
     private $first_seen;
     private $last_seen;
@@ -44,6 +45,7 @@ class AP
 
         $instance->id             = $info->id;
         $instance->scan_id        = $info->scan_id;
+        $instance->ind_scan_id    = $info->ind_scan_id;
         $instance->bssid          = $info->bssid;
         $instance->first_seen     = $info->first_seen;
         $instance->last_seen      = $info->last_seen;
@@ -73,6 +75,7 @@ class AP
 
     public function getID() { return $this->id; }
     public function getScanID() { return $this->scan_id; }
+    public function getIndScanID() { return $this->ind_scan_id; }
     public function getBSSID() { return $this->bssid; }
     public function getFirstSeen() { return $this->first_seen; }
     public function getLastSeen() { return $this->last_seen; }
@@ -87,6 +90,7 @@ class AP
     public function getLatitude() { return $this->latitude; }
     public function getLongitude() { return $this->longitude; }
 
+    public function setIndScanID($val) { $this->setVal("ind_scan_id", $val); $this->ind_scan_id = $val; }
     public function setLastSeen($val) { $this->setVal("last_seen", $val); $this->last_seen = $val; }
     public function setBeacons($val) { $this->setVal("beacons", $val); $this->beacons = $val; }
     public function setIVs($val) { $this->setVal("ivs", $val); $this->ivs = $val; }

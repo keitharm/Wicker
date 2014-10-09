@@ -1,4 +1,3 @@
-
 function getSystemStats() {
     $.ajax({
         url: "fetch.php?type=system",
@@ -12,9 +11,4 @@ function getSystemStats() {
 }
 
 getSystemStats();
-setInterval(getSystemStats, 1000);
-
-
-
-
-
+setInterval(getSystemStats, 5000);

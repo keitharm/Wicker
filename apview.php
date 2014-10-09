@@ -3,8 +3,9 @@ require_once("Wicker.php");
 require_once("Scan.class.php");
 require_once("AP.class.php");
 
-$scan = Scan::fromDB($_GET['scanid']);
-$ap   = AP::fromDB($_GET['scanid'], $_GET['bssid']);
+$ap          = AP::fromDB($_GET['parent_scan'], $_GET['bssid']);
+$scan        = Scan::fromDB($_GET['scanid']);
+$parent_scan = Scan::fromDB($_GET['parent_scan']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
