@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 09, 2014 at 01:57 AM
+-- Generation Time: Oct 09, 2014 at 03:55 AM
 -- Server version: 5.5.38-0ubuntu0.14.04.1
 -- PHP Version: 5.6.1
 
@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS `aps` (
   `essid` varchar(64) NOT NULL,
   `latitude` varchar(20) NOT NULL,
   `longitude` varchar(20) NOT NULL,
-  `key` varchar(64) NOT NULL
+  `key` varchar(64) NOT NULL,
+  `handshake` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
