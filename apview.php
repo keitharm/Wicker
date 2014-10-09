@@ -33,6 +33,8 @@ if ($_GET['do'] == "terminate") {
     die;
 } else if ($_GET['do'] == "deauth") {
     $wicker->deauth($_GET['bssid'], $_GET['deauthmac']);
+} else if ($_GET['do'] == "deauthbroadcast") {
+    $wicker->deauth($_GET['bssid']);
 }
 
 if ($_GET['scanid'] == 0) {
@@ -74,6 +76,7 @@ if ($parent_scan->getStatus() != 2 && $parent_scan->getStatus() != 3) {
     } else if ($ind_scan->getStatus() == 1) {
 ?>
                     <input type="button" class="btn-danger" value="Terminate individual scan" onClick="window.location='apview.php?do=terminate&parent_scan=<?=$_GET['parent_scan']?>&scanid=<?=$_GET['scanid']?>&bssid=<?=$_GET['bssid']?>'">
+                    <input type="button" class="btn-success" value="Broadcast deauth" onClick="window.location='apview.php?do=deauthbroadcast&parent_scan=<?=$_GET['parent_scan']?>&scanid=<?=$_GET['scanid']?>&bssid=<?=$_GET['bssid']?>'">
 <?php
     }
 }

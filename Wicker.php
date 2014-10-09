@@ -367,8 +367,12 @@ class Wicker
         return $line[0];
     }
 
-    public function deauth($ap, $client) {
-        system("sudo aireplay-ng -0 1 -a " . $ap . " -c " . $client . " mon0 > /dev/null 2>&1 &");
+    public function deauth($ap, $client = null) {
+        if ($client == null) {
+            system("sudo aireplay-ng -0 1 -a " . $ap . " mon0 > /dev/null");
+        } else {
+            system("sudo aireplay-ng -0 1 -a " . $ap . " -c " . $client . " mon0 > /dev/null");
+        }
     }
 }
 
