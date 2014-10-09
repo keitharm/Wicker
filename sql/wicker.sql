@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 07, 2014 at 03:25 PM
+-- Generation Time: Oct 09, 2014 at 01:57 AM
 -- Server version: 5.5.38-0ubuntu0.14.04.1
 -- PHP Version: 5.6.1
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `aps` (
 `id` int(11) NOT NULL,
   `scan_id` int(11) NOT NULL,
+  `ind_scan_id` int(11) NOT NULL,
   `bssid` varchar(17) NOT NULL,
   `first_seen` int(10) NOT NULL,
   `last_seen` int(10) NOT NULL,
@@ -41,7 +42,8 @@ CREATE TABLE IF NOT EXISTS `aps` (
   `ivs` int(10) NOT NULL,
   `essid` varchar(64) NOT NULL,
   `latitude` varchar(20) NOT NULL,
-  `longitude` varchar(20) NOT NULL
+  `longitude` varchar(20) NOT NULL,
+  `key` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -117,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `scans` (
   `guid` varchar(36) NOT NULL,
   `time` int(10) NOT NULL,
   `status` int(1) NOT NULL,
+  `individual` int(1) NOT NULL,
   `aps` int(11) NOT NULL,
   `clients` int(11) NOT NULL,
   `pid` int(5) NOT NULL
