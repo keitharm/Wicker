@@ -75,7 +75,7 @@ class Scan
 
     public function startIndScan($bssid, $channel) {
         global $wicker;
-        system("sudo " . $wicker->config->getAirodumpng() . " -w \"scans/" . $this->getGUID() . "\" -i --bssid " . $bssid . " -c " . $channel . " --ignore-negative-one mon0 > /dev/null 2>&1 &");
+        system("sudo " . $wicker->config->getAirodumpng() . " -w \"scans/" . $this->getGUID() . "\" --bssid " . $bssid . " -c " . $channel . " --ignore-negative-one mon0 > /dev/null 2>&1 &");
         exec("ps aux | grep 'sudo " . $wicker->config->getAirodumpng() . " -w scans/" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
         $this->setPID($out[0]);
         $this->setIndividual(1);
