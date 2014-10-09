@@ -294,9 +294,9 @@ class Wicker
 
     public function countScans($hidden = false) {
         if ($hidden) {
-            $statement = $this->db->con()->prepare("SELECT * FROM `scans` WHERE `status` = 3");
+            $statement = $this->db->con()->prepare("SELECT * FROM `scans` WHERE `status` = 3 AND `individual` <> 1");
         } else {
-            $statement = $this->db->con()->prepare("SELECT * FROM `scans` WHERE `status` <> 3");
+            $statement = $this->db->con()->prepare("SELECT * FROM `scans` WHERE `status` <> 3 AND `individual` <> 1");
         }
         $statement->execute();
         return $statement->rowCount();
