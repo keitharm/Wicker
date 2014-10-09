@@ -19,6 +19,7 @@ class AP
     private $essid;
     private $latitude;
     private $longitude;
+    private $key;
 
     public $db;
 
@@ -59,6 +60,7 @@ class AP
         $instance->essid          = $info->essid;
         $instance->latitude       = $info->latitude;
         $instance->longitude      = $info->longitude;
+        $instance->key            = $info->key;
 
         return $instance;
     }
@@ -89,6 +91,7 @@ class AP
     public function getESSID() { return $this->essid; }
     public function getLatitude() { return $this->latitude; }
     public function getLongitude() { return $this->longitude; }
+    public function getKey() { return $this->key; }
 
     public function setIndScanID($val) { $this->setVal("ind_scan_id", $val); $this->ind_scan_id = $val; }
     public function setLastSeen($val) { $this->setVal("last_seen", $val); $this->last_seen = $val; }
@@ -97,6 +100,7 @@ class AP
     public function setLatitude($val) { $this->setVal("latitude", $val); $this->latitude = $val; }
     public function setLongitude($val) { $this->setVal("longitude", $val); $this->longitude = $val; }
     public function setPower($val) { $this->setVal("power", $val); $this->power = $val; }
+    public function setKey($val) { $this->setVal("key", $val); $this->key = $val; }
 }
 
 ?>
