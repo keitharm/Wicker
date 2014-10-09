@@ -126,14 +126,13 @@ th {
 .navbar-center .line1
 {
   margin: 7px;
-  margin-left: -50px;
+  margin-left: -2%;
   font-size: 18px;
 }
 
 .navbar-center .line2
 {
   margin: -3px;
-  margin-left: -90px;
 }
 
 .tablestatus {

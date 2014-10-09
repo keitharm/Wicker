@@ -16,9 +16,7 @@ if ($_GET['do'] == "terminate") {
         header('Location: apview.php?parent_scan=' . $_GET['parent_scan'] . '&scanid=' . $_GET['scanid'] . '&bssid=' . $_GET['bssid']);
         die;
     }
-}
-
-if ($_GET['do'] == "terminatenstart") {
+} else if ($_GET['do'] == "terminatenstart") {
     // Terminate parent scan
     $previous = Scan::fromDB($_GET['parent_scan']);
     if ($previous->getPID() != 0 && $previous->getStatus() == 1) {
@@ -33,6 +31,8 @@ if ($_GET['do'] == "terminatenstart") {
     $parent_ap->setIndScanID($scan->getID());
     header('Location: apview.php?parent_scan=' . $_GET['parent_scan'] . '&scanid=' . $scan->getID() . '&bssid=' . $_GET['bssid']);
     die;
+} else if ($_GET['do'] == "deauth") {
+    $wicker->deauth($_GET['bssid'], $_GET['deauthmac']);
 }
 
 if ($_GET['scanid'] == 0) {
@@ -49,6 +49,7 @@ if ($_GET['scanid'] == 0) {
         <id hidden><?=$_GET['scanid']?></id>
         <running hidden><?=(($ind_scan->getStatus() == 1) ? "yes" : "no")?></running>
         <bssid hidden><?=$_GET['bssid']?></bssid>
+        <parent hidden><?=$_GET['parent_scan']?></parent>
     </head>
     <body>
         <?=$wicker->heading()?>
@@ -70,7 +71,7 @@ if ($parent_scan->getStatus() != 2 && $parent_scan->getStatus() != 3) {
 ?>
                     <input type="button" class="btn-success" value="Start individual scan" onClick="window.location='apview.php?do=terminatenstart&parent_scan=<?=$parent_scan->getID()?>&bssid=<?=$_GET['bssid']?>'">
 <?php
-    } else if ($_GET['scanid'] != 0 && $ind_scan->getStatus() == 1) {
+    } else if ($ind_scan->getStatus() == 1) {
 ?>
                     <input type="button" class="btn-danger" value="Terminate individual scan" onClick="window.location='apview.php?do=terminate&parent_scan=<?=$_GET['parent_scan']?>&scanid=<?=$_GET['scanid']?>&bssid=<?=$_GET['bssid']?>'">
 <?php
