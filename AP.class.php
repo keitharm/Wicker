@@ -20,6 +20,7 @@ class AP
     private $latitude;
     private $longitude;
     private $key;
+    private $handshake;
 
     public $db;
 
@@ -61,6 +62,7 @@ class AP
         $instance->latitude       = $info->latitude;
         $instance->longitude      = $info->longitude;
         $instance->key            = $info->key;
+        $instance->handshake      = $info->handshake;
 
         return $instance;
     }
@@ -92,6 +94,7 @@ class AP
     public function getLatitude() { return $this->latitude; }
     public function getLongitude() { return $this->longitude; }
     public function getKey() { return $this->key; }
+    public function getHandshake() { return $this->handshake; }
 
     public function setIndScanID($val) { $this->setVal("ind_scan_id", $val); $this->ind_scan_id = $val; }
     public function setLastSeen($val) { $this->setVal("last_seen", $val); $this->last_seen = $val; }
@@ -101,6 +104,7 @@ class AP
     public function setLongitude($val) { $this->setVal("longitude", $val); $this->longitude = $val; }
     public function setPower($val) { $this->setVal("power", $val); $this->power = $val; }
     public function setKey($val) { $this->setVal("key", $val); $this->key = $val; }
+    public function setHandshake($val) { $this->setVal("handshake", $val); $this->handshake = $val; }
 }
 
 ?>
