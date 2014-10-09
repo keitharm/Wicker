@@ -262,7 +262,7 @@ class Wicker
 
     public function status() {
         exec($this->config->getSensors(), $sensors);
-        exec("uptime; du -hs uploads; du -hs logs;", $data);
+        exec("uptime; du -hs uploads; du -hs logs; du -hs scans;", $data);
         exec("DISPLAY=:0 aticonfig --pplib-cmd 'get temperature 0'", $gpu);
         $gputemp = $this->extractData($gpu[0], " is ", ".");
         $gputemp = "<span style='color: " . $this->color($gputemp, 65, 45) . "'>" . $gputemp . ".0°C</span>";
@@ -279,7 +279,8 @@ class Wicker
         $uptime = array($this->extractData($data[0], "up ", ",") . " - " . $this->extractData($data[0], ",", ",")[0], $loadavgs[0], $loadavgs[1], $loadavgs[2]);
         $uploads = trim($this->extractData(":" . $data[1], ":", "uploads"));
         $logs = trim($this->extractData(":" . $data[2], ":", "logs"));
-        return array("<span style='color: " . $this->color($cpus[0], 100, 70) . "'>" . $cpus[0] . "°C</span>", "<span style='color: " . $this->color($cpus[1], 100, 70) . "'>" . $cpus[1] . "°C</span>", "<span style='color: " . $this->color($cpus[2], 100, 70) . "'>" . $cpus[2] . "°C</span>", "<span style='color: " . $this->color($cpus[3], 100, 70) . "'>" . $cpus[3] . "°C</span>", $gputemp, $uptime[0], "<span style='color: " . $this->color($uptime[1], 6.00, 1.00) . "'>" . $uptime[1] . "</span>", "<span style='color: " . $this->color($uptime[2], 6.00, 1.00) . "'>" . $uptime[2] . "</span>", "<span style='color: " . $this->color($uptime[3], 6.00, 1.00) . "'>" . $uptime[3] . "</span>", $uploads, $logs);
+        $scans = trim($this->extractData(":" . $data[3], ":", "scans"));
+        return array("<span style='color: " . $this->color($cpus[0], 100, 70) . "'>" . $cpus[0] . "°C</span>", "<span style='color: " . $this->color($cpus[1], 100, 70) . "'>" . $cpus[1] . "°C</span>", "<span style='color: " . $this->color($cpus[2], 100, 70) . "'>" . $cpus[2] . "°C</span>", "<span style='color: " . $this->color($cpus[3], 100, 70) . "'>" . $cpus[3] . "°C</span>", $gputemp, $uptime[0], "<span style='color: " . $this->color($uptime[1], 6.00, 1.00) . "'>" . $uptime[1] . "</span>", "<span style='color: " . $this->color($uptime[2], 6.00, 1.00) . "'>" . $uptime[2] . "</span>", "<span style='color: " . $this->color($uptime[3], 6.00, 1.00) . "'>" . $uptime[3] . "</span>", $uploads, $logs, $scans);
     }
 
     public function capfiles() {
@@ -364,6 +365,10 @@ class Wicker
         $new = $ex[0] . "-" . $ex[1] . "-" . $ex[2];
         exec("grep \"" . $new . "\" oui.txt | awk '{print $3}'", $line);
         return $line[0];
+    }
+
+    public function deauth($ap, $client) {
+        system("sudo aireplay-ng -0 1 -a " . $ap . " -c " . $client . " mon0 > /dev/null 2>&1 &");
     }
 }
 
