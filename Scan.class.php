@@ -9,6 +9,7 @@ class Scan
     private $guid;
     private $time;
     private $status;
+    private $individual;
     private $aps;
     private $clients;
     private $pid;
@@ -69,6 +70,14 @@ class Scan
         system("sudo " . $wicker->config->getAirodumpng() . " -w \"scans/" . $this->getGUID() . "\" --output-format csv --ignore-negative-one mon0 > /dev/null 2>&1 &");
         exec("ps aux | grep 'sudo " . $wicker->config->getAirodumpng() . " -w scans/" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
         $this->setPID($out[0]);
+    }
+
+    public function startIndScan($bssid, $channel) {
+        global $wicker;
+        system("sudo " . $wicker->config->getAirodumpng() . " -w \"scans/" . $this->getGUID() . "\" --bssid " . $bssid . " -c " . $channel . " --ignore-negative-one mon0 > /dev/null 2>&1 &");
+        exec("ps aux | grep 'sudo " . $wicker->config->getAirodumpng() . " -w scans/" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
+        $this->setPID($out[0]);
+        $this->setIndividual(1);
     }
 
     public function parseCSV() {
@@ -151,6 +160,7 @@ class Scan
     public function getGUID() { return $this->guid; }
     public function getTime() { return $this->time; }
     public function getStatus() { return $this->status; }
+    public function getIndividual() { return $this->individual; }
     public function getAPCount() { return $this->aps; }
     public function getClientCount() { return $this->clients; }
     public function getPID() { return $this->pid; }
@@ -158,6 +168,7 @@ class Scan
     public function setGUID($val) { $this->setVal("guid", $val); $this->guid = $val; }
     public function setTime($val) { $this->setVal("time", $val); $this->time = $val; }
     public function setStatus($val) { $this->setVal("status", $val); $this->status = $val; }
+    public function setIndividual($val) { $this->setVal("individual", $val); $this->individual = $val; }
     public function setAPCount($val) { $this->setVal("aps", $val); $this->aps = $val; }
     public function setClientCount($val) { $this->setVal("clients", $val); $this->clients = $val; }
     public function setPID($val) { $this->setVal("pid", $val); $this->pid = $val; }
