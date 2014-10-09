@@ -64,6 +64,13 @@ if ($do == "newscan") {
             $check->setBeacons($ap["beacons"]);
             $check->setIVs($ap["ivs"]);
             $check->setPower($ap["power"]);
+
+            // If this is an individual scan, perform handshake check
+            if ($scan->getIndividual() == 1 && $check->getHandshake() != 1) {
+                if ($scan->capturedHandshake()) {
+                    $check->setHandshake(1);
+                }
+            }
         }
     }
 

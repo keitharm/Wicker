@@ -1,5 +1,6 @@
 var id = $('id').html();
 var bssid = $('bssid').html();
+var parent = $('parent').html();
 var running = $('running').html();
 function update() {
     $.get("scanctl.php?do=update&id=" + id);
@@ -13,7 +14,7 @@ function update() {
     });
 
     $.ajax({
-        url: "scanupdate.php?type=clientapview&id=" + id,
+        url: "scanupdate.php?type=clientapview&id=" + id + "&bssid=" + bssid + "&parent_scan=" + parent,
         success: function(data) {
             $('#currentclients').html(data);
         }

@@ -99,7 +99,7 @@ if (count($clients) != 0) {
 <?php
 } else if ($type == "apview") {
     $data = AP::fromDB($_GET['id'], $_GET['bssid']);
-    if ($_GET['id'] == 0 || $data->getEssid() == null) {
+    if ($_GET['id'] == 0 || $data->getESSID() == null) {
 ?>
 <h1 class="page-header"></h1>
 
@@ -127,6 +127,10 @@ if (count($clients) != 0) {
     <div class="col-xs-6 col-sm-3 placeholder">
         <h2>0</h2>
         <span class="text-muted">IVs</span>
+    </div>
+    <div class="col-xs-6 col-sm-4 placeholder">
+        <h2>:|</h2>
+        <span class="text-muted">Handshake</span>
     </div>
 
 </div>
@@ -160,6 +164,10 @@ if (count($clients) != 0) {
         <h2><?=number_format($data->getIVs())?></h2>
         <span class="text-muted">IVs</span>
     </div>
+    <div class="col-xs-6 col-sm-4 placeholder">
+        <h2><?=(($data->getHandshake() == 0) ? "<font color='red'>no :(</font>" : "<font color='green'>yep! :)</font>")?></h2>
+        <span class="text-muted"><?=(($data->getHandshake() == 0) ? "Handshake" : "<a href='scans/" . $scan->getGUID() . "-01.cap'>Handshake</a>")?></span>
+    </div>
 
 </div>
 <?php
@@ -170,6 +178,7 @@ if (count($clients) != 0) {
         <h3>Clients - <?=$scan->getClientCount()?></h3>
         <thead>
             <tr>
+                <th>Actions</th>
                 <th>#</th>
                 <th>MAC</th>
                 <th>First seen</th>
@@ -188,6 +197,7 @@ if (count($clients) != 0) {
         $a++;
 ?>
             <tr>
+                <td><input type="button" class="btn-success" value="Deauth" onClick="window.location='apview.php?do=deauth&deauthmac=<?=$client->getMac()?>&parent_scan=<?=$_GET['parent_scan']?>&scanid=<?=$_GET['id']?>&bssid=<?=$_GET['bssid']?>'"></td>
                 <td><?=$a?></td>
                 <td><a href="clientview.php?scanid=<?=$_GET['id']?>&bssid=<?=$client->getMac()?>" target="_blank"><span title="<?=$wicker->getMan($client->getMac())?>"><?=$client->getMac()?></span></a></td>
                 <td><?=$wicker->timeconv($client->getFirstSeen())?></td>
