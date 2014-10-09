@@ -10,7 +10,7 @@ if ($_FILES != null) {
 
     if (!in_array($ext, array("cap"))) {
         $bad = true;
-        $msg = "Only . files are accepted.";
+        $msg = "<font color='red'>Only .cap files are accepted.</font>";
     }
 
     if (!$bad) {
@@ -41,6 +41,7 @@ if ($_FILES != null) {
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <h1 class="page-header">Upload</h1>
                     <h3>Upload a .cap file for cracking</h3>
+                    <?=$msg?>
                     <form action="upload.php" method="POST" enctype="multipart/form-data">
                         <input type="file" name="file"><br>
                         <input type="submit" class="btn btn-success" value="Upload">
