@@ -44,13 +44,14 @@ class Scan
         $statement->execute(array($id));
         $info = $statement->fetchObject();
 
-        $instance->id      = $info->id;
-        $instance->guid    = $info->guid;
-        $instance->time    = $info->time;
-        $instance->status  = $info->status;
-        $instance->aps     = $info->aps;
-        $instance->clients = $info->clients;
-        $instance->pid     = $info->pid;
+        $instance->id         = $info->id;
+        $instance->guid       = $info->guid;
+        $instance->time       = $info->time;
+        $instance->status     = $info->status;
+        $instance->individual = $info->individual;
+        $instance->aps        = $info->aps;
+        $instance->clients    = $info->clients;
+        $instance->pid        = $info->pid;
 
         return $instance;
     }
@@ -78,6 +79,16 @@ class Scan
         exec("ps aux | grep 'sudo " . $wicker->config->getAirodumpng() . " -w scans/" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
         $this->setPID($out[0]);
         $this->setIndividual(1);
+    }
+
+    public function capturedHandshake() {
+        global $wicker;
+        system("aircrack-ng scans/" . $this->getGUID() . "-01.cap > scans/" . $this->getGUID() . ".tmp");
+        $log = file_get_contents("scans/" . $this->getGUID() . ".tmp");
+        if ($wicker->extractData($log, "WPA (", " handshake)") != 0) {
+            return true;
+        }
+        return false;
     }
 
     public function parseCSV() {
