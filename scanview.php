@@ -22,7 +22,7 @@ if ($scan->getID() == 0) {
             <div class="row">
                 <?=$wicker->menu("null")?>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <h1 class="page-header"><?=$scan->getID()?> - <?=$wicker->timeconv($scan->getTime())?></h1>
+                    <h1 class="page-header"><small><?=$scan->getID()?></small></h1>
 <?php
 if ($scan->getStatus() == 1) {
 ?>

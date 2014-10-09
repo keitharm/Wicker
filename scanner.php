@@ -8,7 +8,7 @@ if ($_GET['do'] == "hide") {
     if ($scan->getStatus() != 3) {
         $scan->setStatus(3);
     }
-    header('Location: scanner.php?do=hidesuccess');
+    header('Location: scanner.php');
     die;
 } else if ($_GET['do'] == "unhide") {
     $id = $_GET['id'];
@@ -16,12 +16,8 @@ if ($_GET['do'] == "hide") {
     if ($scan->getStatus() == 3) {
         $scan->setStatus(2);
     }
-    header('Location: scanner.php?do=unhidesuccess');
+    header('Location: scanner.php');
     die;
-} else if ($_GET['do'] == "hidesuccess") {
-    $msg = "<font color='green'>Scan hidden successfully!</font>";
-} else if ($_GET['do'] == "unhidesuccess") {
-    $msg = "<font color='green'>Scan unhidden successfully!</font>";
 } else if ($_GET['do'] == "showhidden") {
     $hidden = true;
 }
@@ -81,7 +77,6 @@ if (!$hidden) {
 }
 ?>
                     <div class="table-responsive">
-                        <?=$msg?>
                         <form action="scanctl.php?do=newscan" method="POST">
                             <input type="checkbox" name="wep" value="wep" checked="checked"> WEP <input type="checkbox" name="wpa" value="wpa" checked="checked"> WPA
                             <input type="submit" class="btn-success" value="New Scan">
@@ -100,10 +95,10 @@ if (!$hidden) {
 <?php
 if (!$hidden) {
     $action = "hide";
-    $statement = $wicker->db->con()->prepare("SELECT * FROM `scans` WHERE `status` <> 3 ORDER BY `id` DESC");
+    $statement = $wicker->db->con()->prepare("SELECT * FROM `scans` WHERE `status` <> 3 AND `individual` <> 1 ORDER BY `id` DESC");
 } else {
     $action = "unhide";
-    $statement = $wicker->db->con()->prepare("SELECT * FROM `scans` WHERE `status` = 3 ORDER BY `id` DESC");
+    $statement = $wicker->db->con()->prepare("SELECT * FROM `scans` WHERE `status` = 3 AND `individual` <> 1 ORDER BY `id` DESC");
 }
 $statement->execute();
 for ($a = 0; $a < $statement->rowCount(); $a++) {
