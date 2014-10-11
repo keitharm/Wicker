@@ -8,13 +8,13 @@ $id = $_GET['id'];
 if ($do == "newscan") {
     $wep = $_POST['wep'];
     $wpa = $_POST['wpa'];
-    $scan = Scan::newScan();
     if (!$wicker->mon0Enabled()) {
         $wicker->error("No wireless devices in monitor mode detected.");
         die;
     }
+    $scan = Scan::newScan();
     $scan->setStatus(1);
-    $scan->startScan();
+    $scan->startScan($wep, $wpa);
     // Give airodump-ng a chance to create files
     sleep(1);
     header('Location: scanview.php?id=' . $scan->getID());
@@ -65,10 +65,25 @@ if ($do == "newscan") {
             $check->setIVs($ap["ivs"]);
             $check->setPower($ap["power"]);
 
-            // If this is an individual scan, perform handshake check
-            if ($scan->getIndividual() == 1 && $check->getHandshake() != 1) {
+            // If this is an individual scan and not OPN or WEP, perform handshake check
+            if ($scan->getIndividual() == 1 && $check->getHandshake() != 1 && !in_array($check->getPrivacy(), array("WEP", "OPN"))) {
                 if ($scan->capturedHandshake()) {
                     $check->setHandshake(1);
+                }
+            } else {
+                // If wep scan hasn't started yet, attempt to start if enough IVs
+                if ($scan->getWEP() == 0 && $check->getIVs() >= 100) {
+                    $scan->setWEP(1);
+                    $scan->startAircrackWEP();
+                }
+
+                // If scan has started, than check to see if key has been recovered yet.
+                if ($scan->getWEP() == 1) {
+                    // Key recovered
+                    $key = $scan->checkKey();
+                    if ($key !== false) {
+                        $check->setKey($key);
+                    }
                 }
             }
         }

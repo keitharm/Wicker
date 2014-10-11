@@ -78,7 +78,7 @@ if (!$hidden) {
 ?>
                     <div class="table-responsive">
                         <form action="scanctl.php?do=newscan" method="POST">
-                            <input type="checkbox" name="wep" value="wep" checked="checked"> WEP <input type="checkbox" name="wpa" value="wpa" checked="checked"> WPA
+                            <input type="checkbox" name="wep" value="true" checked="checked"> WEP <input type="checkbox" name="wpa" value="true" checked="checked"> WPA
                             <input type="submit" class="btn-success" value="New Scan">
                         </form>
                         <table class="table table-striped">

@@ -12,6 +12,7 @@ class Scan
     private $individual;
     private $aps;
     private $clients;
+    private $wep;
     private $pid;
 
     public $db;
@@ -51,6 +52,7 @@ class Scan
         $instance->individual = $info->individual;
         $instance->aps        = $info->aps;
         $instance->clients    = $info->clients;
+        $instance->wep        = $info->wep;
         $instance->pid        = $info->pid;
 
         return $instance;
@@ -66,9 +68,16 @@ class Scan
         $statement->execute(array($val, $this->getID()));
     }
 
-    public function startScan() {
+    public function startScan($wep = true, $wpa = true) {
         global $wicker;
-        system("sudo " . $wicker->config->getAirodumpng() . " -w \"scans/" . $this->getGUID() . "\" --output-format csv --ignore-negative-one mon0 > /dev/null 2>&1 &");
+        $privacy = null;
+        if ($wep == true) {
+            $privacy .= " -t wep ";
+        }
+        if ($wpa == true) {
+            $privacy .= " -t wpa ";
+        }
+        system("sudo " . $wicker->config->getAirodumpng() . " -w \"scans/" . $this->getGUID() . "\" " . $privacy . " --output-format csv --ignore-negative-one mon0 > /dev/null 2>&1 &");
         exec("ps aux | grep 'sudo " . $wicker->config->getAirodumpng() . " -w scans/" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
         $this->setPID($out[0]);
     }
@@ -77,6 +86,10 @@ class Scan
         global $wicker;
         system("sudo " . $wicker->config->getAirodumpng() . " -w \"scans/" . $this->getGUID() . "\" --bssid " . $bssid . " -c " . $channel . " --ignore-negative-one mon0 > /dev/null 2>&1 &");
         exec("ps aux | grep 'sudo " . $wicker->config->getAirodumpng() . " -w scans/" . $this->getGUID() . "' | grep -v grep | awk '{ print $2 }' | tail -1", $out);
+
+        // Create log file
+        system("touch scans/" . $this->getGUID() . ".log");
+
         $this->setPID($out[0]);
         $this->setIndividual(1);
     }
@@ -87,6 +100,21 @@ class Scan
         $log = file_get_contents("scans/" . $this->getGUID() . ".tmp");
         if ($wicker->extractData($log, "WPA (", " handshake)") != 0) {
             return true;
+        }
+        return false;
+    }
+
+    public function startAircrackWEP() {
+        // Start aircrack up on the cap file
+        system("aircrack-ng scans/" . $this->getGUID() . "-01.cap > scans/" . $this->getGUID() . ".tmp 2>&1 &");
+    }
+
+    public function checkKey() {
+        global $wicker;
+        $log = file_get_contents("scans/" . $this->getGUID() . ".tmp");
+        $result = $wicker->extractData($log, "KEY FOUND! [ ", " ]");
+        if ($result !== false) {
+            return $result;
         }
         return false;
     }
@@ -174,7 +202,9 @@ class Scan
     public function getIndividual() { return $this->individual; }
     public function getAPCount() { return $this->aps; }
     public function getClientCount() { return $this->clients; }
+    public function getWEP() { return $this->wep; }
     public function getPID() { return $this->pid; }
+    public function getLog() { return file_get_contents("scans/" . $this->getGUID() . ".log"); }
 
     public function setGUID($val) { $this->setVal("guid", $val); $this->guid = $val; }
     public function setTime($val) { $this->setVal("time", $val); $this->time = $val; }
@@ -182,6 +212,7 @@ class Scan
     public function setIndividual($val) { $this->setVal("individual", $val); $this->individual = $val; }
     public function setAPCount($val) { $this->setVal("aps", $val); $this->aps = $val; }
     public function setClientCount($val) { $this->setVal("clients", $val); $this->clients = $val; }
+    public function setWEP($val) { $this->setVal("wep", $val); $this->wep = $val; }
     public function setPID($val) { $this->setVal("pid", $val); $this->pid = $val; }
 }
 
