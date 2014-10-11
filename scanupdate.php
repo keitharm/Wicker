@@ -34,6 +34,14 @@ if (count($aps) != 0) {
 
         // Color code the BSSIDs
         $hex = substr(md5($ap->getBSSID()),0 ,6);
+
+        if ($ap->getPrivacy() == "WEP") {
+            $privacy = "<font color='green'>WEP</font>";
+        } else if ($ap->getPrivacy() == "WEP") {
+            $privacy = "<font color='#0F0'>OPN</font>";
+        } else {
+            $privacy = "<font color='red'>" . $ap->getPrivacy() . "</font>";
+        }
 ?>
         <tr>
             <td bgcolor="#<?=$hex?>"><?=$a?></td>
@@ -42,7 +50,7 @@ if (count($aps) != 0) {
             <td><?=$wicker->timeconv($ap->getFirstSeen())?></td>
             <td><?=$wicker->timeconv($ap->getLastSeen())?></td>
             <td><?=$ap->getChannel()?></td>
-            <td><?=(($ap->getPrivacy() == "WEP") ? "<font color='green'>WEP</font>" : "<font color='red'>" . $ap->getPrivacy() . "</font>")?></td>
+            <td><?=$privacy?></td>
             <td><span style='color: <?=$wicker->color($ap->getPower(), -75, -60)?>'><?=$ap->getPower()?></span></td>
             <td><?=$ap->getBeacons()?></td>
             <td><?=number_format($ap->getIVs())?></td>
@@ -77,6 +85,9 @@ $clients = $scan->getClients();
 $a = 0;
 if (count($clients) != 0) {
     foreach ($clients as $client) {
+        if ($client->getMac() == "FF:FF:FF:FF:FF:FF" || ((time() - $client->getLastSeen()) > 60 && $scan->getStatus() != 2 && $scan->getStatus() != 3)) {
+            continue;
+        }
         $a++;
         $hex = substr(md5($client->getBSSID()),0 ,6);
 ?>
@@ -113,7 +124,7 @@ if (count($clients) != 0) {
         <span class="text-muted">First Seen</span>
     </div>
     <div class="col-xs-6 col-sm-3 placeholder">
-        <h2>--</h2>
+        <h2>---</h2>
         <span class="text-muted">Last Seen</span>
     </div>
     <div class="col-xs-6 col-sm-4 placeholder">
@@ -128,14 +139,36 @@ if (count($clients) != 0) {
         <h2>0</h2>
         <span class="text-muted">IVs</span>
     </div>
+<?php
+if ($data->getPrivacy() == "WEP") {
+?>
+    <div class="col-xs-6 col-sm-4 placeholder">
+        <h2><?=(($data->getKey() == null) ? "<i>null</i>" : $data->getKey())?></h2>
+        <span class="text-muted">Passphrase</span>
+    </div>
+<?php
+} else if ($data->getPrivacy() == "WPA2WPA" || $data->getPrivacy() == "WPA2" || $data->getPrivacy() == "WPA") {
+?>
     <div class="col-xs-6 col-sm-4 placeholder">
         <h2>:|</h2>
         <span class="text-muted">Handshake</span>
     </div>
-
+<?php
+} else if ($data->getPrivacy() == "OPN") {
+?>
+<?php
+}
+?>
 </div>
 <?php
     } else {
+        if ($data->getPrivacy() == "WEP") {
+            $privacy = "<font color='green'>WEP</font>";
+        } else if ($data->getPrivacy() == "WEP") {
+            $privacy = "<font color='#0F0'>OPN</font>";
+        } else {
+            $privacy = "<font color='red'>" . $data->getPrivacy() . "</font>";
+        }
 ?>
 <h1 class="page-header"><small><?=$data->getESSID()?> - channel: <?=$data->getChannel()?></small></h1>
 
@@ -153,7 +186,7 @@ if (count($clients) != 0) {
         <span class="text-muted">Last Seen</span>
     </div>
     <div class="col-xs-6 col-sm-4 placeholder">
-        <h2><?=(($data->getPrivacy() == "WEP") ? "<font color='green'>WEP</font>" : "<font color='red'>" . $data->getPrivacy() . "</font>")?></h2>
+        <h2><?=$privacy?></h2>
         <span class="text-muted">Privacy</span>
     </div>
     <div class="col-xs-6 col-sm-4 placeholder">
@@ -164,11 +197,30 @@ if (count($clients) != 0) {
         <h2><?=number_format($data->getIVs())?></h2>
         <span class="text-muted">IVs</span>
     </div>
+<?php
+if ($data->getPrivacy() == "WEP") {
+?>
+    <div class="col-xs-6 col-sm-4 placeholder">
+        <h2><?=(($data->getKey() == null) ? "<i>null</i>" : "<font color='#0F0'>" . $data->getKey() . "</font>")?></h2>
+        <span class="text-muted">Passphrase</span>
+    </div>
+<?php
+} else if ($data->getPrivacy() == "WPA2WPA" || $data->getPrivacy() == "WPA2" || $data->getPrivacy() == "WPA") {
+?>
     <div class="col-xs-6 col-sm-4 placeholder">
         <h2><?=(($data->getHandshake() == 0) ? "<font color='red'>no :(</font>" : "<font color='green'>yep! :)</font>")?></h2>
         <span class="text-muted"><?=(($data->getHandshake() == 0) ? "Handshake" : "<a href='scans/" . $scan->getGUID() . "-01.cap'>Handshake</a>")?></span>
     </div>
-
+<?php
+} else if ($data->getPrivacy() == "OPN") {
+?>
+<?php
+}
+?>
+    <div class="col-xs-6 col-sm-8 placeholder">
+        <textarea rows="7" cols="100%" readonly><?=$wicker->deControllify($scan->getLog())?></textarea><br>
+        <span class="text-muted">Output of last command</span>
+    </div>
 </div>
 <?php
     }
