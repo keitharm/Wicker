@@ -140,19 +140,6 @@ if (!file_exists("wicker.conf.php")) {
                         echo "No airodump-ng sessions running.";
                     }
 ?>
-                    <h3 class="sub-header">Pyrit</h3>
-<?php
-                    exec("ps -eo user,pid,command | grep pyrit | awk '{print $1 \" \" $2 \" \" $3}'", $pyrit);
-                    foreach ($pyrit as $entry) {
-                        $ex = explode(" ", $entry);
-                        if ($ex[0] == "root") {
-                            echo "<button class=\"btn btn-danger\" onclick=\"window.location='settings.php?do=kill&pid=" . $ex[1] . "'\">Kill " . $ex[1] . "</button>&nbsp;";
-                        }
-                    }
-                    if (count($pyrit) == 2) {
-                        echo "No pyrit sessions running.";
-                    }
-?>
                     <h3 class="sub-header">Aireplay-ng</h3>
 <?php
                     exec("ps -eo user,pid,command | grep aireplay-ng | awk '{print $1 \" \" $2 \" \" $3}'", $aireplay);
@@ -164,6 +151,32 @@ if (!file_exists("wicker.conf.php")) {
                     }
                     if (count($aireplay) == 2) {
                         echo "No aireplay-ng sessions running.";
+                    }
+?>
+                    <h3 class="sub-header">Aircrack-ng</h3>
+<?php
+                    exec("ps -eo user,pid,command | grep aircrack-ng | awk '{print $1 \" \" $2 \" \" $3}'", $aircrack);
+                    foreach ($aircrack as $entry) {
+                        $ex = explode(" ", $entry);
+                        if ($ex[0] == "www-data" && $ex[2] != "sh" && $ex[2] != "grep") {
+                            echo "<button class=\"btn btn-danger\" onclick=\"window.location='settings.php?do=kill&pid=" . $ex[1] . "'\">Kill " . $ex[1] . "</button>&nbsp;";
+                        }
+                    }
+                    if (count($aircrack) == 2) {
+                        echo "No aircrack-ng sessions running.";
+                    }
+?>
+                    <h3 class="sub-header">Pyrit</h3>
+<?php
+                    exec("ps -eo user,pid,command | grep pyrit | awk '{print $1 \" \" $2 \" \" $3}'", $pyrit);
+                    foreach ($pyrit as $entry) {
+                        $ex = explode(" ", $entry);
+                        if ($ex[0] == "root") {
+                            echo "<button class=\"btn btn-danger\" onclick=\"window.location='settings.php?do=kill&pid=" . $ex[1] . "'\">Kill " . $ex[1] . "</button>&nbsp;";
+                        }
+                    }
+                    if (count($pyrit) == 2) {
+                        echo "No pyrit sessions running.";
                     }
 ?>
                 </div>
