@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 09, 2014 at 03:55 AM
+-- Generation Time: Oct 11, 2014 at 05:55 AM
 -- Server version: 5.5.38-0ubuntu0.14.04.1
 -- PHP Version: 5.6.1
 
@@ -123,6 +123,7 @@ CREATE TABLE IF NOT EXISTS `scans` (
   `individual` int(1) NOT NULL,
   `aps` int(11) NOT NULL,
   `clients` int(11) NOT NULL,
+  `wep` int(11) NOT NULL,
   `pid` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

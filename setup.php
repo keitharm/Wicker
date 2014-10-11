@@ -13,7 +13,7 @@ echo "\ \      / (_) ___| | _____ _ __\n";
 echo " \ \ /\ / /| |/ __| |/ / _ \ '__|\n";
 echo "  \ V  V / | | (__|   <  __/ |\n";
 echo "   \_/\_/  |_|\___|_|\_\___|_|\n";
-echo "Version 1.2.0\n\n";
+echo "Version 1.3.0\n\n";
 
 if ($argv[1] == "--view-config") {
     if (file_exists("wicker.conf.php")) {
