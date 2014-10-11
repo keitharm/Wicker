@@ -32,9 +32,17 @@ if ($_GET['do'] == "terminate") {
     header('Location: apview.php?parent_scan=' . $_GET['parent_scan'] . '&scanid=' . $scan->getID() . '&bssid=' . $_GET['bssid']);
     die;
 } else if ($_GET['do'] == "deauth") {
-    $wicker->deauth($_GET['bssid'], $_GET['deauthmac']);
+    $wicker->deauth($_GET['bssid'], $_GET['deauthmac'], "scans/" . $ind_scan->getGUID() . ".log");
 } else if ($_GET['do'] == "deauthbroadcast") {
-    $wicker->deauth($_GET['bssid']);
+    $wicker->deauth($_GET['bssid'], null, "scans/" . $ind_scan->getGUID() . ".log");
+} else if ($_GET['do'] == "associate") {
+    $wicker->associate($_GET['bssid'], "scans/" . $ind_scan->getGUID() . ".log");
+} else if ($_GET['do'] == "0841") {
+    $wicker->attack0841($_GET['bssid'], $_GET['scanid'], "scans/" . $ind_scan->getGUID() . ".log");
+} else if ($_GET['do'] == "sendyes") {
+    system("echo \"y\" > scans/" . $_GET['bssid'] . $_GET['scanid'] . "fifo");
+} else if ($_GET['do'] == "sendno") {
+    system("echo \"n\" > scans/" . $_GET['bssid'] . $_GET['scanid'] . "fifo");
 }
 
 if ($_GET['scanid'] == 0) {
@@ -77,6 +85,10 @@ if ($parent_scan->getStatus() != 2 && $parent_scan->getStatus() != 3) {
 ?>
                     <input type="button" class="btn-danger" value="Terminate individual scan" onClick="window.location='apview.php?do=terminate&parent_scan=<?=$_GET['parent_scan']?>&scanid=<?=$_GET['scanid']?>&bssid=<?=$_GET['bssid']?>'">
                     <input type="button" class="btn-success" value="Broadcast deauth" onClick="window.location='apview.php?do=deauthbroadcast&parent_scan=<?=$_GET['parent_scan']?>&scanid=<?=$_GET['scanid']?>&bssid=<?=$_GET['bssid']?>'">
+                    <input type="button" class="btn-primary" value="Associate with AP" onClick="window.location='apview.php?do=associate&parent_scan=<?=$_GET['parent_scan']?>&scanid=<?=$_GET['scanid']?>&bssid=<?=$_GET['bssid']?>'">
+                    <input type="button" class="btn-warning" value="0841 attack" onClick="window.location='apview.php?do=0841&parent_scan=<?=$_GET['parent_scan']?>&scanid=<?=$_GET['scanid']?>&bssid=<?=$_GET['bssid']?>'">
+                    <input type="button" class="btn-default" value="Send yes" onClick="window.location='apview.php?do=sendyes&parent_scan=<?=$_GET['parent_scan']?>&scanid=<?=$_GET['scanid']?>&bssid=<?=$_GET['bssid']?>'">
+                    <input type="button" class="btn-default" value="Send no" onClick="window.location='apview.php?do=sendno&parent_scan=<?=$_GET['parent_scan']?>&scanid=<?=$_GET['scanid']?>&bssid=<?=$_GET['bssid']?>'">
 <?php
     }
 }

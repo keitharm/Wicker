@@ -367,12 +367,30 @@ class Wicker
         return $line[0];
     }
 
-    public function deauth($ap, $client = null) {
+    public function deauth($ap, $client = null, $log = "/dev/null") {
         if ($client == null) {
-            system("sudo aireplay-ng -0 1 -a " . $ap . " mon0 > /dev/null");
+            system("sudo aireplay-ng -0 3 -a " . $ap . " mon0 > " . $log . " &");
         } else {
-            system("sudo aireplay-ng -0 1 -a " . $ap . " -c " . $client . " mon0 > /dev/null");
+            system("sudo aireplay-ng -0 3 -a " . $ap . " -c " . $client . " mon0 > " . $log . " &");
         }
+    }
+
+    public function associate($ap, $log = "/dev/null") {
+        system("sudo aireplay-ng -1 0 -a " . $ap . " mon0 | col -b > " . $log . " &");
+    }
+
+    public function attack0841($ap, $id, $log = "/dev/null") {
+        // Attempt to make fifo
+        system("mkfifo scans/" . $ap . $id . "fifo");
+
+        // And attack with fifo as STDIN
+        system("( tail -f scans/" . $ap . $id . "fifo ) | sudo aireplay-ng -2 -p 0841 -c FF:FF:FF:FF:FF:FF -b " . $ap . " mon0 > " . $log . " 2>&1 &");
+    }
+
+    public function deControllify($input) {
+        file_put_contents("scans/tmp", $input);
+        system("col -b < scans/tmp > scans/tmpresult");
+        return file_get_contents("scans/tmpresult");
     }
 }
 
