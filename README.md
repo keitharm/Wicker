@@ -4,21 +4,21 @@ Wicker - The stupid wifi pen tester
 Overview
 --------
 Wicker is a web interface that runs on top of the aircrack-ng suite and pyrit.
-It was created to simplify the process of wireless pen testing against WPA/WPA2 networks.
+It was created to simplify the process of wireless pen testing against WPA/WPA2 and WEP networks.
 
 Wicker provides a simplistic web GUI that allows users to easily capture handshakes and then
-test them against supplied dictionaries. (scanner/dictionaries currently under development)
+test them against supplied dictionaries. (dictionaries currently under development)
 
 Configuration
 -------------
 In order for Wicker's features to work properly, you'll have to change some 
 settings on your system.
 
-1. Disable SELinux (or allow PHP to execute commands such as system, exec, 
-    passthru, etc.)
-2. Add Webserver user to visudo with execute permissions for airodump-ng, kill, chmod & chown (to allow wicker to make directories writeable)
+1. Disable SELinux and allow PHP to execute commands such as system, exec, 
+    passthru, etc.
+2. Add Webserver user to visudo with execute permissions for aircrack-ng suite, kill, chmod & chown (to allow wicker to make directories writeable)
 ```
-    www-data        ALL=NOPASSWD:   /usr/local/sbin/airodump-ng, /bin/kill, /bin/chown, /bin/chmod
+    www-data        ALL=NOPASSWD:   airodump-ng, kill, aticonfig, rfkill, airmon-ng, chmod, aireplay-ng
 ```
 3. Comment out "Defaults requiretty" or add this line in visudo
 ```
