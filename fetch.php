@@ -6,7 +6,7 @@ $data = array();
 
 switch($type) {
     case "cap":
-        for ($a = 1; $a <= 8; $a++) {
+        for ($a = 1; $a <= 9; $a++) {
             unset($attack);
             $attack = Attack::fromDB($_GET['id'], $a);
             $attack->updateData();

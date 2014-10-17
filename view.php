@@ -38,8 +38,8 @@ if ($cap->getID() == 0) {
                         </div>
 
                         <div class="col-xs-6 col-sm-4 placeholder">
-                            <h2><span title="<?=$cap->getChecksum()?>"><?=substr($cap->getChecksum(), 0, 16)?>...</span></h2>
-                            <span class="text-muted">Checksum</span>
+                            <h2><span title="<?=$cap->getLocation()?>"><?=$cap->getLocation()?></span></h2>
+                            <span class="text-muted">Location</span>
                         </div>
                         <div class="col-xs-6 col-sm-4 placeholder">
                             <h2><?=$cap->getPassword()?></h2>
@@ -68,7 +68,7 @@ if ($cap->getID() == 0) {
                             <tbody>
 
 <?php
-for ($a = 1; $a <= 8; $a++) {
+for ($a = 1; $a <= 9; $a++) {
     unset($status);
     unset($runtime);
     $attack = Attack::fromDB($cap->getID(), $a);

@@ -124,7 +124,7 @@ Class CapFile
 
     private function generateAttackRecords() {
         $cap = CapFile::fromDB("[C]" . $this->getChecksum());
-        for ($a = 1; $a <= 8; $a++) {
+        for ($a = 1; $a <= 9; $a++) {
             $statement = $this->db->con()->prepare("INSERT INTO `attacks` (`cap_id`, `attack`) VALUES (?, ?)");
             $statement->execute(array($cap->getID(), $a));
         }

@@ -7,7 +7,7 @@ $cmd         = $_GET['cmd'];
 $id          = $_GET['id'];
 $attack_type = $_GET['attack'];
 
-if(is_null($cmd) || is_null($id) || is_null($attack_type)) {
+if(is_null($cmd) || is_null($id)) {
     header('Location: view.php?id=' . $_GET['id']);
     die;
 }
@@ -15,7 +15,7 @@ if(is_null($cmd) || is_null($id) || is_null($attack_type)) {
 $attack = Attack::fromDB($_GET['id'], $_GET['attack']);
 
 if ($cmd == "execute") {
-    $dictionaries = array("10k most common.txt", "rockyou.txt", "small", "Custom-WPA", "Super-WPA", "big", "bigger", "combined");
+    $dictionaries = array("10k most common.txt", "rockyou.txt", "small", "Custom-WPA", "Super-WPA", "big", "bigger", "combined", "eight");
     $cap = CapFile::fromDB($id);
     $attack->setTmpfile($wicker->newGUID());
 
